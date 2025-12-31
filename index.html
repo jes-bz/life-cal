@@ -166,16 +166,14 @@
         </div>
     </div>
 
-    <!-- Image Mode Container (Shown only if mode=image) -->
-    <div id="image-mode-container" class="hidden fixed inset-0 bg-black flex items-center justify-center">
-        <img id="full-render-img" class="max-w-full max-h-full object-contain" alt="Generated Life Calendar">
-    </div>
+    <!-- Image Mode Container (Removed as it is now handled by Worker) -->
 
-    <script>
+    <script type="module">
+        import { generateRectData, CONSTANTS } from './shared/calendar-logic.js';
+
         // --- Configuration & Constants ---
-        // iPhone 16 Pro Max Resolution
-        const CANVAS_WIDTH = 1320;
-        const CANVAS_HEIGHT = 2868;
+        // TODO: Replace with your actual deployed worker URL
+        const WORKER_URL = 'https://life-cal-worker.jessebrizzi.workers.dev';
 
         // --- DOM Elements ---
         const els = {
@@ -189,12 +187,10 @@
             colorRest: document.getElementById('color-rest'),
             hexRest: document.getElementById('hex-rest'),
             canvas: document.getElementById('canvas'),
-            fullRenderImg: document.getElementById('full-render-img'),
             btnDownload: document.getElementById('btn-download'),
             btnCopy: document.getElementById('btn-copy-link'),
             directLink: document.getElementById('direct-link'),
             uiContainer: document.getElementById('ui-container'),
-            imageContainer: document.getElementById('image-mode-container'),
         };
 
         // --- State ---
@@ -205,7 +201,6 @@
             lived: '#ffffff',
             rest: '#333333',
             layout: 'none', // 'none', 'top', 'bottom'
-            mode: 'interactive'
         };
 
         // --- Initialization ---
@@ -222,8 +217,6 @@
             // Layout
             if (params.has('layout')) state.layout = params.get('layout');
 
-            if (params.get('mode') === 'image') state.mode = 'image';
-
             // 2. Set Input Values
             els.dob.value = state.dob;
             els.years.value = state.years;
@@ -236,16 +229,8 @@
             updateColorInputs('lived', state.lived);
             updateColorInputs('rest', state.rest);
 
-            // 3. Check Mode
-            if (state.mode === 'image') {
-                els.uiContainer.classList.add('hidden');
-                els.imageContainer.classList.remove('hidden');
-            } else {
-                // Initialize the direct link href immediately
-                updateUrl();
-            }
-
-            // Draw immediately
+            // 3. Initialize URL and Draw
+            updateUrl();
             draw();
 
             // 4. Listeners
@@ -325,18 +310,10 @@
 
         // --- Core Logic ---
 
-        function getWeeksLived(dob) {
-            const birth = new Date(dob);
-            const now = new Date();
-            const diffTime = Math.abs(now - birth);
-            const diffWeeks = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 7));
-            return diffWeeks;
-        }
-
         function draw() {
             const ctx = els.canvas.getContext('2d');
-            const width = CANVAS_WIDTH;
-            const height = CANVAS_HEIGHT;
+            const width = CONSTANTS.CANVAS_WIDTH;
+            const height = CONSTANTS.CANVAS_HEIGHT;
 
             // Fill Background
             ctx.fillStyle = state.bg;
@@ -344,103 +321,32 @@
 
             if (!state.dob) return;
 
-            const totalYears = parseInt(state.years) || 90;
-            const totalWeeks = totalYears * 52;
-            const livedWeeks = getWeeksLived(state.dob);
+            const rects = generateRectData({
+                width, 
+                height,
+                dob: state.dob,
+                years: state.years,
+                layout: state.layout,
+                colorLived: state.lived,
+                colorRest: state.rest
+            });
 
-            // Safe Zones calculation
-            const BASE_TOP_PCT = 0.25; // Clock area
-            const BASE_BOTTOM_PCT = 0.10; // Buttons area
-
-            // Differentiate top/bottom widget spacing
-            const TOP_WIDGET_ADDITION = 0.10;
-            const BOTTOM_WIDGET_ADDITION = 0.10;
-
-            let topPct = BASE_TOP_PCT;
-            let bottomPct = BASE_BOTTOM_PCT;
-
-            if (state.layout === 'top') {
-                topPct += TOP_WIDGET_ADDITION;
-            } else if (state.layout === 'bottom') {
-                bottomPct += BOTTOM_WIDGET_ADDITION;
+            for (const r of rects) {
+                ctx.fillStyle = r.color;
+                ctx.fillRect(r.x, r.y, r.size, r.size);
             }
+        }
 
-            const safeZoneTop = height * topPct;
-            const safeZoneBottom = height * bottomPct;
-
-            const marginX = width * 0.04;
-            const availableWidth = width - (marginX * 2);
-
-            // Gap between cells
-            const gap = 5;
-
-            // Calculate optimal columns
-
-            // Find the minimum columns needed to fit vertically
-            let minFitCols = 0;
-            let c = 52;
-
-            // Safety break at 200
-            while (c < 200) {
-                const cellSize = (availableWidth - (gap * (c - 1))) / c;
-                const rows = Math.ceil(totalWeeks / c);
-                const gridHeight = (cellSize * rows) + (gap * (rows - 1));
-
-                const extraTopH = 5 * (cellSize + gap);
-                const extraBottomH = 6 * (cellSize + gap);
-
-                const requiredHeight = gridHeight + extraTopH + extraBottomH;
-                const availableHeight = height - safeZoneTop - safeZoneBottom;
-
-                if (requiredHeight <= availableHeight + 1) {
-                    minFitCols = c;
-                    break;
-                }
-                c++;
-            }
-
-            // Use minFitCols to set final parameters
-            const cols = minFitCols;
-            const cellSize = (availableWidth - (gap * (cols - 1))) / cols;
-            const rows = Math.ceil(totalWeeks / cols);
-            const gridHeight = (cellSize * rows) + (gap * (rows - 1));
-            const extraTopH = 0 * (cellSize + gap);
-            const extraBottomH = 0 * (cellSize + gap);
-
-            // Final Dimensions
-            const finalGridWidth = (cellSize * cols) + (gap * (cols - 1));
-
-            // Positioning
-            // Top Y = SafeZoneTop + 5 rows clearance + Centering Offset
-            const startY = (safeZoneTop + extraTopH);
-
-            // Center Horizontally
-            const startX = (width - finalGridWidth) / 2;
-
-            let currentWeek = 0;
-
-            for (let i = 0; i < totalWeeks; i++) {
-                currentWeek++;
-
-                const colIndex = i % cols;
-                const rowIndex = Math.floor(i / cols);
-
-                const posX = startX + (colIndex * (cellSize + gap));
-                const posY = startY + (rowIndex * (cellSize + gap));
-
-                if (currentWeek <= livedWeeks) {
-                    ctx.fillStyle = state.lived;
-                } else {
-                    ctx.fillStyle = state.rest;
-                }
-
-                ctx.fillRect(posX, posY, cellSize, cellSize);
-            }
-
-            if (state.mode === 'image') {
-                const dataUrl = els.canvas.toDataURL('image/png');
-                els.fullRenderImg.src = dataUrl;
-            }
+        function getWorkerUrl() {
+            const params = new URLSearchParams();
+            params.set('dob', state.dob);
+            params.set('years', state.years);
+            params.set('bg', state.bg.replace('#', ''));
+            params.set('lived', state.lived.replace('#', ''));
+            params.set('rest', state.rest.replace('#', ''));
+            params.set('layout', state.layout);
+            
+            return `${WORKER_URL}?${params.toString()}`;
         }
 
         function updateUrl() {
@@ -455,12 +361,12 @@
             const newUrl = `${window.location.pathname}?${params.toString()}`;
             window.history.replaceState({}, '', newUrl);
 
-            const directParams = new URLSearchParams(params);
-            directParams.set('mode', 'image');
-            els.directLink.href = `${window.location.pathname}?${directParams.toString()}`;
+            // Direct link now points to the worker
+            els.directLink.href = getWorkerUrl();
         }
 
         function downloadImage() {
+            // Use client-side canvas generation to save worker calls
             const link = document.createElement('a');
             link.download = `life-calendar-${state.dob}.png`;
             link.href = els.canvas.toDataURL('image/png');
