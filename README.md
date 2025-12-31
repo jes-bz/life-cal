@@ -4,7 +4,7 @@ A "Memento Mori" life calendar generator that visualizes your life in weeks. It 
 
 The project consists of:
 1.  **Static Website**: An interactive configuration tool to set your birthdate, life expectancy, and colors.
-2.  **Cloudflare Worker**: A serverless function that generates the high-quality PNG wallpaper on-the-fly, enabling automation.
+2.  **Cloudflare Worker**: A serverless function that generates the PNG wallpaper on-the-fly, enabling automation.
 
 ## Features
 
@@ -30,7 +30,7 @@ You can set up your iPhone to automatically update its lock screen with your Lif
 2.  Tap the **+** to create a new shortcut.
 3.  Add the following 4 actions in order:
 
-    1.  **Text**: Paste your full Worker URL here (e.g., `https://your-worker.workers.dev/?dob=...`).
+    1.  **URL**: Paste your full Worker URL here (e.g., `https://your-worker.workers.dev/?dob=...`).
     2.  **Get Contents of URL**: Set this to get contents of the **Text** from the previous step.
     3.  **Get Images from Input**: Set this to get images from the **Contents of URL**.
     4.  **Set Wallpaper**: 
@@ -50,5 +50,3 @@ You can set up your iPhone to automatically update its lock screen with your Lif
 6.  On the next screen, select the Shortcut you created in Step 1.
 
 ![Automation Setup](assets/automation.png)
-
-Now your lock screen will automatically fill in a new square every week!
