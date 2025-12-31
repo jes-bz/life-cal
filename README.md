@@ -1,5 +1,7 @@
 # Life Calendar Wallpaper
 
+[https://jes-bz.github.io/life-cal/](https://jes-bz.github.io/life-cal/)
+
 A "Memento Mori" life calendar generator that visualizes your life in weeks. It generates a wallpaper for your phone showing weeks lived versus weeks remaining, helping you stay mindful of your time.
 
 The project consists of:
