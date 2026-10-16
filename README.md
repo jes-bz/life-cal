@@ -32,7 +32,7 @@ You can set up your iPhone to automatically update its lock screen with your Lif
 2.  Tap the **+** to create a new shortcut.
 3.  Add the following 4 actions in order:
 
-    1.  **URL**: Paste your full Worker URL here (e.g., `https://your-worker.workers.dev/?dob=...`).
+    1.  **URL**: Paste your full Worker URL here (e.g., `https://life-cal.jes.bz/?dob=...`).
     2.  **Get Contents of URL**: Set this to get contents of the **Text** from the previous step.
     3.  **Get Images from Input**: Set this to get images from the **Contents of URL**.
     4.  **Set Wallpaper**: 
