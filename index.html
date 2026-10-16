@@ -5,14 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Life Calendar Wallpaper</title>
+    <meta name="theme-color" content="#000000">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Catthode palette: catthode.github.io/styles.css.
+        tailwind.config = {
+            theme: { extend: { colors: {
+                surface: '#141414',
+                gray: {
+                    50: '#1b1b1b', 100: '#2d2d2d', 200: '#636363',
+                    300: '#636363', 400: '#b3b3b3', 500: '#b3b3b3',
+                    600: '#e8e8e8', 700: '#e8e8e8', 800: '#2d2d2d', 900: '#fae2c8'
+                },
+                indigo: {
+                    50: '#2a2018', 100: '#5a4028', 200: '#d9b98c',
+                    500: '#ffb86c', 600: '#ff9e3b', 700: '#ffb86c', 900: '#fae2c8'
+                }
+            } } }
+        };
+    </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
-        body {
-            font-family: 'JetBrains Mono', monospace;
+        :root { color-scheme: dark; }
+        body { font-family: 'JetBrains Mono', monospace; }
+        :focus-visible { outline: 2px solid #ffb86c; outline-offset: 3px; }
+        input[type=radio] { accent-color: #ff9e3b; }
+        input[type=text], input[type=number], input[type=date] { min-width: 0; }
+        input[type=color] { background: transparent; }
+        .preview-area {
+            background: radial-gradient(ellipse at center, #211a14 0%, #0a0a0a 65%);
         }
+        @supports (height: 100dvh) { body { height: 100dvh; } }
+
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
@@ -25,12 +51,12 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: #636363;
             border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+            background: #b3b3b3;
         }
 
         .no-scrollbar::-webkit-scrollbar {
@@ -44,18 +70,18 @@
     </style>
 </head>
 
-<body class="bg-gray-50 text-gray-800 h-screen overflow-hidden flex flex-col">
+<body class="bg-black text-white h-screen overflow-hidden flex flex-col">
 
     <!-- UI Container (Hidden if mode=image) -->
     <div id="ui-container" class="flex flex-col h-full md:flex-row">
 
         <!-- Controls Panel -->
         <div
-            class="w-full md:w-96 bg-white border-r border-gray-200 flex flex-col z-10 shadow-lg md:shadow-none h-auto max-h-[40vh] md:max-h-full overflow-y-auto">
+            class="w-full md:w-96 bg-surface border-r border-gray-200 flex flex-col z-10 shadow-lg md:shadow-none h-auto max-h-[40vh] md:max-h-full overflow-y-auto">
             <div class="p-6 border-b border-gray-100">
                 <h1 class="text-xl font-bold tracking-tighter uppercase"><i
                         class="fa-solid fa-calendar-days mr-2 text-indigo-600"></i>MEMENTO MORI</h1>
-                <p class="text-xs text-gray-500 mt-1">Life Calendar Generator</p>
+                <p class="text-xs text-gray-500 mt-1">Life Calendar Generator <span class="text-indigo-500">/ Catthode</span></p>
             </div>
 
             <div class="p-6 space-y-6 flex-1 overflow-y-auto">
@@ -136,11 +162,11 @@
                 <!-- Actions -->
                 <div class="pt-4 space-y-3">
                     <button id="btn-download"
-                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded text-sm transition-colors flex items-center justify-center">
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-black font-bold py-3 px-4 rounded text-sm transition-colors flex items-center justify-center">
                         <i class="fa-solid fa-download mr-2"></i> Download Wallpaper
                     </button>
                     <button id="btn-copy-link"
-                        class="w-full bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold py-2 px-4 rounded text-sm transition-colors flex items-center justify-center">
+                        class="w-full bg-surface border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold py-2 px-4 rounded text-sm transition-colors flex items-center justify-center">
                         <i class="fa-solid fa-link mr-2"></i> Copy Config Link
                     </button>
                     <a id="direct-link" href="#" target="_blank"
@@ -161,7 +187,7 @@
         </div>
 
         <!-- Preview Area -->
-        <div class="flex-1 bg-gray-200 relative overflow-hidden flex items-center justify-center p-4 md:p-8">
+        <div class="preview-area flex-1 relative overflow-hidden flex items-center justify-center p-4 md:p-8">
             <div class="relative shadow-2xl rounded-3xl border-8 border-gray-800 overflow-hidden bg-black"
                 style="aspect-ratio: 1320/2868; height: 90%;">
                 <!-- The Canvas is now directly displayed for performance -->
@@ -177,8 +203,8 @@
 
     <!-- How-to Modal -->
     <div id="howto-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto flex flex-col">
-            <div class="p-6 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-white z-10">
+        <div class="bg-surface rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto flex flex-col">
+            <div class="p-6 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-surface z-10">
                 <h2 class="text-lg font-bold">iPhone Automation Guide</h2>
                 <button id="btn-close-modal" class="text-gray-400 hover:text-gray-600">
                     <i class="fa-solid fa-xmark text-xl"></i>
@@ -191,8 +217,8 @@
                     <h3 class="font-bold text-indigo-900 mb-2">Your Dynamic URL</h3>
                     <p class="text-xs mb-2">Copy this URL for Step 1:</p>
                     <div class="flex space-x-2">
-                        <input id="modal-url-input" readonly type="text" class="flex-1 bg-white border border-indigo-200 rounded p-2 text-xs font-mono text-gray-600 select-all">
-                        <button id="btn-copy-modal-url" class="bg-indigo-600 text-white px-3 rounded hover:bg-indigo-700 transition-colors">
+                        <input id="modal-url-input" readonly type="text" class="flex-1 bg-surface border border-indigo-200 rounded p-2 text-xs font-mono text-gray-600 select-all">
+                        <button id="btn-copy-modal-url" class="bg-indigo-600 text-black px-3 rounded hover:bg-indigo-700 transition-colors">
                             <i class="fa-regular fa-copy"></i>
                         </button>
                     </div>
@@ -234,7 +260,6 @@
         import { generateRectData, CONSTANTS } from './shared/calendar-logic.js';
 
         // --- Configuration & Constants ---
-        // TODO: Replace with your actual deployed worker URL
         const WORKER_URL = 'https://life-cal.jes.bz';
 
         // --- DOM Elements ---
