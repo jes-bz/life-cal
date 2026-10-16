@@ -1,124 +1,91 @@
 # Life Calendar Worker
 
-This Cloudflare Worker generates the Life Calendar PNG images on the fly.
+The production endpoint is https://life-cal.jes.bz/. Its complete request handler
+and PNG renderer are Rust compiled to Wasm in `../worker-rust/`. workers-rs creates
+the JavaScript bridge automatically. This directory keeps the production Wrangler
+configuration and npm commands. `src/` retains the former JS implementation for
+pixel comparisons; Wrangler no longer deploys it.
 
-## Returning to this project
+## Returning to the project
 
-The website at `https://jes.bz/life-cal/` deploys through GitHub Pages on pushes
-to `main`. The PNG endpoint at `https://life-cal.jes.bz/` deploys separately:
+Install Rust through rustup, then install the pinned toolchain and build helper:
 
-```bash
-cd worker
+```sh
+cd worker-rust
+rustup show
+cargo install worker-build --version 0.8.7 --locked
+cd ../worker
 npm ci
 npx wrangler whoami
 # If needed: npx wrangler login
+npm test
 npm run deploy
 ```
 
-`wrangler.toml` enables persisted invocation logs with full sampling. Changes
-take effect after deploying. In Cloudflare, open **Workers & Pages →
-life-cal-worker → Observability** to inspect new invocations, outcomes, CPU time,
-and exceptions. For live output, run `npx wrangler tail` from this directory.
-Logs are not retroactive. Invocation logs may include request URLs (including
-the birthdate query parameter); custom render logs omit dates and full URLs.
+`rust-toolchain.toml` selects Rust 1.99.1 and the wasm32-unknown-unknown target.
+The npm lockfile pins Wrangler 4.151.1, needed for the tested outer cache config.
+`npm run build` compiles and bundles without deploying; `npm run dev` serves the
+Rust Worker locally. The GitHub Worker check workflow builds Wasm, runs native
+boundary/validation tests, compares 180 PNGs, and tests the Wasm handler in workerd.
+Worker deployment is manual; pushing main separately publishes the static UI
+through GitHub Pages. The website previews and downloads images locally in canvas.
 
-The Worker redirects bare-root visits (including unknown-query-only requests) to
-`https://jes.bz/life-cal/`. Configured links still produce PNGs. `/robots.txt`
-asks cooperative crawlers not to index the image endpoint. Unknown paths and
-invalid inputs return before image generation; HEAD requests never render.
+## Links and behavior
 
-The renderer creates a native-resolution indexed PNG directly (1320 × 2868 by default), using a small fixed-Huffman DEFLATE
-encoder that copies repeated scanlines. It does not load Wasm or build SVG. Seven coverage levels for each
-foreground color preserve softened square edges; edge pixels can differ slightly
-from the previous SVG renderer. The background and full-coverage colors retain
-exact RGB values. The UI still previews and downloads images locally using canvas.
+Existing Shortcut URLs keep working. Device presets are iPhone 1206×2622, Max
+1320×2868, Duo outer 1398×2034, Duo inner 1878×2670, and inner landscape 2670×1878.
+Omitting device retains the legacy Max default; the website defaults to iPhone.
+Duo layout remains fixed beside the right controls, with 35% top / 6% bottom
+margins and 22% right reservation. Regular iPhones retain none/top/bottom/right.
 
-The Cache API key includes the visible number of weeks lived, years, colors, and
-layout. It ignores parameter order, unknown parameters, and birthdates that produce
-the same image. Cached image data lives for up to seven days; the filename is set
-per response. Client caching lasts up to one hour, bounded by the next week-change
-instant. `X-Calendar-Cache: HIT` or `MISS` identifies the response path.
-Cache entries remain local to a Cloudflare data center and may be evicted.
+Bare-root or unknown-parameter-only visits redirect to https://jes.bz/life-cal/.
+Unknown paths return 404; malformed dates, colors, years outside 1–120, devices,
+and layouts return 400. Non-GET/HEAD image requests return 405. robots.txt asks
+cooperative crawlers not to index the image endpoint; it is not bot protection.
 
-Invocation logs expose CPU time, outcomes, request headers, and status. Structured
-`calendar_request` logs add bounded paths, user agents, country, ASN, and location
-without custom logging of IPs or birthdates. User agents are claims, not reliable
-identity. Compare `calendar_render_start`, `calendar_render_complete`, and
-`calendar_cache_hit` with invocation CPU/outcomes. No browser challenges or user
-agent blocking are enabled, so iPhone Shortcuts remain supported. Logs only cover
-traffic after observability was enabled; exclude our curl verification requests
-when assessing usage. Requests to the static GitHub Pages UI are separate from
-Worker invocations and are not counted by these logs.
+## Caching and logs
 
-Local verification (Node with TypeScript stripping support):
+Workers Cache serves repeated URLs before code executes. Its entries are bounded
+by Cache-Control, at most one hour and never past the next weeks-lived change.
+The in-handler Cache API additionally normalizes device, layout, colors, years,
+and visible weeks, ignoring unknown parameters, order and equivalent birthdates.
+Those immutable image bytes are cached for seven days, with a versioned key.
+The response filename is set for each request, so it cannot leak across birthdays.
+Cache entries can be evicted. Request quotas still apply to outer cache hits.
 
-```bash
-node scripts/check-deflate.mjs
-node scripts/check-renderer.mjs
-node scripts/check-worker.mjs
-npx tsc --noEmit --target es2022 --lib es2022 --module esnext --moduleResolution bundler --types @cloudflare/workers-types src/index.ts
+`CF-Cache-Status` identifies outer cache behavior. `X-Calendar-Cache` identifies
+in-handler MISS/HIT and is preserved on an outer hit, so do not read it alone.
+`X-Calendar-Renderer: rust-1` identifies the renderer. Direct HEAD misses do not
+render or seed an empty image; the outer cache may convert HEAD to GET to fill
+its entry, as documented by Cloudflare.
+
+Persisted invocation logs are fully sampled, with traces sampled at 1%. Query
+strings are redacted from observability logs. Structured request logs retain
+bounded user agent, path, country, ASN, location and verified bot category, plus
+render/cache events; no custom DOB or IP logging. User agents are claims rather
+than proof of human/bot identity. Outer cache hits do not invoke the Worker.
+
+Inspect Workers & Pages → life-cal-worker → Observability, or run
+`npx wrangler tail`. Logging is not retroactive. Static website visits are separate
+from Worker traffic. No paid plan, bot challenge or automatic blocking is required.
+
+## Performance and rollback
+
+The paired Cloudflare test found identical pixels and 68.7% smaller PNGs. In the
+20 pairs with CPU records for both implementations, Rust averaged 27.35 ms versus
+31.45 ms for JS, but had a higher median. Neither reliably fit the free 10 ms CPU
+allowance; successful HTTP responses are not proof that CPU failures are resolved.
+See `../docs/cloudflare-benchmark-2026-10-16.md` for method and limitations.
+
+The pre-Rust production version is `6cfcf20b-5f35-4ccb-a6a0-46e949112f18`.
+To restore it if necessary, from this directory:
+
+```sh
+npx wrangler rollback 6cfcf20b-5f35-4ccb-a6a0-46e949112f18
 ```
 
-The renderer checks decode generated PNGs and inspect dimensions and square
-interiors across all five device sizes and four layouts at 1, 80, and 120 years. The handler checks routing,
-HEAD behavior, cache normalization, per-request filenames, cross-day reuse, and
-week-boundary expiry. Local timing is wall time and does not establish Cloudflare
-CPU usage; verify production invocation logs after deployment.
+Rollback affects deployed code. Revert the corresponding source/config changes
+before the next normal deploy; separately inspect cache settings and cache state.
 
-Validate configuration and bundle without publishing:
-
-```bash
-npx wrangler deploy --dry-run
-```
-
-## Setup
-
-1.  Install dependencies:
-    ```bash
-    npm install
-    ```
-
-2.  Login to Cloudflare (if not already logged in):
-    ```bash
-    npx wrangler login
-    ```
-
-3.  Deploy:
-    ```bash
-    npm run deploy
-    ```
-
-## Development
-
-To run locally:
-```bash
-npm run dev
-```
-
-## Integration
-
-Update `WORKER_URL` in `../index.html` with your deployed worker URL (e.g., `https://life-cal-worker.yourname.workers.dev`).
-## Performance validation (2026-10-16)
-
-The deployed direct renderer preserves the 1320 × 2868 dimensions. The standard
-image is approximately 90 KB versus 137 KB for the original Resvg output. A
-native-deflate prototype produced a smaller 16 KB image but still used 46–129 ms
-of CPU in the sampled uncached requests. The final scanline-copy encoder trades
-some compression efficiency for less repeated pixel processing.
-
-The original default render measured 476 ms CPU. Initial final-deployment widget
-renders measured 48–65 ms; one cache hit measured 1 ms. These are a few individual
-requests, not a statistical benchmark or proof that free-tier CPU failures are
-resolved. Local timing and HTTP 200 responses alone do not establish CPU-budget
-compliance. Inspect future invocation outcomes and CPU time before declaring the
-issue fixed. No paid resources, bot challenges, or automatic blocking were added.
-
-Device presets are shared with the web UI in `shared/calendar-logic.js`.
-`device=duo-outer` selects 1398 × 2034; `duo-inner` selects 1878 × 2670;
-`duo-inner-landscape` selects 2670 × 1878; `iphone` selects 1206 × 2622.
-Omitted `device` defaults to `max` (1320 × 2868). Unknown device values return 400.
-Cache keys include the device. Duo presets reserve 22% of width on the right,
-35% of height above the grid, and 6% below it. Duo grids align to the lower
-safe edge and omit the legacy extra row padding, using more of the available height. Duo always uses this fixed layout;
-legacy top/bottom/right layout parameters map to the same image and cache key.
-These are practical estimates, not Apple's exact Lock Screen bounds.
+Sources: https://developers.cloudflare.com/workers/languages/rust/ and
+https://developers.cloudflare.com/workers/cache/

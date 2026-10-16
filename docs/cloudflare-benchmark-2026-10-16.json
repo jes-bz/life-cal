@@ -1,0 +1,2157 @@
+{
+  "start": 1792170825468,
+  "end": 1792170832472,
+  "comparisons": 25,
+  "rows": [
+    {
+      "variant": "js",
+      "round": 0,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=none&bg=101000&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 96599,
+      "wallMs": 354,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b22c7c558c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 0,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=none&bg=101000&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 27781,
+      "wallMs": 202,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b22e3e45cef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 0,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=none&bg=101002&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 98291,
+      "wallMs": 200,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b22f1fdc8c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 0,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=none&bg=101002&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 42578,
+      "wallMs": 168,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2306edacef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 0,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=none&bg=101004&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 94544,
+      "wallMs": 141,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b2317aa18c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 0,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=none&bg=101004&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 26634,
+      "wallMs": 166,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2325e3dcef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 0,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=none&bg=101006&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 104044,
+      "wallMs": 149,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b2336cca8c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 0,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=none&bg=101006&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38741,
+      "wallMs": 167,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2346e2dcef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 0,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=none&bg=101008&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 105393,
+      "wallMs": 128,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b2356edb8c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 0,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=none&bg=101008&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38150,
+      "wallMs": 201,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2362c6ecef2-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 1,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=top&bg=10100a&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 25438,
+      "wallMs": 80,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b23778becef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 1,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=top&bg=10100a&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 96248,
+      "wallMs": 104,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b2380a948c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 1,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=top&bg=10100c&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 32503,
+      "wallMs": 235,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b238acd9cef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 1,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=top&bg=10100c&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 101323,
+      "wallMs": 94,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b23a1caf8c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 1,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=top&bg=10100e&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 26634,
+      "wallMs": 158,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b23acc3bcef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 1,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=top&bg=10100e&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 94544,
+      "wallMs": 47,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b23bae638c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 1,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=top&bg=101010&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38741,
+      "wallMs": 145,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b23c1925cef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 1,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=top&bg=101010&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 104044,
+      "wallMs": 89,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b23cffc18c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 1,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=top&bg=101012&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38150,
+      "wallMs": 256,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b23d9ef4cef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 1,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=top&bg=101012&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 105393,
+      "wallMs": 78,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b23f29dc8c39-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 2,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=bottom&bg=101014&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 95821,
+      "wallMs": 99,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b23faa528c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 2,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=bottom&bg=101014&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 25780,
+      "wallMs": 58,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2404837cef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 2,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=bottom&bg=101016&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 100913,
+      "wallMs": 68,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b240ab8f8c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 2,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=bottom&bg=101016&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 33138,
+      "wallMs": 139,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2412b39cef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 2,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=bottom&bg=101018&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 94544,
+      "wallMs": 54,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b241fcef8c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 2,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=bottom&bg=101018&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 26634,
+      "wallMs": 145,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2425f5acef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 2,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=bottom&bg=10101a&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 104044,
+      "wallMs": 135,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b2434e798c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 2,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=bottom&bg=10101a&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38741,
+      "wallMs": 195,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2442d3bcef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 2,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=bottom&bg=10101c&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 105393,
+      "wallMs": 59,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b24558a58c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 2,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=bottom&bg=10101c&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38150,
+      "wallMs": 102,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b245bb08cef2-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 3,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=right&bg=10101e&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 19567,
+      "wallMs": 76,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2466d8fcef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 3,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=right&bg=10101e&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 111675,
+      "wallMs": 95,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b246ea358c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 3,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=right&bg=101020&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 24815,
+      "wallMs": 141,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b247793fcef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 3,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=right&bg=101020&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 100223,
+      "wallMs": 82,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b2486bd98c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 3,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=right&bg=101022&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 26634,
+      "wallMs": 172,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b248ef2dcef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 3,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=right&bg=101022&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 94544,
+      "wallMs": 60,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b249fe1a8c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 3,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=right&bg=101024&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38741,
+      "wallMs": 75,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b24a5c60cef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 3,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=right&bg=101024&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 104044,
+      "wallMs": 144,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b24adf518c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 3,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=right&bg=101026&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38150,
+      "wallMs": 76,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b24bc892cef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 3,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=right&bg=101026&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 105393,
+      "wallMs": 103,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b24c49088c39-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 4,
+      "device": "iphone",
+      "query": "device=iphone&years=120&dob=1990-01-01&layout=none&bg=101028&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 123690,
+      "wallMs": 99,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b24ce9b98c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 4,
+      "device": "iphone",
+      "query": "device=iphone&years=120&dob=1990-01-01&layout=none&bg=101028&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 33552,
+      "wallMs": 70,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b24d9e37cef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 4,
+      "device": "max",
+      "query": "device=max&years=120&dob=1990-01-01&layout=none&bg=10102a&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 126756,
+      "wallMs": 90,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b24e1aef8c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 4,
+      "device": "max",
+      "query": "device=max&years=120&dob=1990-01-01&layout=none&bg=10102a&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 37643,
+      "wallMs": 79,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b24e992fcef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 4,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=120&dob=1990-01-01&layout=none&bg=10102c&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 127205,
+      "wallMs": 75,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b24f2bf18c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 4,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=120&dob=1990-01-01&layout=none&bg=10102c&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 26081,
+      "wallMs": 197,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b24f9c01cef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 4,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=120&dob=1990-01-01&layout=none&bg=10102e&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 131949,
+      "wallMs": 141,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b250ddc98c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 4,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=120&dob=1990-01-01&layout=none&bg=10102e&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 37255,
+      "wallMs": 185,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b251bb4dcef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 4,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=120&dob=1990-01-01&layout=none&bg=101030&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 131799,
+      "wallMs": 82,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b252efee8c39-EWR"
+    },
+    {
+      "variant": "rust",
+      "round": 4,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=120&dob=1990-01-01&layout=none&bg=101030&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 53083,
+      "wallMs": 155,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b253690fcef2-EWR"
+    }
+  ],
+  "repeats": [
+    {
+      "variant": "js",
+      "device": "iphone",
+      "status": 200,
+      "cache": "HIT",
+      "render": "HIT"
+    },
+    {
+      "variant": "rust",
+      "device": "iphone",
+      "status": 200,
+      "cache": "HIT",
+      "render": "MISS"
+    },
+    {
+      "variant": "js",
+      "device": "max",
+      "status": 200,
+      "cache": "HIT",
+      "render": "HIT"
+    },
+    {
+      "variant": "rust",
+      "device": "max",
+      "status": 200,
+      "cache": "HIT",
+      "render": "MISS"
+    },
+    {
+      "variant": "js",
+      "device": "duo-outer",
+      "status": 200,
+      "cache": "HIT",
+      "render": "HIT"
+    },
+    {
+      "variant": "rust",
+      "device": "duo-outer",
+      "status": 200,
+      "cache": "HIT",
+      "render": "MISS"
+    },
+    {
+      "variant": "js",
+      "device": "duo-inner",
+      "status": 200,
+      "cache": "HIT",
+      "render": "HIT"
+    },
+    {
+      "variant": "rust",
+      "device": "duo-inner",
+      "status": 200,
+      "cache": "HIT",
+      "render": "MISS"
+    },
+    {
+      "variant": "js",
+      "device": "duo-inner-landscape",
+      "status": 200,
+      "cache": "HIT",
+      "render": "HIT"
+    },
+    {
+      "variant": "rust",
+      "device": "duo-inner-landscape",
+      "status": 200,
+      "cache": "HIT",
+      "render": "MISS"
+    }
+  ],
+  "paired": [
+    {
+      "variant": "js",
+      "round": 0,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=none&bg=101000&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 96599,
+      "wallMs": 354,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b22c7c558c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b22c7c558c39",
+        "cpu": 72,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "iphone",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101000,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 0,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=none&bg=101000&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 27781,
+      "wallMs": 202,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b22e3e45cef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 0,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=none&bg=101002&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 98291,
+      "wallMs": 200,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b22f1fdc8c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b22f1fdc8c39",
+        "cpu": 116,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "max",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101002,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 0,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=none&bg=101002&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 42578,
+      "wallMs": 168,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2306edacef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b2306edacef2-EWR",
+        "cpu": 38,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "max",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101002,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 0,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=none&bg=101004&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 94544,
+      "wallMs": 141,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b2317aa18c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b2317aa18c39",
+        "cpu": 44,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-outer",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101004,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 0,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=none&bg=101004&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 26634,
+      "wallMs": 166,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2325e3dcef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b2325e3dcef2-EWR",
+        "cpu": 40,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-outer",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101004,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 0,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=none&bg=101006&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 104044,
+      "wallMs": 149,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b2336cca8c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b2336cca8c39",
+        "cpu": 90,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101006,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 0,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=none&bg=101006&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38741,
+      "wallMs": 167,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2346e2dcef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b2346e2dcef2-ATL",
+        "cpu": 28,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101006,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 0,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=none&bg=101008&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 105393,
+      "wallMs": 128,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b2356edb8c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b2356edb8c39",
+        "cpu": 32,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner-landscape",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101008,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 0,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=none&bg=101008&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38150,
+      "wallMs": 201,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2362c6ecef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b2362c6ecef2-ATL",
+        "cpu": 37,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner-landscape",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101008,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 1,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=top&bg=10100a&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 25438,
+      "wallMs": 80,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b23778becef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b23778becef2-EWR",
+        "cpu": 6,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "iphone",
+          "dob": "1990-01-01",
+          "layout": "top",
+          "bg": "10100a",
+          "lived": "ffffff",
+          "years": 90,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 1,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=top&bg=10100a&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 96248,
+      "wallMs": 104,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b2380a948c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b2380a948c39",
+        "cpu": 48,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "iphone",
+          "dob": "1990-01-01",
+          "layout": "top",
+          "bg": "10100a",
+          "lived": "ffffff",
+          "years": 90,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 1,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=top&bg=10100c&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 32503,
+      "wallMs": 235,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b238acd9cef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b238acd9cef2-ORD",
+        "cpu": 46,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "max",
+          "dob": "1990-01-01",
+          "layout": "top",
+          "bg": "10100c",
+          "lived": "ffffff",
+          "years": 90,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 1,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=top&bg=10100c&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 101323,
+      "wallMs": 94,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b23a1caf8c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b23a1caf8c39",
+        "cpu": 13,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "max",
+          "dob": "1990-01-01",
+          "layout": "top",
+          "bg": "10100c",
+          "lived": "ffffff",
+          "years": 90,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 1,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=top&bg=10100e&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 26634,
+      "wallMs": 158,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b23acc3bcef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 1,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=top&bg=10100e&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 94544,
+      "wallMs": 47,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b23bae638c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b23bae638c39",
+        "cpu": 10,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-outer",
+          "dob": "1990-01-01",
+          "layout": "top",
+          "bg": "10100e",
+          "lived": "ffffff",
+          "years": 90,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 1,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=top&bg=101010&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38741,
+      "wallMs": 145,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b23c1925cef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b23c1925cef2-EWR",
+        "cpu": 27,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner",
+          "dob": "1990-01-01",
+          "layout": "top",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101010,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 1,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=top&bg=101010&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 104044,
+      "wallMs": 89,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b23cffc18c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b23cffc18c39",
+        "cpu": 41,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner",
+          "dob": "1990-01-01",
+          "layout": "top",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101010,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 1,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=top&bg=101012&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38150,
+      "wallMs": 256,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b23d9ef4cef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 1,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=top&bg=101012&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 105393,
+      "wallMs": 78,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b23f29dc8c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b23f29dc8c39",
+        "cpu": 22,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner-landscape",
+          "dob": "1990-01-01",
+          "layout": "top",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101012,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 2,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=bottom&bg=101014&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 95821,
+      "wallMs": 99,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b23faa528c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b23faa528c39",
+        "cpu": 48,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "iphone",
+          "dob": "1990-01-01",
+          "layout": "bottom",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101014,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 2,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=bottom&bg=101014&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 25780,
+      "wallMs": 58,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2404837cef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b2404837cef2-EWR",
+        "cpu": 5,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "iphone",
+          "dob": "1990-01-01",
+          "layout": "bottom",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101014,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 2,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=bottom&bg=101016&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 100913,
+      "wallMs": 68,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b240ab8f8c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b240ab8f8c39",
+        "cpu": 14,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "max",
+          "dob": "1990-01-01",
+          "layout": "bottom",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101016,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 2,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=bottom&bg=101016&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 33138,
+      "wallMs": 139,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2412b39cef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b2412b39cef2-IAD",
+        "cpu": 26,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "max",
+          "dob": "1990-01-01",
+          "layout": "bottom",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101016,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 2,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=bottom&bg=101018&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 94544,
+      "wallMs": 54,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b241fcef8c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b241fcef8c39",
+        "cpu": 9,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-outer",
+          "dob": "1990-01-01",
+          "layout": "bottom",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101018,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 2,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=bottom&bg=101018&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 26634,
+      "wallMs": 145,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2425f5acef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b2425f5acef2-IAD",
+        "cpu": 27,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-outer",
+          "dob": "1990-01-01",
+          "layout": "bottom",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101018,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 2,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=bottom&bg=10101a&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 104044,
+      "wallMs": 135,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b2434e798c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b2434e798c39",
+        "cpu": 17,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner",
+          "dob": "1990-01-01",
+          "layout": "bottom",
+          "bg": "10101a",
+          "lived": "ffffff",
+          "years": 90,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 2,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=bottom&bg=10101a&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38741,
+      "wallMs": 195,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2442d3bcef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b2442d3bcef2-IAD",
+        "cpu": 60,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner",
+          "dob": "1990-01-01",
+          "layout": "bottom",
+          "bg": "10101a",
+          "lived": "ffffff",
+          "years": 90,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 2,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=bottom&bg=10101c&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 105393,
+      "wallMs": 59,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b24558a58c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b24558a58c39",
+        "cpu": 9,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner-landscape",
+          "dob": "1990-01-01",
+          "layout": "bottom",
+          "bg": "10101c",
+          "lived": "ffffff",
+          "years": 90,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 2,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=bottom&bg=10101c&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38150,
+      "wallMs": 102,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b245bb08cef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b245bb08cef2-EWR",
+        "cpu": 31,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner-landscape",
+          "dob": "1990-01-01",
+          "layout": "bottom",
+          "bg": "10101c",
+          "lived": "ffffff",
+          "years": 90,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 3,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=right&bg=10101e&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 19567,
+      "wallMs": 76,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b2466d8fcef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b2466d8fcef2-EWR",
+        "cpu": 5,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "iphone",
+          "dob": "1990-01-01",
+          "layout": "right",
+          "bg": "10101e",
+          "lived": "ffffff",
+          "years": 90,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 3,
+      "device": "iphone",
+      "query": "device=iphone&years=90&dob=1990-01-01&layout=right&bg=10101e&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 111675,
+      "wallMs": 95,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b246ea358c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b246ea358c39",
+        "cpu": 13,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "iphone",
+          "dob": "1990-01-01",
+          "layout": "right",
+          "bg": "10101e",
+          "lived": "ffffff",
+          "years": 90,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 3,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=right&bg=101020&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 24815,
+      "wallMs": 141,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b247793fcef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b247793fcef2-IAD",
+        "cpu": 22,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "max",
+          "dob": "1990-01-01",
+          "layout": "right",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101020,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 3,
+      "device": "max",
+      "query": "device=max&years=90&dob=1990-01-01&layout=right&bg=101020&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 100223,
+      "wallMs": 82,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b2486bd98c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b2486bd98c39",
+        "cpu": 15,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "max",
+          "dob": "1990-01-01",
+          "layout": "right",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101020,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 3,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=right&bg=101022&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 26634,
+      "wallMs": 172,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b248ef2dcef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b248ef2dcef2-IAD",
+        "cpu": 26,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-outer",
+          "dob": "1990-01-01",
+          "layout": "right",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101022,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 3,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=90&dob=1990-01-01&layout=right&bg=101022&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 94544,
+      "wallMs": 60,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b249fe1a8c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b249fe1a8c39",
+        "cpu": 9,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-outer",
+          "dob": "1990-01-01",
+          "layout": "right",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101022,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 3,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=right&bg=101024&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38741,
+      "wallMs": 75,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b24a5c60cef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b24a5c60cef2-IAD",
+        "cpu": 9,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner",
+          "dob": "1990-01-01",
+          "layout": "right",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101024,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 3,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=90&dob=1990-01-01&layout=right&bg=101024&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 104044,
+      "wallMs": 144,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b24adf518c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b24adf518c39",
+        "cpu": 19,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner",
+          "dob": "1990-01-01",
+          "layout": "right",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101024,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 3,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=right&bg=101026&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 38150,
+      "wallMs": 76,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b24bc892cef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b24bc892cef2-EWR",
+        "cpu": 8,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner-landscape",
+          "dob": "1990-01-01",
+          "layout": "right",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101026,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 3,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=90&dob=1990-01-01&layout=right&bg=101026&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 105393,
+      "wallMs": 103,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b24c49088c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b24c49088c39",
+        "cpu": 11,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner-landscape",
+          "dob": "1990-01-01",
+          "layout": "right",
+          "lived": "ffffff",
+          "years": 90,
+          "bg": 101026,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 4,
+      "device": "iphone",
+      "query": "device=iphone&years=120&dob=1990-01-01&layout=none&bg=101028&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 123690,
+      "wallMs": 99,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b24ce9b98c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b24ce9b98c39",
+        "cpu": 30,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "iphone",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "lived": "ffffff",
+          "years": 120,
+          "bg": 101028,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 4,
+      "device": "iphone",
+      "query": "device=iphone&years=120&dob=1990-01-01&layout=none&bg=101028&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 33552,
+      "wallMs": 70,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b24d9e37cef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b24d9e37cef2-IAD",
+        "cpu": 6,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "iphone",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "lived": "ffffff",
+          "years": 120,
+          "bg": 101028,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 4,
+      "device": "max",
+      "query": "device=max&years=120&dob=1990-01-01&layout=none&bg=10102a&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 126756,
+      "wallMs": 90,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b24e1aef8c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b24e1aef8c39",
+        "cpu": 15,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "max",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "bg": "10102a",
+          "lived": "ffffff",
+          "years": 120,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 4,
+      "device": "max",
+      "query": "device=max&years=120&dob=1990-01-01&layout=none&bg=10102a&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 37643,
+      "wallMs": 79,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b24e992fcef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 4,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=120&dob=1990-01-01&layout=none&bg=10102c&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 127205,
+      "wallMs": 75,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b24f2bf18c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b24f2bf18c39",
+        "cpu": 19,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-outer",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "bg": "10102c",
+          "lived": "ffffff",
+          "years": 120,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 4,
+      "device": "duo-outer",
+      "query": "device=duo-outer&years=120&dob=1990-01-01&layout=none&bg=10102c&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 26081,
+      "wallMs": 197,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b24f9c01cef2-EWR"
+    },
+    {
+      "variant": "js",
+      "round": 4,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=120&dob=1990-01-01&layout=none&bg=10102e&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 131949,
+      "wallMs": 141,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b250ddc98c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b250ddc98c39",
+        "cpu": 27,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "bg": "10102e",
+          "lived": "ffffff",
+          "years": 120,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 4,
+      "device": "duo-inner",
+      "query": "device=duo-inner&years=120&dob=1990-01-01&layout=none&bg=10102e&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 37255,
+      "wallMs": 185,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b251bb4dcef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b251bb4dcef2-IAD",
+        "cpu": 49,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "bg": "10102e",
+          "lived": "ffffff",
+          "years": 120,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    },
+    {
+      "variant": "js",
+      "round": 4,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=120&dob=1990-01-01&layout=none&bg=101030&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 131799,
+      "wallMs": 82,
+      "cache": null,
+      "render": "MISS",
+      "ray": "a4b8b252efee8c39-EWR",
+      "log": {
+        "service": "life-cal-js-benchmark",
+        "ray": "a4b8b252efee8c39",
+        "cpu": 24,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner-landscape",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "lived": "ffffff",
+          "years": 120,
+          "bg": 101030,
+          "rest": 333333
+        },
+        "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+      }
+    },
+    {
+      "variant": "rust",
+      "round": 4,
+      "device": "duo-inner-landscape",
+      "query": "device=duo-inner-landscape&years=120&dob=1990-01-01&layout=none&bg=101030&lived=ffffff&rest=333333",
+      "status": 200,
+      "bytes": 53083,
+      "wallMs": 155,
+      "cache": "MISS",
+      "render": "MISS",
+      "ray": "a4b8b253690fcef2-EWR",
+      "log": {
+        "service": "life-cal-rust-probe",
+        "ray": "a4b8b253690fcef2-EWR",
+        "cpu": 51,
+        "outcome": "ok",
+        "status": 200,
+        "query": {
+          "device": "duo-inner-landscape",
+          "dob": "1990-01-01",
+          "layout": "none",
+          "lived": "ffffff",
+          "years": 120,
+          "bg": 101030,
+          "rest": 333333
+        },
+        "version": "99923ed1-aca1-4441-834e-5f3aee83dad6"
+      }
+    }
+  ],
+  "stats": {
+    "js": {
+      "n": 25,
+      "missing": 0,
+      "min": 9,
+      "median": 19,
+      "p95": 90,
+      "max": 116,
+      "mean": 30.68,
+      "over10": 21,
+      "totalBytes": 2658416
+    },
+    "rust": {
+      "n": 20,
+      "missing": 5,
+      "min": 5,
+      "median": 27,
+      "p95": 51,
+      "max": 60,
+      "mean": 27.35,
+      "over10": 14,
+      "totalBytes": 833314
+    }
+  },
+  "cacheInvocations": [
+    {
+      "service": "life-cal-js-benchmark",
+      "ray": "a4b8b256bbeb8c39",
+      "cpu": 1,
+      "outcome": "ok",
+      "status": 200,
+      "query": {
+        "device": "duo-inner-landscape",
+        "dob": "1990-01-01",
+        "layout": "none",
+        "lived": "ffffff",
+        "years": 120,
+        "bg": 101030,
+        "rest": 333333
+      },
+      "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+    },
+    {
+      "service": "life-cal-js-benchmark",
+      "ray": "a4b8b2561b598c39",
+      "cpu": 2,
+      "outcome": "ok",
+      "status": 200,
+      "query": {
+        "device": "duo-inner",
+        "dob": "1990-01-01",
+        "layout": "none",
+        "bg": "10102e",
+        "lived": "ffffff",
+        "years": 120,
+        "rest": 333333
+      },
+      "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+    },
+    {
+      "service": "life-cal-js-benchmark",
+      "ray": "a4b8b2559ae88c39",
+      "cpu": 1,
+      "outcome": "ok",
+      "status": 200,
+      "query": {
+        "device": "duo-outer",
+        "dob": "1990-01-01",
+        "layout": "none",
+        "bg": "10102c",
+        "lived": "ffffff",
+        "years": 120,
+        "rest": 333333
+      },
+      "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+    },
+    {
+      "service": "life-cal-js-benchmark",
+      "ray": "a4b8b2551a578c39",
+      "cpu": 1,
+      "outcome": "ok",
+      "status": 200,
+      "query": {
+        "device": "max",
+        "dob": "1990-01-01",
+        "layout": "none",
+        "bg": "10102a",
+        "lived": "ffffff",
+        "years": 120,
+        "rest": 333333
+      },
+      "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+    },
+    {
+      "service": "life-cal-js-benchmark",
+      "ray": "a4b8b25479958c39",
+      "cpu": 1,
+      "outcome": "ok",
+      "status": 200,
+      "query": {
+        "device": "iphone",
+        "dob": "1990-01-01",
+        "layout": "none",
+        "lived": "ffffff",
+        "years": 120,
+        "bg": 101028,
+        "rest": 333333
+      },
+      "version": "014a028a-32a8-4ac4-8a08-b7d586552f7f"
+    }
+  ]
+}
