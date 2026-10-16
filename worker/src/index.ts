@@ -32,15 +32,16 @@ export default {
         let bg = params.get('bg') || '000000';
         let lived = params.get('lived') || 'ffffff';
         let rest = params.get('rest') || '333333';
-        const layout = params.get('layout') || 'none';
+        const requestedLayout = params.get('layout') || 'none';
         const device = params.get('device') || 'max';
+        const layout = device.startsWith('duo-') ? 'none' : requestedLayout;
 
         // Reject malformed/unbounded inputs before allocating rectangles.
         const birth = new Date(dob);
         if (!/^\d{4}-\d{2}-\d{2}$/.test(dob) || !Number.isFinite(birth.getTime()) ||
             birth.toISOString().slice(0, 10) !== dob ||
             !Number.isInteger(years) || years < 1 || years > 120 ||
-            !['none', 'top', 'bottom', 'right'].includes(layout) || !Object.hasOwn(DEVICES, device) ||
+            !['none', 'top', 'bottom', 'right'].includes(requestedLayout) || !Object.hasOwn(DEVICES, device) ||
             ![bg, lived, rest].every(color => /^#?[0-9a-fA-F]{6}$/.test(color))) {
             return new Response('Invalid calendar parameters', { status: 400 });
         }
@@ -63,7 +64,7 @@ export default {
         // force a render. Weeks lived identifies the actual image state across days.
         const cacheUrl = new URL('/', url.origin);
         cacheUrl.search = new URLSearchParams({
-            v: '5', device, weeks: String(Math.min(weeks, years * 52)),
+            v: '6', device, weeks: String(Math.min(weeks, years * 52)),
             years: String(years), bg: bg.toLowerCase(), lived: lived.toLowerCase(),
             rest: rest.toLowerCase(), layout
         }).toString();

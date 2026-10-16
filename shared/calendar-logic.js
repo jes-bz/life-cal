@@ -55,6 +55,7 @@ export function calculateLayout({ width, height, dob, years, layout, device = 'm
     const livedWeeks = getWeeksLived(dob, now);
 
     const isDuo = device.startsWith('duo-');
+    if (isDuo) layout = 'none'; // Duo always has the same right-side controls.
     let topPct = isDuo ? 0.35 : CONSTANTS.BASE_TOP_PCT;
     let bottomPct = isDuo ? 0.06 : CONSTANTS.BASE_BOTTOM_PCT;
     const rightInset = width * (layout === 'right' ? 0.32 : isDuo ? 0.22 : 0);

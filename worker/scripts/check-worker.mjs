@@ -50,3 +50,11 @@ for (const [device, width, height] of [['iphone',1206,2622],['max',1320,2868],['
 }
 assert.equal((await call('?device=unknown')).status,400);
 console.log('All five native device dimensions, right layouts, cache isolation, and invalid-device checks passed.');
+
+const fixed = await call('?dob=1990-01-01&device=duo-outer&layout=none');
+for (const layout of ['top','bottom','right']) {
+ const response = await call(`?dob=1990-01-01&device=duo-outer&layout=${layout}`);
+ assert.equal(response.headers.get('X-Calendar-Cache'),'HIT');
+ assert.deepEqual(Buffer.from(await response.arrayBuffer()),Buffer.from(await fixed.clone().arrayBuffer()));
+}
+console.log('Duo ignores widget layout choices and shares the fixed layout cache.');

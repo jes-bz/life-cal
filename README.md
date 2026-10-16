@@ -61,8 +61,9 @@ preview, manual download, and Worker use the selected size. Existing links witho
 a `device` parameter keep the original 1320 × 2868 Max output. Device parameters
 are `iphone`, `max`, `duo-outer`, `duo-inner`, and `duo-inner-landscape`.
 
-Duo uses a larger clock area and a right-hand control strip. **+ Right Widgets /
-Controls** widens that strip. These margins are approximate and should be checked
+Duo uses one fixed, left-shifted layout centered in the area beside its permanent
+right-hand control column. Widget layout options apply only to regular iPhones.
+The margins are approximate and should be checked
 against your Lock Screen; they do not claim exact system safe-area measurements.
 Apple's display dimensions: [Duo](https://www.apple.com/iphone-duo/specs/) and
 [iPhone Pro / Max](https://www.apple.com/iphone-18-pro/specs/).

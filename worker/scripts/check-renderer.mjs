@@ -40,7 +40,7 @@ for (const [device, dimensions] of Object.entries(DEVICES)) for (const years of 
     ({width, height} = dimensions);
     const colors = ['#102030', '#abcdef', '#2468ac'];
     const squares = generateRectData({ width, height, dob: '1990-01-01', years, layout, device, colorLived: colors[1], colorRest: colors[2] });
-    const reservedRight = width * (layout === 'right' ? 0.32 : device.startsWith('duo-') ? 0.22 : 0);
+    const reservedRight = width * (device.startsWith('duo-') ? 0.22 : layout === 'right' ? 0.32 : 0);
     for (const square of squares) {
         assert.ok(square.x >= 0 && square.y >= 0);
         assert.ok(square.x + square.size <= width - reservedRight + 0.02);
