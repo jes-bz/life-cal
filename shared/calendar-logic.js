@@ -86,7 +86,7 @@ export function calculateLayout({ width, height, dob, years, layout, device = 'm
         const extraTopH = 5 * (cellSize + gap);
         const extraBottomH = 6 * (cellSize + gap);
 
-        const requiredHeight = gridHeight + extraTopH + extraBottomH;
+        const requiredHeight = gridHeight + (isDuo ? 0 : extraTopH + extraBottomH);
         const availableHeight = height - safeZoneTop - safeZoneBottom;
 
         if (requiredHeight <= availableHeight + 1) {
@@ -103,7 +103,8 @@ export function calculateLayout({ width, height, dob, years, layout, device = 'm
     
     const finalGridWidth = (cellSize * cols) + (gap * (cols - 1));
     
-    const startY = (safeZoneTop + extraTopH);
+    const gridHeight = (cellSize * rows) + (gap * (rows - 1));
+    const startY = isDuo ? height - safeZoneBottom - gridHeight : safeZoneTop + extraTopH;
     const startX = (width - rightInset - finalGridWidth) / 2;
 
     return {

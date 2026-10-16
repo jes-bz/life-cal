@@ -90,7 +90,7 @@
             <div class="p-6 border-b border-gray-100">
                 <h1 class="text-xl font-bold tracking-tighter uppercase"><i
                         class="fa-solid fa-calendar-days mr-2 text-indigo-600"></i>MEMENTO MORI</h1>
-                <p class="text-xs text-gray-500 mt-1">Life Calendar Generator <span class="text-indigo-500">/ Catthode</span></p>
+                <p class="text-xs text-gray-500 mt-1">Life Calendar Generator</p>
             </div>
 
             <div class="p-6 space-y-6 flex-1 overflow-y-auto">
@@ -146,7 +146,7 @@
                     </div>
                 </div>
 
-                <hr class="border-gray-100">
+                <hr id="layout-divider" class="border-gray-100">
 
                 <!-- Colors -->
                 <div class="space-y-4">
@@ -474,6 +474,7 @@
             const isDuo = state.device.startsWith('duo-');
             els.deviceNote.classList.toggle('hidden', !isDuo);
             document.getElementById('layout-options').classList.toggle('hidden', isDuo);
+            document.getElementById('layout-divider').classList.toggle('hidden', isDuo);
             document.getElementById('preview-notch').classList.toggle('hidden', isDuo);
             document.querySelector('label[for="layout-none"]').textContent = isDuo ? 'Standard (Clock + Right Controls)' : 'Standard (Clock + Buttons)';
             document.querySelector('label[for="layout-top"]').textContent = isDuo ? '+ Extra Clock Space' : '+ Top Widgets';

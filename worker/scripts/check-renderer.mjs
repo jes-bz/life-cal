@@ -46,6 +46,10 @@ for (const [device, dimensions] of Object.entries(DEVICES)) for (const years of 
         assert.ok(square.x + square.size <= width - reservedRight + 0.02);
         assert.ok(square.y + square.size <= height + 0.02);
     }
+    if (device.startsWith('duo-') && squares.length) {
+        const bottom = Math.max(...squares.map(square => square.y + square.size));
+        assert.ok(Math.abs(bottom - height * 0.94) < 0.02);
+    }
     const image = decode(await renderPng(width, height, squares, colors));
     assert.equal(image.width, width); assert.equal(image.height, height);
     assert.deepEqual(image.pixel(0, 0), [16,32,48]);

@@ -64,7 +64,7 @@ export default {
         // force a render. Weeks lived identifies the actual image state across days.
         const cacheUrl = new URL('/', url.origin);
         cacheUrl.search = new URLSearchParams({
-            v: '6', device, weeks: String(Math.min(weeks, years * 52)),
+            v: '7', device, weeks: String(Math.min(weeks, years * 52)),
             years: String(years), bg: bg.toLowerCase(), lived: lived.toLowerCase(),
             rest: rest.toLowerCase(), layout
         }).toString();

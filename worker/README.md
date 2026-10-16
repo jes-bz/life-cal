@@ -118,6 +118,7 @@ Device presets are shared with the web UI in `shared/calendar-logic.js`.
 `duo-inner-landscape` selects 2670 × 1878; `iphone` selects 1206 × 2622.
 Omitted `device` defaults to `max` (1320 × 2868). Unknown device values return 400.
 Cache keys include the device. Duo presets reserve 22% of width on the right,
-35% of height above the grid, and 6% below it. Duo always uses this fixed layout;
+35% of height above the grid, and 6% below it. Duo grids align to the lower
+safe edge and omit the legacy extra row padding, using more of the available height. Duo always uses this fixed layout;
 legacy top/bottom/right layout parameters map to the same image and cache key.
 These are practical estimates, not Apple's exact Lock Screen bounds.
