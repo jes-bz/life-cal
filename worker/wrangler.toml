@@ -2,14 +2,18 @@ name = "life-cal-worker"
 main = "src/index.ts"
 compatibility_date = "2024-01-17"
 
+[observability]
+enabled = true
+
+[observability.logs]
+enabled = true
+invocation_logs = true
+persist = true
+head_sampling_rate = 1.0
+
 [[routes]]
 pattern = "life-cal.jes.bz"
 custom_domain = true
-
-[[rules]]
-type = "CompiledWasm"
-globs = ["**/*.wasm"]
-fallthrough = false
 
 [dev]
 port = 8787

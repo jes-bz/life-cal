@@ -14,14 +14,27 @@ export const CONSTANTS = {
     DEFAULT_COLS: 52
 };
 
+/** Native wallpaper sizes; Max preserves existing links.
+ * Sources: apple.com/iphone-duo/specs/ and apple.com/iphone-18-pro/specs/
+ */
+export const DEVICES = {
+    iphone: { label: 'iPhone / Pro', width: 1206, height: 2622 },
+    max: { label: 'iPhone Max', width: 1320, height: 2868 },
+    'duo-outer': { label: 'iPhone Duo · outer', width: 1398, height: 2034 },
+    'duo-inner': { label: 'iPhone Duo · inner (portrait)', width: 1878, height: 2670 },
+    'duo-inner-landscape': { label: 'iPhone Duo · inner (landscape)', width: 2670, height: 1878 }
+};
+export function getDevice(name = 'max') {
+    return Object.hasOwn(DEVICES, name) ? DEVICES[name] : DEVICES.max;
+}
+
 /**
  * Calculates the weeks lived since birth.
  * @param {string} dob - Date of birth (YYYY-MM-DD)
  * @returns {number} Weeks lived
  */
-export function getWeeksLived(dob) {
+export function getWeeksLived(dob, now = new Date()) {
     const birth = new Date(dob);
-    const now = new Date();
     const diffTime = Math.abs(now.getTime() - birth.getTime());
     const diffWeeks = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 7));
     return diffWeeks;
@@ -37,12 +50,14 @@ export function getWeeksLived(dob) {
  * @param {string} params.layout - Layout mode ('none', 'top', 'bottom')
  * @returns {object} Layout calculations
  */
-export function calculateLayout({ width, height, dob, years, layout }) {
+export function calculateLayout({ width, height, dob, years, layout, device = 'max', now = new Date() }) {
     const totalWeeks = years * 52;
-    const livedWeeks = getWeeksLived(dob);
+    const livedWeeks = getWeeksLived(dob, now);
 
-    let topPct = CONSTANTS.BASE_TOP_PCT;
-    let bottomPct = CONSTANTS.BASE_BOTTOM_PCT;
+    const isDuo = device.startsWith('duo-');
+    let topPct = isDuo ? 0.35 : CONSTANTS.BASE_TOP_PCT;
+    let bottomPct = isDuo ? 0.06 : CONSTANTS.BASE_BOTTOM_PCT;
+    const rightInset = width * (layout === 'right' ? 0.32 : isDuo ? 0.22 : 0);
 
     if (layout === 'top') {
         topPct += CONSTANTS.TOP_WIDGET_ADDITION;
@@ -54,7 +69,7 @@ export function calculateLayout({ width, height, dob, years, layout }) {
     const safeZoneBottom = height * bottomPct;
 
     const marginX = width * CONSTANTS.MARGIN_X_PCT;
-    const availableWidth = width - (marginX * 2);
+    const availableWidth = width - (marginX * 2) - rightInset;
     const gap = CONSTANTS.GAP;
 
     // Find the minimum columns needed to fit vertically
@@ -88,7 +103,7 @@ export function calculateLayout({ width, height, dob, years, layout }) {
     const finalGridWidth = (cellSize * cols) + (gap * (cols - 1));
     
     const startY = (safeZoneTop + extraTopH);
-    const startX = (width - finalGridWidth) / 2;
+    const startX = (width - rightInset - finalGridWidth) / 2;
 
     return {
         cols,
@@ -114,6 +129,11 @@ export function generateRectData(params) {
     const { cols, cellSize, gap, startX, startY, totalWeeks, livedWeeks } = layout;
     const { colorLived, colorRest } = params;
 
+    // Every square in a column/row shares coordinates and size. Round once
+    // per column/row instead of repeating string conversions for every week.
+    const xs = Array.from({ length: cols }, (_, i) => Number((startX + i * (cellSize + gap)).toFixed(2)));
+    const ys = Array.from({ length: Math.ceil(totalWeeks / cols) }, (_, i) => Number((startY + i * (cellSize + gap)).toFixed(2)));
+    const size = Number(cellSize.toFixed(2));
     const rects = [];
     let currentWeek = 0;
 
@@ -123,13 +143,10 @@ export function generateRectData(params) {
         const colIndex = i % cols;
         const rowIndex = Math.floor(i / cols);
 
-        const x = startX + (colIndex * (cellSize + gap));
-        const y = startY + (rowIndex * (cellSize + gap));
-
         rects.push({
-            x: Number(x.toFixed(2)),
-            y: Number(y.toFixed(2)),
-            size: Number(cellSize.toFixed(2)),
+            x: xs[colIndex],
+            y: ys[rowIndex],
+            size,
             color: currentWeek <= livedWeeks ? colorLived : colorRest
         });
     }

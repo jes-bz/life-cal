@@ -11,7 +11,8 @@ The project consists of:
 ## Features
 
 *   **Interactive Preview**: Visualize your calendar instantly in the browser.
-*   **Customizable**: Adjust colors, layout, and life expectancy.
+*   **Customizable**: Adjust colors, layout, life expectancy, and display size.
+*   **Device Presets**: iPhone / Pro (1206 × 2622), Max (1320 × 2868), Duo outer (1398 × 2034), and Duo inner portrait/landscape (1878 × 2670 / 2670 × 1878). Duo layouts reserve space for right-side controls.
 *   **High Resolution**: optimized for modern smartphone displays (iPhone 16 Pro Max resolution default).
 *   **Automation Ready**: Use the Cloudflare Worker to automatically update your wallpaper every week.
 
@@ -52,3 +53,16 @@ You can set up your iPhone to automatically update its lock screen with your Lif
 6.  On the next screen, select the Shortcut you created in Step 1.
 
 ![Automation Setup](assets/automation.png)
+
+## Display sizes
+
+Choose **Device / Display** before copying a configuration or automation URL. The
+preview, manual download, and Worker use the selected size. Existing links without
+a `device` parameter keep the original 1320 × 2868 Max output. Device parameters
+are `iphone`, `max`, `duo-outer`, `duo-inner`, and `duo-inner-landscape`.
+
+Duo uses a larger clock area and a right-hand control strip. **+ Right Widgets /
+Controls** widens that strip. These margins are approximate and should be checked
+against your Lock Screen; they do not claim exact system safe-area measurements.
+Apple's display dimensions: [Duo](https://www.apple.com/iphone-duo/specs/) and
+[iPhone Pro / Max](https://www.apple.com/iphone-18-pro/specs/).

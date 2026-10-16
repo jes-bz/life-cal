@@ -35,7 +35,16 @@
         input[type=text], input[type=number], input[type=date] { min-width: 0; }
         input[type=color] { background: transparent; }
         .preview-area {
+            container-type: size;
+            min-width: 0;
+            min-height: 0;
             background: radial-gradient(ellipse at center, #211a14 0%, #0a0a0a 65%);
+        }
+        .phone-preview {
+            --preview-ratio: 1320 / 2868;
+            aspect-ratio: var(--preview-ratio);
+            width: min(90cqw, calc(90cqh * var(--preview-ratio)));
+            flex: none;
         }
         @supports (height: 100dvh) { body { height: 100dvh; } }
 
@@ -86,6 +95,13 @@
 
             <div class="p-6 space-y-6 flex-1 overflow-y-auto">
 
+                <div>
+                    <label for="device" class="block text-xs font-bold uppercase text-gray-400 mb-1">Device / Display</label>
+                    <select id="device" class="block w-full bg-gray-50 border border-gray-200 rounded p-2 text-sm focus:outline-none focus:border-indigo-500 transition-colors"></select>
+                    <p id="device-size" class="mt-2 text-xs text-gray-500" aria-live="polite"></p>
+                    <p id="device-note" class="mt-2 text-xs text-gray-500 hidden">Duo reserves the right side for controls. Margins are estimates; check against your Lock Screen.</p>
+                </div>
+
                 <!-- Date & Age -->
                 <div class="space-y-4">
                     <div>
@@ -122,6 +138,10 @@
                             <input type="radio" id="layout-bottom" name="layout" value="bottom"
                                 class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
                             <label for="layout-bottom" class="ml-2 block text-sm text-gray-700">+ Bottom Widgets</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="layout-right" name="layout" value="right" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                            <label for="layout-right" class="ml-2 block text-sm text-gray-700">+ Right Widgets / Controls</label>
                         </div>
                     </div>
                 </div>
@@ -188,14 +208,13 @@
 
         <!-- Preview Area -->
         <div class="preview-area flex-1 relative overflow-hidden flex items-center justify-center p-4 md:p-8">
-            <div class="relative shadow-2xl rounded-3xl border-8 border-gray-800 overflow-hidden bg-black"
-                style="aspect-ratio: 1320/2868; height: 90%;">
+            <div id="phone-preview" class="phone-preview relative shadow-2xl rounded-3xl border-8 border-gray-800 overflow-hidden bg-black">
                 <!-- The Canvas is now directly displayed for performance -->
                 <canvas id="canvas" width="1320" height="2868"
                     class="w-full h-full object-contain bg-transparent"></canvas>
 
                 <!-- Phone Notch (Purely aesthetic for preview) -->
-                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-1/3 h-7 bg-gray-800 rounded-b-xl z-20">
+                <div id="preview-notch" class="absolute top-0 left-1/2 transform -translate-x-1/2 w-1/3 h-7 bg-gray-800 rounded-b-xl z-20">
                 </div>
             </div>
         </div>
@@ -257,13 +276,17 @@
     <!-- Image Mode Container (Removed as it is now handled by Worker) -->
 
     <script type="module">
-        import { generateRectData, CONSTANTS } from './shared/calendar-logic.js';
+        import { generateRectData, DEVICES, getDevice } from './shared/calendar-logic.js';
 
         // --- Configuration & Constants ---
         const WORKER_URL = 'https://life-cal.jes.bz';
 
         // --- DOM Elements ---
         const els = {
+            device: document.getElementById('device'),
+            deviceSize: document.getElementById('device-size'),
+            deviceNote: document.getElementById('device-note'),
+            phonePreview: document.getElementById('phone-preview'),
             dob: document.getElementById('dob'),
             years: document.getElementById('years'),
             layoutRadios: document.getElementsByName('layout'),
@@ -288,6 +311,7 @@
 
         // --- State ---
         let state = {
+            device: 'max',
             dob: '1990-01-01',
             years: 90,
             bg: '#000000',
@@ -302,6 +326,7 @@
             // 1. Parse URL Params
             const params = new URLSearchParams(window.location.search);
 
+            if (Object.hasOwn(DEVICES, params.get('device'))) state.device = params.get('device');
             if (params.has('dob')) state.dob = params.get('dob');
             if (params.has('years')) state.years = parseInt(params.get('years'));
             if (params.has('bg')) state.bg = '#' + params.get('bg').replace('#', '');
@@ -312,6 +337,9 @@
             if (params.has('layout')) state.layout = params.get('layout');
 
             if (params.get('mode') === 'image') state.mode = 'image';
+
+            for (const [value, device] of Object.entries(DEVICES)) els.device.add(new Option(device.label, value));
+            els.device.value = state.device;
 
             // 2. Set Input Values
             els.dob.value = state.dob;
@@ -345,6 +373,11 @@
         const debouncedUpdateUrl = debounce(updateUrl, 300);
 
         function addListeners() {
+            els.device.addEventListener('change', () => {
+                state.device = els.device.value;
+                updateUrl();
+                draw();
+            });
             // Inputs
             const inputs = ['dob', 'years'];
             inputs.forEach(id => {
@@ -431,8 +464,19 @@
 
         function draw() {
             const ctx = els.canvas.getContext('2d');
-            const width = CONSTANTS.CANVAS_WIDTH;
-            const height = CONSTANTS.CANVAS_HEIGHT;
+            const { width, height } = getDevice(state.device);
+            if (els.canvas.width !== width || els.canvas.height !== height) {
+                els.canvas.width = width;
+                els.canvas.height = height;
+            }
+            els.phonePreview.style.setProperty('--preview-ratio', `${width} / ${height}`);
+            els.deviceSize.textContent = `${width} × ${height} pixels`;
+            const isDuo = state.device.startsWith('duo-');
+            els.deviceNote.classList.toggle('hidden', !isDuo);
+            document.getElementById('preview-notch').classList.toggle('hidden', isDuo);
+            document.querySelector('label[for="layout-none"]').textContent = isDuo ? 'Standard (Clock + Right Controls)' : 'Standard (Clock + Buttons)';
+            document.querySelector('label[for="layout-top"]').textContent = isDuo ? '+ Extra Clock Space' : '+ Top Widgets';
+            document.querySelector('label[for="layout-bottom"]').textContent = isDuo ? '+ Extra Bottom Space' : '+ Bottom Widgets';
 
             // Fill Background
             ctx.fillStyle = state.bg;
@@ -447,7 +491,8 @@
                 years: state.years,
                 layout: state.layout,
                 colorLived: state.lived,
-                colorRest: state.rest
+                colorRest: state.rest,
+                device: state.device
             });
 
             for (const r of rects) {
@@ -458,6 +503,7 @@
 
         function getWorkerUrl() {
             const params = new URLSearchParams();
+            params.set('device', state.device);
             params.set('dob', state.dob);
             params.set('years', state.years);
             params.set('bg', state.bg.replace('#', ''));
@@ -470,6 +516,7 @@
 
         function updateUrl() {
             const params = new URLSearchParams();
+            params.set('device', state.device);
             params.set('dob', state.dob);
             params.set('years', state.years);
             params.set('bg', state.bg.replace('#', ''));
