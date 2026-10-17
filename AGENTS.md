@@ -63,9 +63,12 @@ encoded parameter names, and image links retain their behavior.
 Path allowlists are managed in the private `jes-bz/site-ops` repository.
 Its `config/sites.json` is the source of truth for the image endpoint's allowed
 paths. Unsupported paths are blocked before Worker execution.
+Successful production Pages deployments trigger its apply workflow through
+`.github/workflows/site-policy.yml`. Keep Cloudflare credentials in `site-ops`;
+this repository holds only the scoped `SITE_OPS_DISPATCH_TOKEN` Actions secret.
 
 This is zone configuration, managed separately from Wrangler. Before adding a
-route, update the policy in `site-ops` and apply its workflow. Scope edits to the image
+Worker route, update the policy in `site-ops` and apply its workflow. Scope edits to the image
 hostname and preserve unrelated zone rules. Do not introduce browser challenges
 that break unattended Shortcuts. Confirm workers.dev and preview exposure before
 changing deployment settings; zone rules do not protect those hostnames.

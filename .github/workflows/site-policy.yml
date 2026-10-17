@@ -1,0 +1,22 @@
+name: Sync site policy after deployment
+
+on:
+  workflow_run:
+    workflows: ["Deploy to Pages"]
+    types: [completed]
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  sync:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Trigger private site policy apply
+        env:
+          GH_TOKEN: ${{ secrets.SITE_OPS_DISPATCH_TOKEN }}
+        run: gh workflow run site-paths.yml --repo jes-bz/site-ops --ref main -f apply=true
