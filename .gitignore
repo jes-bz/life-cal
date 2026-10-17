@@ -7,5 +7,5 @@ worker/dist/
 worker/.wrangler/
 
 # Rust/Wasm build artifacts
-worker-rust/target/
-worker-rust/build/
+worker/target/
+worker/build/

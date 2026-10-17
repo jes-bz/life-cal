@@ -2,16 +2,14 @@
   "name": "life-cal-worker",
   "version": "1.0.0",
   "description": "Cloudflare Worker for Life Calendar",
-  "main": "../worker-rust/build/worker/shim.mjs",
+  "main": "build/worker/shim.mjs",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "build": "wrangler deploy --dry-run",
-    "test": "npm run build && cargo test --manifest-path ../worker-rust/Cargo.toml --release && cargo build --manifest-path ../worker-rust/Cargo.toml --release --bin render && node ../worker-rust/scripts/check-pixels.mjs && node ../worker-rust/scripts/check-handler.mjs"
+    "test": "npm run build && cargo test --release && cargo build --release --bin render && node scripts/check-renderer.mjs && node scripts/check-handler.mjs"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "5.20261016.1",
-    "typescript": "^5.3.3",
     "wrangler": "4.151.1"
   },
   "private": true

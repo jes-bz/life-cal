@@ -45,7 +45,7 @@ fn chunk(output: &mut Vec<u8>, kind: &[u8; 4], data: &[u8]) {
     let crc = crc32fast::hash(&output[start..]);
     output.extend_from_slice(&crc.to_be_bytes());
 }
-/// Purpose-built native-resolution PNG. Geometry follows shared/calendar-logic.js.
+/// Purpose-built native-resolution PNG. Geometry follows calendar-logic.js.
 pub fn render(
     device: &str,
     years: usize,
@@ -86,7 +86,7 @@ pub fn render(
         }
     }
     let cell = (available_width - 5.0 * (cols - 1) as f64) / cols as f64;
-    let rows = (total + cols - 1) / cols;
+    let rows = total.div_ceil(cols);
     let grid_height = cell * rows as f64 + 5.0 * (rows - 1) as f64;
     let grid_width = cell * cols as f64 + 5.0 * (cols - 1) as f64;
     let start_x = (w - right - grid_width) / 2.0;
@@ -102,7 +102,7 @@ pub fn render(
     let ys: Vec<f64> = (0..rows)
         .map(|i| fixed2(start_y + i as f64 * (cell + 5.0)))
         .collect();
-    let stride = (width + 1) / 2 + 1;
+    let stride = width.div_ceil(2) + 1;
     let mut pixels = vec![0u8; stride * height];
     for i in 0..total {
         let x = xs[i % cols];

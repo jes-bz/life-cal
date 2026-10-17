@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 import {readFileSync} from 'node:fs';
-import {Miniflare,Log,LogLevel} from '../../worker/node_modules/miniflare/dist/src/index.js';
+import {Miniflare,Log,LogLevel} from '../node_modules/miniflare/dist/src/index.js';
 const modules=Object.fromEntries(['worker/shim.mjs','index.js','index_bg.wasm'].map(path=>[path,{type:path.endsWith('.wasm')?'wasm':'esm',contents:readFileSync(new URL('../build/'+path,import.meta.url))}]));
 const mf=new Miniflare({workers:[{config:{name:'calendar-test',compatibilityDate:'2024-01-17',manifest:{mainModule:'worker/shim.mjs',modulesRoot:fileURLToPath(new URL('../build/',import.meta.url)),modules}}}],log:new Log(LogLevel.ERROR)});
 const call=(query='',method='GET',path='/')=>mf.dispatchFetch(`https://example.com${path}${query}`,{method,redirect:'manual'});

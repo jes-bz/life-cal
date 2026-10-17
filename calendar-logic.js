@@ -3,8 +3,6 @@
  * Constants for the calendar layout
  */
 export const CONSTANTS = {
-    CANVAS_WIDTH: 1320,
-    CANVAS_HEIGHT: 2868,
     BASE_TOP_PCT: 0.25,
     BASE_BOTTOM_PCT: 0.10,
     TOP_WIDGET_ADDITION: 0.10,
@@ -14,7 +12,7 @@ export const CONSTANTS = {
     DEFAULT_COLS: 52
 };
 
-/** Native wallpaper sizes; Max preserves existing links.
+/** Native wallpaper sizes.
  * Sources: apple.com/iphone-duo/specs/ and apple.com/iphone-18-pro/specs/
  */
 export const DEVICES = {
@@ -47,7 +45,7 @@ export function getWeeksLived(dob, now = new Date()) {
  * @param {number} params.height - Canvas/View height
  * @param {string} params.dob - Date of birth
  * @param {number} params.years - Life expectancy in years
- * @param {string} params.layout - Layout mode ('none', 'top', 'bottom')
+ * @param {string} params.layout - Layout mode ('none', 'top', 'bottom', 'right')
  * @returns {object} Layout calculations
  */
 export function calculateLayout({ width, height, dob, years, layout, device = 'max', now = new Date() }) {
@@ -71,6 +69,7 @@ export function calculateLayout({ width, height, dob, years, layout, device = 'm
 
     const marginX = width * CONSTANTS.MARGIN_X_PCT;
     const availableWidth = width - (marginX * 2) - rightInset;
+    const availableHeight = height - safeZoneTop - safeZoneBottom;
     const gap = CONSTANTS.GAP;
 
     // Find the minimum columns needed to fit vertically
@@ -87,7 +86,6 @@ export function calculateLayout({ width, height, dob, years, layout, device = 'm
         const extraBottomH = 6 * (cellSize + gap);
 
         const requiredHeight = gridHeight + (isDuo ? 0 : extraTopH + extraBottomH);
-        const availableHeight = height - safeZoneTop - safeZoneBottom;
 
         if (requiredHeight <= availableHeight + 1) {
             minFitCols = c;
@@ -99,12 +97,11 @@ export function calculateLayout({ width, height, dob, years, layout, device = 'm
     const cols = minFitCols || CONSTANTS.DEFAULT_COLS;
     const cellSize = (availableWidth - (gap * (cols - 1))) / cols;
     const rows = Math.ceil(totalWeeks / cols);
-    const extraTopH = 0 * (cellSize + gap); 
     
     const finalGridWidth = (cellSize * cols) + (gap * (cols - 1));
     
     const gridHeight = (cellSize * rows) + (gap * (rows - 1));
-    const startY = isDuo ? height - safeZoneBottom - gridHeight : safeZoneTop + extraTopH;
+    const startY = isDuo ? height - safeZoneBottom - gridHeight : safeZoneTop;
     const startX = (width - rightInset - finalGridWidth) / 2;
 
     return {
@@ -137,11 +134,7 @@ export function generateRectData(params) {
     const ys = Array.from({ length: Math.ceil(totalWeeks / cols) }, (_, i) => Number((startY + i * (cellSize + gap)).toFixed(2)));
     const size = Number(cellSize.toFixed(2));
     const rects = [];
-    let currentWeek = 0;
-
     for (let i = 0; i < totalWeeks; i++) {
-        currentWeek++;
-
         const colIndex = i % cols;
         const rowIndex = Math.floor(i / cols);
 
@@ -149,7 +142,7 @@ export function generateRectData(params) {
             x: xs[colIndex],
             y: ys[rowIndex],
             size,
-            color: currentWeek <= livedWeeks ? colorLived : colorRest
+            color: i < livedWeeks ? colorLived : colorRest
         });
     }
 

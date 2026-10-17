@@ -68,20 +68,12 @@
             background: #b3b3b3;
         }
 
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
     </style>
 </head>
 
 <body class="bg-black text-white h-screen overflow-hidden flex flex-col">
 
-    <!-- UI Container (Hidden if mode=image) -->
+    <!-- UI Container -->
     <div id="ui-container" class="flex flex-col h-full md:flex-row">
 
         <!-- Controls Panel -->
@@ -205,7 +197,7 @@
         <!-- Preview Area -->
         <div class="preview-area flex-1 relative overflow-hidden flex items-center justify-center p-4 md:p-8">
             <div id="phone-preview" class="phone-preview relative shadow-2xl rounded-3xl border-8 border-gray-800 overflow-hidden bg-black">
-                <!-- The Canvas is now directly displayed for performance -->
+                <!-- Canvas preview -->
                 <canvas id="canvas" width="1320" height="2868"
                     class="w-full h-full object-contain bg-transparent"></canvas>
 
@@ -269,10 +261,8 @@
         </div>
     </div>
 
-    <!-- Image Mode Container (Removed as it is now handled by Worker) -->
-
     <script type="module">
-        import { generateRectData, DEVICES, getDevice } from './shared/calendar-logic.js';
+        import { generateRectData, DEVICES, getDevice } from './calendar-logic.js';
 
         // --- Configuration & Constants ---
         const WORKER_URL = 'https://life-cal.jes.bz';
@@ -286,17 +276,10 @@
             dob: document.getElementById('dob'),
             years: document.getElementById('years'),
             layoutRadios: document.getElementsByName('layout'),
-            colorBg: document.getElementById('color-bg'),
-            hexBg: document.getElementById('hex-bg'),
-            colorLived: document.getElementById('color-lived'),
-            hexLived: document.getElementById('hex-lived'),
-            colorRest: document.getElementById('color-rest'),
-            hexRest: document.getElementById('hex-rest'),
             canvas: document.getElementById('canvas'),
             btnDownload: document.getElementById('btn-download'),
             btnCopy: document.getElementById('btn-copy-link'),
             directLink: document.getElementById('direct-link'),
-            uiContainer: document.getElementById('ui-container'),
             // Modal
             btnHowto: document.getElementById('btn-howto'),
             modal: document.getElementById('howto-modal'),
@@ -306,7 +289,7 @@
         };
 
         // --- State ---
-        let state = {
+        const state = {
             device: 'iphone',
             dob: '1990-01-01',
             years: 90,
@@ -314,7 +297,6 @@
             lived: '#ffffff',
             rest: '#333333',
             layout: 'none', // 'none', 'top', 'bottom'
-            mode: 'interactive'
         };
 
         // --- Initialization ---
@@ -331,8 +313,6 @@
 
             // Layout
             if (['none', 'top', 'bottom'].includes(params.get('layout'))) state.layout = params.get('layout');
-
-            if (params.get('mode') === 'image') state.mode = 'image';
 
             for (const [value, device] of Object.entries(DEVICES)) els.device.add(new Option(device.label, value));
             els.device.value = state.device;
@@ -496,7 +476,7 @@
             }
         }
 
-        function getWorkerUrl() {
+        function getConfigParams() {
             const params = new URLSearchParams();
             params.set('device', state.device);
             params.set('dob', state.dob);
@@ -506,23 +486,17 @@
             params.set('rest', state.rest.replace('#', ''));
             params.set('layout', state.device.startsWith('duo-') ? 'none' : state.layout);
             
-            return `${WORKER_URL}?${params.toString()}`;
+            return params;
+        }
+
+        function getWorkerUrl() {
+            return `${WORKER_URL}?${getConfigParams()}`;
         }
 
         function updateUrl() {
-            const params = new URLSearchParams();
-            params.set('device', state.device);
-            params.set('dob', state.dob);
-            params.set('years', state.years);
-            params.set('bg', state.bg.replace('#', ''));
-            params.set('lived', state.lived.replace('#', ''));
-            params.set('rest', state.rest.replace('#', ''));
-            params.set('layout', state.device.startsWith('duo-') ? 'none' : state.layout);
-
-            const newUrl = `${window.location.pathname}?${params.toString()}`;
+            const newUrl = `${window.location.pathname}?${getConfigParams()}`;
             window.history.replaceState({}, '', newUrl);
 
-            // Direct link now points to the worker
             els.directLink.href = getWorkerUrl();
         }
 

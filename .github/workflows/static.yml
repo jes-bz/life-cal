@@ -1,4 +1,4 @@
-# Combined workflow for generating card list and deploying static content to GitHub Pages
+# Deploy the static website to GitHub Pages.
 name: Deploy to Pages
 
 on:

@@ -110,7 +110,7 @@ impl Config {
     }
 }
 
-// Preserve Number()'s accepted integer forms from existing configuration links.
+// Accept decimal, exponential, hexadecimal, binary, and octal number strings.
 fn number(input: &str) -> Option<f64> {
     let s = input.trim();
     for (prefix, radix) in [
@@ -135,7 +135,7 @@ mod tests {
         Config::parse(pairs.iter().map(|(k, v)| (k.to_string(), v.to_string())))
     }
     #[test]
-    fn defaults_and_legacy_numbers() {
+    fn defaults_and_number_formats() {
         let c = config(&[]).unwrap();
         assert_eq!(c.device, "max");
         assert_eq!(c.years, 80);

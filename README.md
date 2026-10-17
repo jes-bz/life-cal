@@ -13,7 +13,7 @@ The project consists of:
 *   **Interactive Preview**: Visualize your calendar instantly in the browser.
 *   **Customizable**: Adjust colors, layout, life expectancy, and display size.
 *   **Device Presets**: iPhone / Pro (1206 × 2622), Max (1320 × 2868), Duo outer (1398 × 2034), and Duo inner portrait/landscape (1878 × 2670 / 2670 × 1878). Duo layouts reserve space for right-side controls.
-*   **High Resolution**: optimized for modern smartphone displays (iPhone 16 Pro Max resolution default).
+*   **High Resolution**: Native display sizes; the website defaults to iPhone / Pro. Worker requests without a device use Max.
 *   **Automation Ready**: Use the Cloudflare Worker to automatically update your wallpaper every week.
 
 ## iPhone Automation Guide

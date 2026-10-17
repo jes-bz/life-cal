@@ -2,9 +2,9 @@ name: Check Rust Worker
 on:
   push:
     branches: [main]
-    paths: ['worker/**', 'worker-rust/**', 'shared/**', '.github/workflows/worker-checks.yml']
+    paths: ['worker/**', 'calendar-logic.js', '.github/workflows/worker-checks.yml']
   pull_request:
-    paths: ['worker/**', 'worker-rust/**', 'shared/**', '.github/workflows/worker-checks.yml']
+    paths: ['worker/**', 'calendar-logic.js', '.github/workflows/worker-checks.yml']
 permissions:
   contents: read
 jobs:
