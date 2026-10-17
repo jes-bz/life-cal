@@ -60,14 +60,12 @@ directly to `https://jessebrizzi.com/life-cal/`, before Worker execution.
 Requests with any query string continue to the Worker so parameter validation,
 encoded parameter names, and image links retain their behavior.
 
-The `jes.bz` zone has a WAF custom rule with ref
-`life_cal_block_unsupported_paths`, scoped to `life-cal.jes.bz`. It allows `/`,
-`/robots.txt`, `/favicon.ico`, `/apple-touch-icon.png`, and
-`/apple-touch-icon-precomposed.png`; other paths are blocked before Worker
-execution. Icons pass the edge rule but have no Worker route.
+Path allowlists are managed in the private `jes-bz/site-ops` repository.
+Its `config/sites.json` is the source of truth for the image endpoint's allowed
+paths. Unsupported paths are blocked before Worker execution.
 
 This is zone configuration, managed separately from Wrangler. Before adding a
-route, inspect the live rule and update its allowlist. Scope edits to the image
+route, update the policy in `site-ops` and apply its workflow. Scope edits to the image
 hostname and preserve unrelated zone rules. Do not introduce browser challenges
 that break unattended Shortcuts. Confirm workers.dev and preview exposure before
 changing deployment settings; zone rules do not protect those hostnames.
