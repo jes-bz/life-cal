@@ -53,6 +53,13 @@ Do not set Cargo `strip = true`; it breaks the pinned wasm-bindgen catch wrapper
 
 ## Edge protection
 
+The `jes.bz` zone has a Single Redirect rule with ref
+`life_cal_redirect_bare_root` in the `http_request_dynamic_redirect` phase.
+GET/HEAD requests to `life-cal.jes.bz/` with an empty query string receive a 302
+directly to `https://jessebrizzi.com/life-cal/`, before Worker execution.
+Requests with any query string continue to the Worker so parameter validation,
+encoded parameter names, and image links retain their behavior.
+
 The `jes.bz` zone has a WAF custom rule with ref
 `life_cal_block_unsupported_paths`, scoped to `life-cal.jes.bz`. It allows `/`,
 `/robots.txt`, `/favicon.ico`, `/apple-touch-icon.png`, and
