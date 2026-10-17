@@ -1,0 +1,14 @@
+{
+  "zone_name": "jes.bz",
+  "zone_id": "949594ca7123b19b8d83e8192c049658",
+  "ruleset_id": "60f23cff75bf48f4a40195e3a04d117f",
+  "phase": "http_request_firewall_custom",
+  "rule": {
+    "id": "d8207974c8664e73b25e541394856052",
+    "ref": "life_cal_block_unsupported_paths",
+    "description": "Life Calendar: block file probes before Worker execution",
+    "expression": "(http.host eq \"life-cal.jes.bz\" and not http.request.uri.path in {\"/\" \"/robots.txt\" \"/favicon.ico\" \"/apple-touch-icon.png\" \"/apple-touch-icon-precomposed.png\"})",
+    "action": "block",
+    "enabled": true
+  }
+}
