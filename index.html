@@ -139,10 +139,6 @@
                                 class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
                             <label for="layout-bottom" class="ml-2 block text-sm text-gray-700">+ Bottom Widgets</label>
                         </div>
-                        <div class="flex items-center">
-                            <input type="radio" id="layout-right" name="layout" value="right" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
-                            <label for="layout-right" class="ml-2 block text-sm text-gray-700">+ Right Widgets / Controls</label>
-                        </div>
                     </div>
                 </div>
 
@@ -334,7 +330,7 @@
             if (params.has('rest')) state.rest = '#' + params.get('rest').replace('#', '');
 
             // Layout
-            if (params.has('layout')) state.layout = params.get('layout');
+            if (['none', 'top', 'bottom'].includes(params.get('layout'))) state.layout = params.get('layout');
 
             if (params.get('mode') === 'image') state.mode = 'image';
 
@@ -476,9 +472,6 @@
             document.getElementById('layout-options').classList.toggle('hidden', isDuo);
             document.getElementById('layout-divider').classList.toggle('hidden', isDuo);
             document.getElementById('preview-notch').classList.toggle('hidden', isDuo);
-            document.querySelector('label[for="layout-none"]').textContent = isDuo ? 'Standard (Clock + Right Controls)' : 'Standard (Clock + Buttons)';
-            document.querySelector('label[for="layout-top"]').textContent = isDuo ? '+ Extra Clock Space' : '+ Top Widgets';
-            document.querySelector('label[for="layout-bottom"]').textContent = isDuo ? '+ Extra Bottom Space' : '+ Bottom Widgets';
 
             // Fill Background
             ctx.fillStyle = state.bg;
