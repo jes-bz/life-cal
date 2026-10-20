@@ -462,12 +462,9 @@
                 lived: state.lived,
                 rest: state.rest
             };
-            const params = new URLSearchParams({
-                name: 'Life Calendar',
-                input: 'text',
-                text: JSON.stringify(settings)
-            });
-            window.location.href = `shortcuts://run-shortcut?${params.toString()}`;
+            const params = `name=${encodeURIComponent('Life Calendar')}` +
+                `&input=text&text=${encodeURIComponent(JSON.stringify(settings))}`;
+            window.location.href = `shortcuts://run-shortcut?${params}`;
         }
 
         init();
