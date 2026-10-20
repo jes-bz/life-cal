@@ -7,7 +7,7 @@ during a refresh.
 
 ## Install and use
 
-1. [Install Scriptable from the App Store](https://apps.apple.com/us/app/scriptable/id1405459188), then [add the Life Calendar Shortcut from iCloud](https://www.icloud.com/shortcuts/abb0db6469d14f64b88a3d3e445a0731).
+1. [Install Scriptable from the App Store](https://apps.apple.com/us/app/scriptable/id1405459188), then [add the Life Calendar Shortcut from iCloud](https://www.icloud.com/shortcuts/f56ba017122a49fa9e30c2f4f2998809).
 2. In the Shortcut's last **Set Wallpaper Photo** action, select the wallpaper
    you want to update. It updates only the Lock Screen; **Show Preview** and
    **Crop to Subject** are disabled. An unset target can create a new wallpaper.
@@ -15,7 +15,7 @@ during a refresh.
    date, display, life expectancy, widget layout, and color palette, then select
    **Save & Refresh Wallpaper**. Settings are stored using Scriptable's Keychain
    API, outside the distributable Shortcut.
-   The website's **Set Up on iPhone** guide can pass its current settings into
+   The website's **Apply to iPhone** button passes its current settings into
    the Shortcut; Scriptable shows them for review, and saves them only after you
    select **Save & Refresh Wallpaper**. This handoff uses an on-device Shortcuts
    URL and does not call a server.
