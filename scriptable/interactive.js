@@ -13,14 +13,18 @@ async function choose(title, labels, message = '') {
 }
 
 function importedSettings(input) {
-    if (typeof input !== 'string') return null;
-    const text = input.trim();
-    if (!text.startsWith('{')) return null;
-    let parsed;
-    try {
-        parsed = JSON.parse(text);
-    } catch {
-        throw new Error('Life Calendar settings from the website are not valid JSON.');
+    // Shortcuts can decode JSON text into a dictionary before Scriptable sees it.
+    let parsed = input;
+    if (typeof input === 'string') {
+        const text = input.trim();
+        if (!text.startsWith('{')) return null;
+        try {
+            parsed = JSON.parse(text);
+        } catch {
+            throw new Error('Life Calendar settings from the website are not valid JSON.');
+        }
+    } else if (input == null || typeof input !== 'object') {
+        return null;
     }
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
         throw new Error('Life Calendar settings must be a dictionary.');

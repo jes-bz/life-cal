@@ -7,7 +7,7 @@ during a refresh.
 
 ## Install and use
 
-1. [Install Scriptable from the App Store](https://apps.apple.com/us/app/scriptable/id1405459188), then [add the Life Calendar Shortcut from iCloud](https://www.icloud.com/shortcuts/f56ba017122a49fa9e30c2f4f2998809).
+1. [Install Scriptable from the App Store](https://apps.apple.com/us/app/scriptable/id1405459188), then [add the Life Calendar Shortcut from iCloud](https://www.icloud.com/shortcuts/849bddc555824ea698dfa890e4a83cd4).
 2. In the Shortcut's last **Set Wallpaper Photo** action, select the wallpaper
    you want to update. It updates only the Lock Screen; **Show Preview** and
    **Crop to Subject** are disabled. An unset target can create a new wallpaper.

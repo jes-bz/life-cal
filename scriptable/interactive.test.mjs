@@ -84,6 +84,27 @@ test('website settings follow the manual Siri handoff before saving', async () =
     assert.deepEqual(r.saved(), website);
     assert.equal(await r.execute('finish'), 'PNG');
 });
+test('Safari settings decoded by Shortcuts as a dictionary survive the full handoff', async () => {
+    const r = runtime(settings, [5], false);
+    const website = { dob: '1988-04-03', device: 'max', years: 84, layout: 'top',
+        bg: '#112233', lived: '#445566', rest: '#778899', ignored: 'not saved' };
+    assert.equal(await r.preflight(website), 'setup');
+    assert.deepEqual(r.saved(), settings);
+    assert.equal(await r.execute(website), 'setup');
+    assert.deepEqual(r.titles, []);
+    r.setRunsInApp(true);
+    assert.equal(await r.execute(website), 'ready');
+    assert.deepEqual(r.titles, ['Review Website Settings']);
+    const { ignored, ...expected } = website;
+    assert.deepEqual(r.saved(), expected);
+    assert.equal(await r.execute('finish'), 'PNG');
+});
+test('array input is rejected without changing saved settings', async () => {
+    const r = runtime(settings);
+    await assert.rejects(r.preflight([settings]), /must be a dictionary/);
+    assert.deepEqual(r.saved(), settings);
+    assert.equal(r.writes(), 0);
+});
 test('empty input with saved settings does not open a menu', async () => {
     const r = runtime(settings);
     assert.equal(await r.run(null), 'PNG');
