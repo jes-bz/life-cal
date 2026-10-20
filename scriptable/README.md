@@ -15,6 +15,10 @@ during a refresh.
    date, display, life expectancy, widget layout, and color palette, then select
    **Save & Refresh Wallpaper**. Settings are stored using Scriptable's Keychain
    API, outside the distributable Shortcut.
+   The website's **Set Up on iPhone** guide can pass its current settings into
+   the Shortcut; Scriptable shows them for review, and saves them only after you
+   select **Save & Refresh Wallpaper**. This handoff uses an on-device Shortcuts
+   URL and does not call a server.
 4. Later runs with no input silently refresh the wallpaper. Tap
    [Change Life Calendar settings](shortcuts://run-shortcut?name=Life%20Calendar&input=text&text=settings)
    to open the editor (the Shortcut must be named **Life Calendar**; change the

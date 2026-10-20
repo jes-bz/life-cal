@@ -169,19 +169,15 @@
 
                 <!-- Actions -->
                 <div class="pt-4 space-y-3">
+                    <button id="btn-howto"
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded text-sm transition-colors flex items-center justify-center">
+                        <i class="fa-brands fa-apple mr-2"></i> Set Up on iPhone
+                    </button>
                     <button id="btn-download"
-                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-black font-bold py-3 px-4 rounded text-sm transition-colors flex items-center justify-center">
+                        class="w-full bg-surface border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold py-2 px-4 rounded text-sm transition-colors flex items-center justify-center">
                         <i class="fa-solid fa-download mr-2"></i> Download Wallpaper
                     </button>
-                    <button id="btn-copy-link"
-                        class="w-full bg-surface border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold py-2 px-4 rounded text-sm transition-colors flex items-center justify-center">
-                        <i class="fa-solid fa-link mr-2"></i> Copy Preview Link
-                    </button>
-                    <button id="btn-howto"
-                        class="block w-full text-center text-xs text-gray-400 hover:text-gray-600 hover:underline mt-2">
-                        Set Up on iPhone
-                    </button>
-                    
+
                     <a href="https://github.com/jes-bz/life-cal" target="_blank"
                         class="block w-full text-center text-xs text-gray-400 hover:text-indigo-600 mt-4 transition-colors">
                         <i class="fa-brands fa-github mr-1"></i> Contribute on GitHub
@@ -214,23 +210,21 @@
                 </button>
             </div>
             <div class="p-6 space-y-6 text-sm leading-relaxed text-gray-600">
-                <p>Generate and refresh your wallpaper locally on your iPhone with Scriptable.</p>
+                <p>Generate and refresh your wallpaper locally on your iPhone with Scriptable. No wallpaper server is needed.</p>
 
                 <section class="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
-                    <h3 class="font-bold text-indigo-900 mb-2">Install the offline version</h3>
-                    <p class="text-xs mb-3">Install Scriptable, add the Life Calendar Shortcut, then follow the guide to choose your settings and schedule weekly refreshes.</p>
-                    <div class="flex flex-wrap gap-3 text-xs">
-                        <a href="https://apps.apple.com/us/app/scriptable/id1405459188" target="_blank" rel="noopener noreferrer" class="font-bold text-indigo-600 hover:underline">
-                            <i class="fa-brands fa-apple mr-1"></i> Get Scriptable on the App Store
-                        </a>
-                        <a href="https://www.icloud.com/shortcuts/abb0db6469d14f64b88a3d3e445a0731" target="_blank" rel="noopener noreferrer" class="font-bold text-indigo-600 hover:underline">
-                            <i class="fa-solid fa-arrow-down-to-bracket mr-1"></i> Add Life Calendar Shortcut
-                        </a>
-                        <a href="https://github.com/jes-bz/life-cal/blob/main/scriptable/README.md" target="_blank" rel="noopener noreferrer" class="font-bold text-indigo-600 hover:underline">
-                            Read offline setup guide <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
-                        </a>
-                    </div>
+                    <h3 class="font-bold text-indigo-900 mb-2">Set it up once</h3>
+                    <ol class="list-decimal pl-5 space-y-2 text-xs">
+                        <li><a href="https://apps.apple.com/us/app/scriptable/id1405459188" target="_blank" rel="noopener noreferrer" class="font-bold text-indigo-700 hover:underline">Install Scriptable</a>, then <a href="https://www.icloud.com/shortcuts/abb0db6469d14f64b88a3d3e445a0731" target="_blank" rel="noopener noreferrer" class="font-bold text-indigo-700 hover:underline">add the Life Calendar Shortcut</a>.</li>
+                        <li>In the Shortcut, edit the final <strong>Set Wallpaper Photo</strong> action and choose the Lock Screen wallpaper to update. Leave preview and crop options off.</li>
+                        <li>Use the button below to send this page’s settings to the Shortcut, or run it and choose settings on your iPhone. Review them, approve first-run permissions, then tap <strong>Save &amp; Refresh Wallpaper</strong>.</li>
+                        <li>For weekly refreshes, enable the imported Time of Day trigger in the Shortcut’s <strong>Edit → Automation</strong> section. If there isn’t one, create a weekly Time of Day automation with <strong>Run Immediately</strong> and <strong>Run Shortcut → Life Calendar</strong>; leave input empty.</li>
+                    </ol>
                 </section>
+                <button id="btn-use-settings" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded text-sm transition-colors flex items-center justify-center">
+                    <i class="fa-solid fa-arrow-up-right-from-square mr-2"></i> Use These Settings in Life Calendar
+                </button>
+                <p class="text-xs text-gray-500">The handoff URL contains your birth date and settings. It opens Shortcuts on this iPhone; review and save them in Scriptable. Nothing is sent to a wallpaper server. Don’t share the handoff URL.</p>
             </div>
         </div>
     </div>
@@ -249,9 +243,9 @@
             layoutRadios: document.getElementsByName('layout'),
             canvas: document.getElementById('canvas'),
             btnDownload: document.getElementById('btn-download'),
-            btnCopy: document.getElementById('btn-copy-link'),
             // Modal
             btnHowto: document.getElementById('btn-howto'),
+            btnUseSettings: document.getElementById('btn-use-settings'),
             modal: document.getElementById('howto-modal'),
             btnCloseModal: document.getElementById('btn-close-modal'),
         };
@@ -350,7 +344,6 @@
 
             // Buttons
             els.btnDownload.addEventListener('click', downloadImage);
-            els.btnCopy.addEventListener('click', copyLink);
 
             // Modal
             els.btnHowto.addEventListener('click', () => {
@@ -359,6 +352,7 @@
             els.btnCloseModal.addEventListener('click', () => {
                 els.modal.classList.add('hidden');
             });
+            els.btnUseSettings.addEventListener('click', openShortcutWithSettings);
             els.modal.addEventListener('click', (e) => {
                 if (e.target === els.modal) els.modal.classList.add('hidden');
             });
@@ -458,42 +452,22 @@
             link.click();
         }
 
-        function copyLink() {
-            const url = window.location.href;
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url).then(() => {
-                    alertCopy();
-                }).catch(err => {
-                    fallbackCopy(url);
-                });
-            } else {
-                fallbackCopy(url);
-            }
-        }
-
-        function fallbackCopy(text) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            try {
-                document.execCommand('copy');
-                alertCopy();
-            } catch (err) {
-                console.error('Fallback: Oops, unable to copy', err);
-            }
-            document.body.removeChild(textArea);
-        }
-
-        function alertCopy() {
-            const btn = els.btnCopy;
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Copied!';
-            btn.classList.add('bg-green-50', 'text-green-700', 'border-green-200');
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.classList.remove('bg-green-50', 'text-green-700', 'border-green-200');
-            }, 2000);
+        function openShortcutWithSettings() {
+            const settings = {
+                dob: state.dob,
+                device: state.device,
+                years: Number(state.years),
+                layout: state.device.startsWith('duo-') ? 'none' : state.layout,
+                bg: state.bg,
+                lived: state.lived,
+                rest: state.rest
+            };
+            const params = new URLSearchParams({
+                name: 'Life Calendar',
+                input: 'text',
+                text: JSON.stringify(settings)
+            });
+            window.location.href = `shortcuts://run-shortcut?${params.toString()}`;
         }
 
         init();

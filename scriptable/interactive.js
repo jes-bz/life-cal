@@ -12,14 +12,35 @@ async function choose(title, labels, message = '') {
     return index;
 }
 
-async function editSettings(previous) {
+function importedSettings(input) {
+    if (typeof input !== 'string') return null;
+    const text = input.trim();
+    if (!text.startsWith('{')) return null;
+    let parsed;
+    try {
+        parsed = JSON.parse(text);
+    } catch {
+        throw new Error('Life Calendar settings from the website are not valid JSON.');
+    }
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+        throw new Error('Life Calendar settings must be a dictionary.');
+    }
+    const settings = {};
+    for (const key of ['dob', 'device', 'years', 'layout', 'bg', 'lived', 'rest']) {
+        if (Object.prototype.hasOwnProperty.call(parsed, key)) settings[key] = parsed[key];
+    }
+    return settings;
+}
+
+async function editSettings(previous, fromWebsite = false) {
     const settings = Object.assign({
         device: 'iphone', years: 90, layout: 'none',
         bg: '#000000', lived: '#ffffff', rest: '#333333'
     }, previous);
     const layouts = { none: 'Standard', top: 'Top Widgets', bottom: 'Bottom Widgets' };
     while (true) {
-        const row = await choose(previous ? 'Change Settings' : 'Set Up Life Calendar', [
+        const title = fromWebsite ? 'Review Website Settings' : previous ? 'Change Settings' : 'Set Up Life Calendar';
+        const row = await choose(title, [
             `Birth Date: ${settings.dob || 'Choose a date'}`,
             `Display: ${getDevice(settings.device).label}`,
             `Life Expectancy: ${settings.years} years`,
@@ -87,6 +108,8 @@ async function editSettings(previous) {
 }
 
 async function runLifeCalendar(input) {
+    const websiteSettings = importedSettings(input);
+    if (websiteSettings) return await editSettings(websiteSettings, true);
     const command = input == null ? '' : String(input).trim().toLowerCase();
     if (!['', 'refresh', 'settings'].includes(command)) {
         throw new Error('Unsupported Life Calendar input. Leave it empty or use settings to change settings.');
@@ -100,9 +123,14 @@ async function runLifeCalendar(input) {
 }
 
 async function preflightLifeCalendar(input) {
+    const websiteSettings = importedSettings(input);
     const command = input == null ? '' : String(input).trim().toLowerCase();
-    if (!['', 'refresh', 'settings'].includes(command)) {
+    if (!websiteSettings && !['', 'refresh', 'settings'].includes(command)) {
         throw new Error('Unsupported Life Calendar input. Leave it empty or use settings to change settings.');
+    }
+    if (websiteSettings) {
+        Keychain.set(MANUAL_RUN_KEY, 'pending');
+        return 'setup';
     }
     const saved = Keychain.contains(SETTINGS_KEY) ? JSON.parse(Keychain.get(SETTINGS_KEY)) : null;
     if (command === 'settings' || !saved) {
@@ -114,7 +142,8 @@ async function preflightLifeCalendar(input) {
 
 async function executeLifeCalendar(input) {
     const originalInput = input;
-    let command = input == null ? '' : String(input).trim().toLowerCase();
+    const websiteSettings = importedSettings(input);
+    let command = websiteSettings ? '' : input == null ? '' : String(input).trim().toLowerCase();
     if (command === 'prepare') {
         Keychain.set(MANUAL_RUN_KEY, 'pending');
         return 'prepared';
@@ -129,7 +158,7 @@ async function executeLifeCalendar(input) {
     if (command === 'refresh') return await runLifeCalendar('refresh');
 
     const saved = Keychain.contains(SETTINGS_KEY) ? JSON.parse(Keychain.get(SETTINGS_KEY)) : null;
-    const setupRequested = command === 'settings' || command === 'setup' ||
+    const setupRequested = Boolean(websiteSettings) || command === 'settings' || command === 'setup' ||
         command === 'prepared' || (!command && !saved);
 
     // Shortcuts may invoke this inline action once in Siri before the
@@ -143,7 +172,7 @@ async function executeLifeCalendar(input) {
     // Accept the output of the Siri handoff as the foreground editor request.
     if (command === 'setup' || command === 'prepared') command = 'settings';
     try {
-        await runLifeCalendar(command === 'settings' ? 'settings' : originalInput);
+        await runLifeCalendar(websiteSettings ? originalInput : command === 'settings' ? 'settings' : originalInput);
         Keychain.set(MANUAL_RUN_KEY, 'ready');
         Safari.open('shortcuts://');
         return 'ready';

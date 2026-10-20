@@ -60,6 +60,30 @@ test('settings input on first run opens setup', async () => {
     const r = runtime(null);
     assert.equal(await r.preflight('settings'), 'setup');
 });
+test('website settings are routed to the guided setup without overwriting saved values', async () => {
+    const r = runtime(settings, [5]);
+    const website = { dob: '1988-04-03', device: 'max', years: 84, layout: 'top',
+        bg: '#112233', lived: '#445566', rest: '#778899' };
+    const input = JSON.stringify(website);
+    assert.equal(await r.preflight(input), 'setup');
+    assert.deepEqual(r.saved(), settings);
+    assert.equal(await r.run(input), 'PNG');
+    assert.deepEqual(r.titles, ['Review Website Settings']);
+    assert.deepEqual(r.saved(), website);
+});
+test('website settings follow the manual Siri handoff before saving', async () => {
+    const r = runtime(settings, [5], false);
+    const website = { dob: '1988-04-03', device: 'max', years: 84, layout: 'top',
+        bg: '#112233', lived: '#445566', rest: '#778899' };
+    const input = JSON.stringify(website);
+    assert.equal(await r.execute(input), 'setup');
+    assert.deepEqual(r.titles, []);
+    r.setRunsInApp(true);
+    assert.equal(await r.execute(input), 'ready');
+    assert.deepEqual(r.titles, ['Review Website Settings']);
+    assert.deepEqual(r.saved(), website);
+    assert.equal(await r.execute('finish'), 'PNG');
+});
 test('empty input with saved settings does not open a menu', async () => {
     const r = runtime(settings);
     assert.equal(await r.run(null), 'PNG');
