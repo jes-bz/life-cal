@@ -175,15 +175,11 @@
                     </button>
                     <button id="btn-copy-link"
                         class="w-full bg-surface border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold py-2 px-4 rounded text-sm transition-colors flex items-center justify-center">
-                        <i class="fa-solid fa-link mr-2"></i> Copy Config Link
+                        <i class="fa-solid fa-link mr-2"></i> Copy Preview Link
                     </button>
-                    <a id="direct-link" href="#" target="_blank"
-                        class="block text-center text-xs text-indigo-500 hover:underline">
-                        Open Image-Only Mode
-                    </a>
                     <button id="btn-howto"
                         class="block w-full text-center text-xs text-gray-400 hover:text-gray-600 hover:underline mt-2">
-                        How to Automate (iPhone)
+                        Set Up on iPhone
                     </button>
                     
                     <a href="https://github.com/jes-bz/life-cal" target="_blank"
@@ -212,60 +208,35 @@
     <div id="howto-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
         <div class="bg-surface rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto flex flex-col">
             <div class="p-6 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-surface z-10">
-                <h2 class="text-lg font-bold">iPhone Automation Guide</h2>
+                <h2 class="text-lg font-bold">Set Up Life Calendar on iPhone</h2>
                 <button id="btn-close-modal" class="text-gray-400 hover:text-gray-600">
                     <i class="fa-solid fa-xmark text-xl"></i>
                 </button>
             </div>
             <div class="p-6 space-y-6 text-sm leading-relaxed text-gray-600">
-                <p>Set up your iPhone to automatically update its lock screen every week.</p>
+                <p>Generate and refresh your wallpaper locally on your iPhone with Scriptable.</p>
 
-                <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
-                    <h3 class="font-bold text-indigo-900 mb-2">Your Dynamic URL</h3>
-                    <p class="text-xs mb-2">Copy this URL for Step 1:</p>
-                    <div class="flex space-x-2">
-                        <input id="modal-url-input" readonly type="text" class="flex-1 bg-surface border border-indigo-200 rounded p-2 text-xs font-mono text-gray-600 select-all">
-                        <button id="btn-copy-modal-url" class="bg-indigo-600 text-black px-3 rounded hover:bg-indigo-700 transition-colors">
-                            <i class="fa-regular fa-copy"></i>
-                        </button>
+                <section class="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
+                    <h3 class="font-bold text-indigo-900 mb-2">Install the offline version</h3>
+                    <p class="text-xs mb-3">Install Scriptable, add the Life Calendar Shortcut, then follow the guide to choose your settings and schedule weekly refreshes.</p>
+                    <div class="flex flex-wrap gap-3 text-xs">
+                        <a href="https://apps.apple.com/us/app/scriptable/id1405459188" target="_blank" rel="noopener noreferrer" class="font-bold text-indigo-600 hover:underline">
+                            <i class="fa-brands fa-apple mr-1"></i> Get Scriptable on the App Store
+                        </a>
+                        <a href="https://www.icloud.com/shortcuts/abb0db6469d14f64b88a3d3e445a0731" target="_blank" rel="noopener noreferrer" class="font-bold text-indigo-600 hover:underline">
+                            <i class="fa-solid fa-arrow-down-to-bracket mr-1"></i> Add Life Calendar Shortcut
+                        </a>
+                        <a href="https://github.com/jes-bz/life-cal/blob/main/scriptable/README.md" target="_blank" rel="noopener noreferrer" class="font-bold text-indigo-600 hover:underline">
+                            Read offline setup guide <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+                        </a>
                     </div>
-                </div>
-
-                <div>
-                    <h3 class="font-bold text-gray-900 mb-2">Step 1: Create the Shortcut</h3>
-                    <ol class="list-decimal list-inside space-y-2 ml-1">
-                        <li>Open the <strong>Shortcuts</strong> app and tap <strong>+</strong>.</li>
-                        <li>Add these 4 actions in order:
-                            <ul class="list-disc list-inside ml-5 mt-1 space-y-1 text-gray-500 text-xs">
-                                <li><strong>URL</strong>: Paste the URL from above.</li>
-                                <li><strong>Get Contents of URL</strong>: Get contents of <strong>Text</strong>.</li>
-                                <li><strong>Get Images from Input</strong>: Get images from <strong>Contents of URL</strong>.</li>
-                                <li><strong>Set Wallpaper</strong>: Set Lock Screen to <strong>Images</strong>. Turn OFF "Show Preview".</li>
-                            </ul>
-                        </li>
-                    </ol>
-                    <img src="assets/shortcut.png" class="mt-4 rounded-lg border border-gray-200 w-full" alt="Shortcut Setup">
-                </div>
-
-                <div>
-                    <h3 class="font-bold text-gray-900 mb-2">Step 2: Schedule It</h3>
-                    <ol class="list-decimal list-inside space-y-2 ml-1">
-                        <li>Go to <strong>Automation</strong> tab -> <strong>New Automation</strong>.</li>
-                        <li>Choose <strong>Time of Day</strong> (e.g., Weekly, Monday 9AM).</li>
-                        <li>Select <strong>Run Immediately</strong>.</li>
-                        <li>Select the Shortcut you just created.</li>
-                    </ol>
-                    <img src="assets/automation.png" class="mt-4 rounded-lg border border-gray-200 w-full" alt="Automation Setup">
-                </div>
+                </section>
             </div>
         </div>
     </div>
 
     <script type="module">
         import { generateRectData, DEVICES, getDevice } from './calendar-logic.js';
-
-        // --- Configuration & Constants ---
-        const WORKER_URL = 'https://life-cal.jes.bz';
 
         // --- DOM Elements ---
         const els = {
@@ -279,13 +250,10 @@
             canvas: document.getElementById('canvas'),
             btnDownload: document.getElementById('btn-download'),
             btnCopy: document.getElementById('btn-copy-link'),
-            directLink: document.getElementById('direct-link'),
             // Modal
             btnHowto: document.getElementById('btn-howto'),
             modal: document.getElementById('howto-modal'),
             btnCloseModal: document.getElementById('btn-close-modal'),
-            modalUrlInput: document.getElementById('modal-url-input'),
-            btnCopyModalUrl: document.getElementById('btn-copy-modal-url'),
         };
 
         // --- State ---
@@ -387,24 +355,12 @@
             // Modal
             els.btnHowto.addEventListener('click', () => {
                 els.modal.classList.remove('hidden');
-                els.modalUrlInput.value = getWorkerUrl();
             });
             els.btnCloseModal.addEventListener('click', () => {
                 els.modal.classList.add('hidden');
             });
             els.modal.addEventListener('click', (e) => {
                 if (e.target === els.modal) els.modal.classList.add('hidden');
-            });
-            els.btnCopyModalUrl.addEventListener('click', () => {
-                els.modalUrlInput.select();
-                navigator.clipboard.writeText(els.modalUrlInput.value);
-                const icon = els.btnCopyModalUrl.querySelector('i');
-                icon.classList.remove('fa-copy');
-                icon.classList.add('fa-check');
-                setTimeout(() => {
-                    icon.classList.add('fa-copy');
-                    icon.classList.remove('fa-check');
-                }, 2000);
             });
         }
 
@@ -489,19 +445,13 @@
             return params;
         }
 
-        function getWorkerUrl() {
-            return `${WORKER_URL}?${getConfigParams()}`;
-        }
-
         function updateUrl() {
             const newUrl = `${window.location.pathname}?${getConfigParams()}`;
             window.history.replaceState({}, '', newUrl);
-
-            els.directLink.href = getWorkerUrl();
         }
 
         function downloadImage() {
-            // Use client-side canvas generation to save worker calls
+            // Generate the wallpaper locally in the browser.
             const link = document.createElement('a');
             link.download = `life-calendar-${state.dob}.png`;
             link.href = els.canvas.toDataURL('image/png');
