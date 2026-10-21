@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "siteUrl": "https://jes.bz/life-cal",
+  "shortcutUrl": "https://www.icloud.com/shortcuts/99942882e26b4477ade306f972045ea8",
+  "shortcutSha256": "cd8cccd67835a26a20f39e101bb92c052df3bd271aac953da1f8c03809045db5",
+  "scriptSha256": [
+    "bac70a31aaa24de9f70fea6a27a500b33ddd88d8ee852de80cefb5c9031a7b05",
+    "6267c6b84b9bf71dbb3e873b595d0d942e97498f08e04a4f88a1bb6bce4fb334",
+    "6267c6b84b9bf71dbb3e873b595d0d942e97498f08e04a4f88a1bb6bce4fb334"
+  ],
+  "verifiedVersion": "1.0.0",
+  "verifiedPaths": [
+    "cancel",
+    "edit-website",
+    "empty-refresh",
+    "fresh-install",
+    "safari-apply"
+  ]
+}

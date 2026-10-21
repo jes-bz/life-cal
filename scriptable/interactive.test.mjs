@@ -7,159 +7,133 @@ import assert from 'node:assert/strict';
 execFileSync(process.execPath, ['scriptable/build.mjs']);
 const source = await readFile(new URL('./interactive.js', import.meta.url), 'utf8');
 const functions = source.slice(0, source.lastIndexOf('Script.setShortcutOutput'));
+const release = JSON.parse(await readFile(new URL('../release.json', import.meta.url), 'utf8'));
+const settings = { dob: '2000-01-01', device: 'max', years: 90, layout: 'bottom',
+    bg: '#000000', lived: '#ffffff', rest: '#333333' };
+const website = { ...settings, dob: '1988-04-03', bg: '#112233' };
 
-function runtime(saved, choices = [], runsInApp = true) {
+function runtime(saved, choice = 'Apply Wallpaper', runsInApp = true) {
     const store = new Map();
     if (saved) store.set('life-calendar.settings.v1', JSON.stringify(saved));
-    const titles = [];
-    let writes = 0;
+    const tables = [], opened = [];
+    let settingsWrites = 0;
+    class Row {
+        cells = [];
+        addText(title, subtitle) { this.cells.push({ title, subtitle }); }
+        addImage(image) { assert.equal(image, 'IMAGE'); return { centerAligned() {} }; }
+    }
     const context = vm.createContext({
+        LIFE_CALENDAR_VERSION: release.version, LIFE_CALENDAR_SITE_URL: release.siteUrl,
         config: { runsInApp },
-        Safari: { open: url => assert.equal(url, 'shortcuts://') },
+        Safari: { open: url => opened.push(url) },
         Keychain: { contains: key => store.has(key), get: key => store.get(key),
-            set: (key, next) => { store.set(key, next); writes++; } },
-        Alert: class {
-            addAction() {} addCancelAction() {}
-            async presentSheet() {
-                titles.push(this.title);
-                assert.ok(choices.length, 'Unexpected prompt');
-                return choices.shift();
+            set: (key, next) => { store.set(key, next); if (key === 'life-calendar.settings.v1') settingsWrites++; } },
+        UITableRow: Row,
+        UITable: class {
+            rows = [];
+            addRow(row) { this.rows.push(row); }
+            async present() {
+                tables.push(this.rows);
+                if (choice) {
+                    const row = this.rows.find(r => r.cells.some(c => c.title === choice));
+                    assert.ok(row, 'Requested preview action exists');
+                    assert.equal(row.dismissOnSelect, true);
+                    row.onSelect();
+                }
             }
         },
-        renderWallpaper: settings => { assert.ok(settings.dob); return 'PNG'; },
+        Image: { fromData: () => 'IMAGE' }, Data: { fromBase64String: value => assert.equal(value, 'PNG') },
+        renderWallpaper: value => { assert.ok(value?.dob, 'Invalid settings'); return 'PNG'; },
         getDevice: () => ({ label: 'iPhone Max' })
     });
     vm.runInContext(functions, context);
-    return { run: input => context.runLifeCalendar(input), preflight: input => context.preflightLifeCalendar(input),
-        execute: input => context.executeLifeCalendar(input), titles,
-        setRunsInApp: value => { context.config.runsInApp = value; },
+    return { preflight: input => context.preflightLifeCalendar(input), execute: input => context.executeLifeCalendar(input),
+        setRunsInApp: value => { context.config.runsInApp = value; }, tables, opened,
         saved: () => store.has('life-calendar.settings.v1') ? JSON.parse(store.get('life-calendar.settings.v1')) : null,
-        writes: () => writes };
+        writes: () => settingsWrites };
 }
-const settings = { dob: '2000-01-01', device: 'max', years: 90, layout: 'bottom' };
 
-test('empty input silently refreshes saved settings during preflight', async () => {
-    const r = runtime(settings);
+test('fresh install opens the website without local configuration prompts', async () => {
+    const r = runtime(null);
+    assert.equal(await r.preflight(null), release.siteUrl);
+    assert.equal(await r.execute(null), release.siteUrl);
+    assert.deepEqual(r.tables, []);
+    assert.equal(r.saved(), null);
+});
+test('empty input refreshes saved settings silently without navigation or writes', async () => {
+    const r = runtime(settings, null, false);
     assert.equal(await r.preflight(null), 'PNG');
-    assert.deepEqual(r.titles, []);
+    assert.equal(await r.execute('refresh'), 'PNG');
+    assert.deepEqual(r.tables, []);
+    assert.deepEqual(r.opened, []);
     assert.equal(r.writes(), 0);
 });
-test('missing settings sends first run to setup', async () => {
-    const r = runtime(null);
-    assert.equal(await r.preflight(null), 'setup');
-    assert.deepEqual(r.titles, []);
-    assert.equal(r.writes(), 1);
+test('Shortcuts empty-list input follows the same refresh and first-run paths', async () => {
+    const configured = runtime(settings, null, false);
+    assert.equal(await configured.preflight([]), 'PNG');
+    assert.equal(await configured.execute([]), 'PNG');
+    assert.deepEqual(configured.tables, []);
+    assert.equal(await runtime(null).preflight([]), release.siteUrl);
 });
-test('settings input opens the saved settings form', async () => {
-    const r = runtime(settings, [5]);
-    assert.equal(await r.preflight('settings'), 'setup');
-    assert.equal(await r.run('settings'), 'PNG');
-    assert.deepEqual(r.titles, ['Change Settings']);
-});
-test('settings input on first run opens setup', async () => {
-    const r = runtime(null);
-    assert.equal(await r.preflight('settings'), 'setup');
-});
-test('website settings are routed to the guided setup without overwriting saved values', async () => {
-    const r = runtime(settings, [5]);
-    const website = { dob: '1988-04-03', device: 'max', years: 84, layout: 'top',
-        bg: '#112233', lived: '#445566', rest: '#778899' };
-    const input = JSON.stringify(website);
-    assert.equal(await r.preflight(input), 'setup');
-    assert.deepEqual(r.saved(), settings);
-    assert.equal(await r.run(input), 'PNG');
-    assert.deepEqual(r.titles, ['Review Website Settings']);
-    assert.deepEqual(r.saved(), website);
-});
-test('website settings follow the manual Siri handoff before saving', async () => {
-    const r = runtime(settings, [5], false);
-    const website = { dob: '1988-04-03', device: 'max', years: 84, layout: 'top',
-        bg: '#112233', lived: '#445566', rest: '#778899' };
-    const input = JSON.stringify(website);
-    assert.equal(await r.execute(input), 'setup');
-    assert.deepEqual(r.titles, []);
-    r.setRunsInApp(true);
-    assert.equal(await r.execute(input), 'ready');
-    assert.deepEqual(r.titles, ['Review Website Settings']);
-    assert.deepEqual(r.saved(), website);
-    assert.equal(await r.execute('finish'), 'PNG');
-});
-test('Safari settings decoded by Shortcuts as a dictionary survive the full handoff', async () => {
-    const r = runtime(settings, [5], false);
-    const website = { dob: '1988-04-03', device: 'max', years: 84, layout: 'top',
-        bg: '#112233', lived: '#445566', rest: '#778899', ignored: 'not saved' };
-    assert.equal(await r.preflight(website), 'setup');
-    assert.deepEqual(r.saved(), settings);
-    assert.equal(await r.execute(website), 'setup');
-    assert.deepEqual(r.titles, []);
-    r.setRunsInApp(true);
-    assert.equal(await r.execute(website), 'ready');
-    assert.deepEqual(r.titles, ['Review Website Settings']);
-    const { ignored, ...expected } = website;
-    assert.deepEqual(r.saved(), expected);
-    assert.equal(await r.execute('finish'), 'PNG');
-});
-test('array input is rejected without changing saved settings', async () => {
+test('settings link restores saved design in the website fragment', async () => {
     const r = runtime(settings);
-    await assert.rejects(r.preflight([settings]), /must be a dictionary/);
+    const url = new URL(await r.preflight('settings'));
+    assert.equal(url.search, '');
+    const values = new URLSearchParams(url.hash.slice(1));
+    assert.equal(values.get('dob'), settings.dob);
+    assert.equal(values.get('bg'), '000000');
+    assert.deepEqual(r.tables, []);
+});
+for (const [label, input] of [['JSON string', JSON.stringify(website)], ['Safari dictionary', { ...website, ignored: 'drop' }]]) {
+    test(`${label} previews only in foreground and saves after Apply`, async () => {
+        const r = runtime(settings, 'Apply Wallpaper', false);
+        assert.equal(await r.preflight(input), 'setup');
+        assert.deepEqual(r.saved(), settings);
+        assert.equal(await r.execute(input), 'setup');
+        assert.deepEqual(r.tables, []);
+        r.setRunsInApp(true);
+        assert.equal(await r.execute(input), 'ready');
+        assert.deepEqual(r.saved(), website);
+        assert.equal(r.writes(), 1);
+        assert.match(r.tables[0][0].cells[0].subtitle, new RegExp(release.version.replaceAll('.', '\\.')));
+        assert.deepEqual(r.tables[0].filter(row => row.onSelect).map(row => row.cells[0].title),
+            ['Apply Wallpaper', 'Edit on Website', 'Cancel']);
+        assert.equal(await r.execute('finish'), 'PNG');
+        assert.equal(await r.execute('finish'), 'shortcuts://');
+    });
+}
+test('Edit on Website restores the candidate design without overwriting saved settings', async () => {
+    const r = runtime(settings, 'Edit on Website');
+    await r.preflight(website);
+    const link = await r.execute(website);
+    assert.equal(new URLSearchParams(new URL(link).hash.slice(1)).get('dob'), website.dob);
+    assert.equal(await r.execute('finish'), link);
     assert.deepEqual(r.saved(), settings);
     assert.equal(r.writes(), 0);
 });
-test('empty input with saved settings does not open a menu', async () => {
+for (const choice of ['Cancel', null]) {
+    test(`${choice || 'closing preview'} exits cleanly without saving or rendering wallpaper output`, async () => {
+        const r = runtime(settings, choice);
+        await r.preflight(website);
+        assert.equal(await r.execute(website), 'shortcuts://');
+        assert.equal(await r.execute('finish'), 'shortcuts://');
+        assert.deepEqual(r.saved(), settings);
+        assert.equal(r.writes(), 0);
+    });
+}
+test('new preview invalidates any previously approved handoff', async () => {
     const r = runtime(settings);
-    assert.equal(await r.run(null), 'PNG');
-    assert.deepEqual(r.titles, []);
+    await r.preflight(website); await r.execute(website);
+    await r.preflight(website);
+    assert.equal(await r.execute('finish'), 'shortcuts://');
 });
-test('changing settings saves only when confirmed', async () => {
-    const r = runtime(settings, [5]);
-    assert.equal(await r.run('settings'), 'PNG');
-    assert.deepEqual(r.titles, ['Change Settings']);
-    assert.equal(r.saved().dob, settings.dob);
-    assert.equal(r.writes(), 1);
-});
-test('cancelling setup does not save settings or produce wallpaper output', async () => {
-    const r = runtime(null, [-1]);
-    await assert.rejects(r.run(null), /cancelled/);
-    assert.equal(r.saved(), null);
+test('invalid inputs cannot replace saved settings', async () => {
+    const r = runtime(settings);
+    await assert.rejects(r.preflight([website]), /dictionary/);
+    await assert.rejects(r.preflight('{broken'), /valid JSON/);
+    await assert.rejects(r.preflight('unsupported'), /Unsupported/);
+    await assert.rejects(r.execute({ device: 'max' }), /Invalid settings/);
+    assert.equal(await r.execute('finish'), 'shortcuts://');
+    assert.deepEqual(r.saved(), settings);
     assert.equal(r.writes(), 0);
-});
-test('foreground settings handoff must complete before background render and can only be consumed once', async () => {
-    const r = runtime(settings, [5]);
-    assert.equal(await r.execute('prepare'), 'prepared');
-    await assert.rejects(r.execute('finish'), /did not finish/);
-    assert.equal(await r.execute('settings'), 'ready');
-    assert.equal(await r.execute('finish'), 'PNG');
-    await assert.rejects(r.execute('finish'), /did not finish/);
-});
-test('Siri defers the settings UI to the foreground Scriptable pass', async () => {
-    const r = runtime(settings, [5], false);
-    assert.equal(await r.execute('settings'), 'setup');
-    assert.deepEqual(r.titles, []);
-
-    r.setRunsInApp(true);
-    assert.equal(await r.execute('setup'), 'ready');
-    assert.deepEqual(r.titles, ['Change Settings']);
-    assert.equal(await r.execute('finish'), 'PNG');
-});
-test('a prepared Siri handoff token opens settings only after entering the app', async () => {
-    const r = runtime(settings, [5], false);
-    assert.equal(await r.execute('prepare'), 'prepared');
-    assert.deepEqual(r.titles, []);
-
-    r.setRunsInApp(true);
-    assert.equal(await r.execute('prepared'), 'ready');
-    assert.deepEqual(r.titles, ['Change Settings']);
-    assert.equal(await r.execute('finish'), 'PNG');
-});
-test('first-run Siri pass returns setup without presenting an alert', async () => {
-    const r = runtime(null, [], false);
-    assert.equal(await r.execute(null), 'setup');
-    assert.deepEqual(r.titles, []);
-    assert.equal(r.saved(), null);
-});
-test('cancelling a manual run prevents refreshing even when settings exist', async () => {
-    const r = runtime(settings, [-1]);
-    await r.execute('prepare');
-    await assert.rejects(r.execute('settings'), /cancelled/);
-    await assert.rejects(r.execute('finish'), /cancelled/);
 });

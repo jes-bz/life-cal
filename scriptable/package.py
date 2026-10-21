@@ -1,5 +1,6 @@
-"""Build a single guided Shortcut with silent refresh and a settings URL path."""
+"""Build a Shortcut with silent refresh, website settings, and native preview."""
 import plistlib
+import json
 import subprocess
 from pathlib import Path
 from uuid import uuid4
@@ -7,6 +8,7 @@ from uuid import uuid4
 ROOT = Path(__file__).resolve().parent.parent
 subprocess.run(["node", "scriptable/build.mjs"], cwd=ROOT, check=True)
 source = (ROOT / "dist/life-calendar-interactive.js").read_text()
+release = json.loads((ROOT / "release.json").read_text())
 preflight_source = source.replace(
     "Script.setShortcutOutput(await executeLifeCalendar(args.shortcutParameter));",
     "Script.setShortcutOutput(await preflightLifeCalendar(args.shortcutParameter));",
@@ -35,6 +37,8 @@ def text_output(uid, name):
 
 
 group = str(uuid4()).upper()
+action("is.workflow.actions.comment", WFCommentActionText=
+       f"Life Calendar {release['version']}\n{release['siteUrl']}\nChange colors/settings: hold link → Open Link.\nSaved designs refresh silently.")
 preflight = action("dk.simonbs.Scriptable.RunScriptInlineIntent", script=preflight_source,
                    parameter=reference(), runInApp=False, ShowWhenRun=False)
 preflight_text = action("is.workflow.actions.gettext",
@@ -53,6 +57,13 @@ action("dk.simonbs.Scriptable.RunScriptInlineIntent", script=source,
 action("is.workflow.actions.conditional", WFControlFlowMode=1, GroupingIdentifier=group)
 action("is.workflow.actions.gettext", WFTextActionText=text_output(preflight, "Output"))
 result = action("is.workflow.actions.conditional", WFControlFlowMode=2, GroupingIdentifier=group)
+navigation_group = str(uuid4()).upper()
+action("is.workflow.actions.conditional", WFControlFlowMode=0,
+       GroupingIdentifier=navigation_group, WFCondition=99, WFConditionalActionString="://",
+       WFInput={"Type": "Variable", "Variable": reference(result, "If Result")})
+action("is.workflow.actions.openurl", WFInput=reference(result, "If Result"))
+action("is.workflow.actions.output", WFOutput="")
+action("is.workflow.actions.conditional", WFControlFlowMode=2, GroupingIdentifier=navigation_group)
 decoded = action("is.workflow.actions.base64encode", WFEncodeMode="Decode",
                  WFInput=reference(result, "If Result"))
 images = action("is.workflow.actions.detect.images", WFInput=reference(decoded, "Base64 Encoded"))
