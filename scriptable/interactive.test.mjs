@@ -11,6 +11,7 @@ const release = JSON.parse(await readFile(new URL('../release.json', import.meta
 const settings = { dob: '2000-01-01', device: 'max', years: 90, layout: 'bottom',
     bg: '#000000', lived: '#ffffff', rest: '#333333' };
 const website = { ...settings, dob: '1988-04-03', bg: '#112233' };
+const handoff = { ...website, version: release.version };
 
 function runtime(saved, choice = 'Apply Wallpaper', runsInApp = true) {
     const store = new Map();
@@ -84,7 +85,7 @@ test('settings link restores saved design in the website fragment', async () => 
     assert.equal(values.get('bg'), '000000');
     assert.deepEqual(r.tables, []);
 });
-for (const [label, input] of [['JSON string', JSON.stringify(website)], ['Safari dictionary', { ...website, ignored: 'drop' }]]) {
+for (const [label, input] of [['JSON string', JSON.stringify(handoff)], ['Safari dictionary', { ...handoff, ignored: 'drop' }]]) {
     test(`${label} previews only in foreground and saves after Apply`, async () => {
         const r = runtime(settings, 'Apply Wallpaper', false);
         assert.equal(await r.preflight(input), 'setup');
@@ -104,8 +105,8 @@ for (const [label, input] of [['JSON string', JSON.stringify(website)], ['Safari
 }
 test('Edit on Website restores the candidate design without overwriting saved settings', async () => {
     const r = runtime(settings, 'Edit on Website');
-    await r.preflight(website);
-    const link = await r.execute(website);
+    await r.preflight(handoff);
+    const link = await r.execute(handoff);
     assert.equal(new URLSearchParams(new URL(link).hash.slice(1)).get('dob'), website.dob);
     assert.equal(await r.execute('finish'), link);
     assert.deepEqual(r.saved(), settings);
@@ -114,8 +115,8 @@ test('Edit on Website restores the candidate design without overwriting saved se
 for (const choice of ['Cancel', null]) {
     test(`${choice || 'closing preview'} exits cleanly without saving or rendering wallpaper output`, async () => {
         const r = runtime(settings, choice);
-        await r.preflight(website);
-        assert.equal(await r.execute(website), 'shortcuts://');
+        await r.preflight(handoff);
+        assert.equal(await r.execute(handoff), 'shortcuts://');
         assert.equal(await r.execute('finish'), 'shortcuts://');
         assert.deepEqual(r.saved(), settings);
         assert.equal(r.writes(), 0);
@@ -123,8 +124,8 @@ for (const choice of ['Cancel', null]) {
 }
 test('new preview invalidates any previously approved handoff', async () => {
     const r = runtime(settings);
-    await r.preflight(website); await r.execute(website);
-    await r.preflight(website);
+    await r.preflight(handoff); await r.execute(handoff);
+    await r.preflight(handoff);
     assert.equal(await r.execute('finish'), 'shortcuts://');
 });
 test('invalid inputs cannot replace saved settings', async () => {
@@ -132,8 +133,40 @@ test('invalid inputs cannot replace saved settings', async () => {
     await assert.rejects(r.preflight([website]), /dictionary/);
     await assert.rejects(r.preflight('{broken'), /valid JSON/);
     await assert.rejects(r.preflight('unsupported'), /Unsupported/);
-    await assert.rejects(r.execute({ device: 'max' }), /Invalid settings/);
+    await assert.rejects(r.execute({ device: 'max', version: release.version }), /Invalid settings/);
     assert.equal(await r.execute('finish'), 'shortcuts://');
     assert.deepEqual(r.saved(), settings);
     assert.equal(r.writes(), 0);
+});
+
+for (const version of ['1.1.9', '1.1.0']) {
+    test(`patch-compatible handoff ${version} previews normally`, async () => {
+        const r = runtime(settings);
+        assert.equal(await r.execute({ ...website, version }), 'ready');
+        assert.deepEqual(r.saved(), website);
+    });
+}
+for (const version of ['1.2.0', '2.0.0', '1.0.9', 'invalid', null]) {
+    test(`incompatible handoff ${version} blocks before settings or wallpaper writes`, async () => {
+        const r = runtime(settings, 'Open update page', false);
+        const input = { ...website, version };
+        assert.equal(await r.preflight(input), 'setup');
+        assert.equal(await r.execute(input), 'setup');
+        assert.equal(r.tables.length, 0);
+        r.setRunsInApp(true);
+        const result = await r.execute(input);
+        assert.equal(new URLSearchParams(new URL(result).hash.slice(1)).get('update'), '1');
+        assert.equal(await r.execute('finish'), result);
+        assert.deepEqual(r.saved(), settings);
+        assert.equal(r.writes(), 0);
+        assert.equal(r.tables[0][0].cells[0].title,
+            ['1.0.9', null].includes(version) ? 'Reopen the website' : 'Shortcut update required');
+    });
+}
+test('canceling an update exits cleanly and invalidates an earlier approval', async () => {
+    const r = runtime(settings, 'Cancel');
+    await r.preflight({ ...website, version: '2.0.0' });
+    assert.equal(await r.execute({ ...website, version: '2.0.0' }), 'shortcuts://');
+    assert.equal(await r.execute('finish'), 'shortcuts://');
+    assert.deepEqual(r.saved(), settings);
 });

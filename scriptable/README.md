@@ -8,7 +8,7 @@ access, or separate script installation.
 ## Install and use
 
 1. [Install Scriptable](https://apps.apple.com/us/app/scriptable/id1405459188),
-   then [add Life Calendar](https://www.icloud.com/shortcuts/99942882e26b4477ade306f972045ea8).
+   then [add Life Calendar](https://www.icloud.com/shortcuts/2fad56b25104445c9b1d750111cfc9de).
    Return to the website after installation. An unconfigured Shortcut opens the
    website; it does not present a second color or settings editor.
 2. In the Shortcut's final **Set Wallpaper Photo** action, select the Lock Screen
@@ -24,7 +24,9 @@ access, or separate script installation.
    This runs Life Calendar with the `settings` input and opens the website with
    your saved values. The configuration link is also in the Shortcut's opening
    comment. Settings returned to the site use a URL fragment, which is not sent
-   to the web server. Previously shared query-string links still work.
+   to the web server. The website remembers the last design in this browser's
+   local storage; an explicit settings link overrides remembered values.
+   Previously shared query-string links still work.
 5. For weekly refreshes, enable the included Friday 1:00 AM trigger in
    **Edit → Automation**. It imports disabled. If your iOS version does not
    support embedded triggers, create a weekly Time of Day automation with
@@ -42,12 +44,22 @@ text or as a dictionary decoded by Shortcuts; both are supported. A foreground
 preview hands completion back to Shortcuts. Cancellation and website navigation
 exit before image decoding or wallpaper replacement.
 
+Website handoffs include the website version. The Shortcut accepts matching
+major/minor versions (for example, 1.1.0 and 1.1.9). A newer major or minor
+version stops configuration and offers the update page before saving anything.
+An older website page asks you to reopen the current website. Weekly refreshes
+use saved settings without checking the network. This protection requires the
+version-aware Shortcut; earlier shared versions cannot enforce it retroactively.
+
 ## Build and release
 
 `release.json` is the release's version, public link, signed payload checksum,
 inline-source checksums, and native smoke-test checklist. The version is embedded
 in every inline script and shown on the iPhone preview and website. Increment it
 before releasing code changes; recipients import the new Shortcut to update.
+Keep `WEBSITE_VERSION` in `index.html` equal to the release version. The release
+verifier checks this, and the website disables handoffs when cached page code
+and release metadata disagree.
 
 From the repository root:
 

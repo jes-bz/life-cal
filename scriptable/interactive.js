@@ -22,7 +22,41 @@ function importedSettings(input) {
     for (const key of SETTINGS_FIELDS) {
         if (Object.prototype.hasOwnProperty.call(parsed, key)) settings[key] = parsed[key];
     }
-    return settings;
+    return { settings, version: parsed.version == null ? '1.0.0' : parsed.version };
+}
+
+function compatibleVersion(version) {
+    return typeof version === 'string' && /^\d+\.\d+\.\d+$/.test(version) &&
+        version.split('.').slice(0, 2).join('.') === LIFE_CALENDAR_VERSION.split('.').slice(0, 2).join('.');
+}
+
+async function confirmUpdate(version, settings) {
+    const installed = LIFE_CALENDAR_VERSION.split('.').map(Number);
+    const incoming = typeof version === 'string' && /^\d+\.\d+\.\d+$/.test(version)
+        ? version.split('.').map(Number) : null;
+    const olderWebsite = incoming && (incoming[0] < installed[0] ||
+        (incoming[0] === installed[0] && incoming[1] < installed[1]));
+    const table = new UITable();
+    const heading = new UITableRow();
+    heading.height = 140;
+    heading.addText(olderWebsite ? 'Reopen the website' : 'Shortcut update required',
+        'Installed: ' + LIFE_CALENDAR_VERSION + '. Website: ' + String(version) +
+        (olderWebsite ? '. This website page is older than your Shortcut. Reopen the current website before applying this design.' :
+            '. Reinstall Life Calendar from the website before applying this design.') +
+        ' Your saved design has not changed.');
+    table.addRow(heading);
+    let result = SHORTCUTS_URL;
+    for (const title of ['Open update page', 'Cancel']) {
+        const row = new UITableRow();
+        row.addText(title);
+        row.dismissOnSelect = true;
+        row.onSelect = () => {
+            if (title === 'Open update page') result = websiteURL(settings) + '&update=1';
+        };
+        table.addRow(row);
+    }
+    await table.present();
+    return result;
 }
 
 function savedSettings() {
@@ -77,8 +111,8 @@ async function confirmWallpaper(settings, png) {
 }
 
 async function preflightLifeCalendar(input) {
-    const websiteSettings = importedSettings(input);
-    if (websiteSettings) {
+    const handoff = importedSettings(input);
+    if (handoff) {
         Keychain.set(MANUAL_RUN_KEY, 'pending');
         return 'setup';
     }
@@ -96,14 +130,21 @@ async function executeLifeCalendar(input) {
         if (result.startsWith(LIFE_CALENDAR_SITE_URL)) return result;
         return SHORTCUTS_URL;
     }
-    const websiteSettings = importedSettings(input);
-    if (!websiteSettings) return await preflightLifeCalendar(input);
+    const handoff = importedSettings(input);
+    if (!handoff) return await preflightLifeCalendar(input);
     // Shortcuts may make a Siri pass before entering foreground Scriptable.
     if (!config.runsInApp) {
         Keychain.set(MANUAL_RUN_KEY, 'pending');
         return 'setup';
     }
     try {
+        const websiteSettings = handoff.settings;
+        if (!compatibleVersion(handoff.version)) {
+            const result = await confirmUpdate(handoff.version, websiteSettings);
+            Keychain.set(MANUAL_RUN_KEY, result);
+            Safari.open(SHORTCUTS_URL);
+            return result;
+        }
         const png = renderWallpaper(websiteSettings);
         const choice = await confirmWallpaper(websiteSettings, png);
         let result = SHORTCUTS_URL;
