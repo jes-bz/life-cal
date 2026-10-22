@@ -2,6 +2,16 @@
 
 The hosted `life-cal-worker` service is retired. Keep `worker/` local-only; do not redeploy it or restore its production route. The static site and offline Shortcut are the supported paths.
 
+## Tool behavior
+
+- For Google account work, use the Vivaldi extension browser control, not the
+  built-in browser or native desktop control.
+- Before editing `jes-bz/site-ops`, account-wide Cloudflare configuration, or
+  email, read the applicable connector instructions and verify the exact target.
+- When taking a service offline, remove its policy health probes before applying
+  allowlist changes; retain the unrelated firewall policy until its rules can be
+  reviewed separately.
+
 ## Project scope
 
 - `index.html` is the static configuration site, published to
@@ -10,8 +20,8 @@ The hosted `life-cal-worker` service is retired. Keep `worker/` local-only; do n
   is also used by the PNG tests; the production Worker does not import it.
 - `calendar-design.js` supplies shared appearance settings and scene geometry
   for the browser and offline Scriptable renderer.
-- `worker/` contains the Rust request handler, PNG renderer, tests, npm commands,
-  and production Wrangler configuration for `https://life-cal.jes.bz/`.
+- `worker/` retains local Rust renderer and test code. It has no production
+  endpoint or deployment workflow.
 - Keep this repository focused on Life Calendar. Account-wide Cloudflare changes
   and configuration for other websites do not belong here.
 
@@ -60,28 +70,17 @@ Do not set Cargo `strip = true`; it breaks the pinned wasm-bindgen catch wrapper
 
 ## Edge protection
 
-The `jes.bz` zone has a Single Redirect rule with ref
-`life_cal_redirect_bare_root` in the `http_request_dynamic_redirect` phase.
-GET/HEAD requests to `life-cal.jes.bz/` with an empty query string receive a 302
-directly to `https://jessebrizzi.com/life-cal/`, before Worker execution.
-Requests with any query string continue to the Worker so parameter validation,
-encoded parameter names, and image links retain their behavior.
+Path allowlists are managed in the private `jes-bz/site-ops` repository. Its
+`config/sites.json` is the source of truth. The static site's published files
+must be allowlisted there before release; uploading them to Pages alone does not
+make them accessible through Cloudflare. Successful production Pages deployments
+trigger its apply workflow through `.github/workflows/site-policy.yml`. Keep
+Cloudflare credentials in `site-ops`; this repository holds only the scoped
+`SITE_OPS_DISPATCH_TOKEN` Actions secret.
 
-Path allowlists are managed in the private `jes-bz/site-ops` repository.
-Its `config/sites.json` is the source of truth for the image endpoint's allowed
-paths. Unsupported paths are blocked before Worker execution.
-The static site's published files are also allowlisted there. Add new root-level
-JavaScript or metadata files to its Life Calendar source inventory before release;
-uploading them to Pages alone does not make them accessible through Cloudflare.
-Successful production Pages deployments trigger its apply workflow through
-`.github/workflows/site-policy.yml`. Keep Cloudflare credentials in `site-ops`;
-this repository holds only the scoped `SITE_OPS_DISPATCH_TOKEN` Actions secret.
-
-This is zone configuration, managed separately from Wrangler. Before adding a
-Worker route, update the policy in `site-ops` and apply its workflow. Scope edits to the image
-hostname and preserve unrelated zone rules. Do not introduce browser challenges
-that break unattended Shortcuts. Confirm workers.dev and preview exposure before
-changing deployment settings; zone rules do not protect those hostnames.
+Do not add Worker routes. Preserve unrelated zone rules, avoid browser challenges
+that could interrupt automation, and check `workers.dev` exposure when changing
+retirement settings. A deleted service must not remain in policy probe paths.
 
 ## Repository hygiene
 
