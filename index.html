@@ -211,7 +211,7 @@
                 <!-- Actions -->
                 <div class="pt-4 space-y-3">
                     <button id="btn-apply-settings" disabled
-                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-black font-bold py-3 px-4 rounded text-sm transition-colors flex items-center justify-center">
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold py-3 px-4 rounded text-sm transition-colors flex items-center justify-center">
                         <i class="fa-solid fa-arrow-up-right-from-square mr-2"></i> Apply to iPhone
                     </button>
                     <p class="text-xs text-gray-400">Opens the installed Life Calendar Shortcut with this design. Preview it on your iPhone, then tap Apply Wallpaper.</p>
@@ -287,7 +287,7 @@
                 <section class="rounded-lg border border-gray-100 bg-gray-50 p-4">
                     <h3 class="font-bold text-white mb-2">3. Load these settings</h3>
                     <p class="mb-3 text-xs text-gray-500">Tap the button to open Life Calendar on this iPhone with the settings currently selected on this page. Review the wallpaper preview in Scriptable, approve first-run permissions, then tap <strong>Apply Wallpaper</strong>.</p>
-                    <button id="btn-use-settings" disabled class="w-full bg-indigo-600 hover:bg-indigo-700 text-black font-bold py-3 px-4 rounded text-sm transition-colors flex items-center justify-center">
+                    <button id="btn-use-settings" disabled class="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold py-3 px-4 rounded text-sm transition-colors flex items-center justify-center">
                         <i class="fa-solid fa-arrow-up-right-from-square mr-2"></i> Apply to iPhone
                     </button>
                 </section>
@@ -634,7 +634,7 @@
         }
 
         init();
-        fetch('./release.json').then(response => {
+        fetch(`./release.json?v=${WEBSITE_VERSION}`, { cache: 'no-store' }).then(response => {
             if (!response.ok) throw new Error('Release metadata unavailable');
             return response.json();
         }).then(release => {
