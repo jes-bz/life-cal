@@ -65,6 +65,9 @@ encoded parameter names, and image links retain their behavior.
 Path allowlists are managed in the private `jes-bz/site-ops` repository.
 Its `config/sites.json` is the source of truth for the image endpoint's allowed
 paths. Unsupported paths are blocked before Worker execution.
+The static site's published files are also allowlisted there. Add new root-level
+JavaScript or metadata files to its Life Calendar source inventory before release;
+uploading them to Pages alone does not make them accessible through Cloudflare.
 Successful production Pages deployments trigger its apply workflow through
 `.github/workflows/site-policy.yml`. Keep Cloudflare credentials in `site-ops`;
 this repository holds only the scoped `SITE_OPS_DISPATCH_TOKEN` Actions secret.
