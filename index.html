@@ -241,11 +241,14 @@
                     class="w-full h-full object-contain bg-transparent"></canvas>
 
                 <div id="icon-overlay" class="hidden absolute inset-0 pointer-events-none z-10" aria-hidden="true">
-                    <div class="absolute rounded-xl border border-white/30 bg-white/10" style="left:8%;top:13%;width:84%;height:17%"></div>
-                    <div class="absolute grid grid-cols-4 gap-3" style="left:9%;top:36%;width:82%">
+                    <div id="sample-clock" class="absolute rounded-xl border border-white/30 bg-white/10" style="left:14%;top:13%;width:72%;height:10%"></div>
+                    <div id="sample-widgets" class="absolute rounded-xl border border-white/30 bg-white/10" style="left:8%;width:84%;height:8%"></div>
+                    <div id="sample-home-icons" class="absolute grid grid-cols-4 gap-3" style="left:9%;top:36%;width:82%">
                         <span class="aspect-square rounded-xl bg-white/20 border border-white/30"></span><span class="aspect-square rounded-xl bg-white/20 border border-white/30"></span><span class="aspect-square rounded-xl bg-white/20 border border-white/30"></span><span class="aspect-square rounded-xl bg-white/20 border border-white/30"></span>
                     </div>
-                    <div class="absolute rounded-2xl border border-white/30 bg-white/10" style="left:7%;bottom:3%;width:86%;height:9%"></div>
+                    <div id="sample-dock" class="absolute rounded-2xl border border-white/30 bg-white/10" style="left:7%;bottom:3%;width:86%;height:9%"></div>
+                    <div id="sample-lock-controls" class="absolute flex justify-between" style="left:8%;bottom:3%;width:84%;height:5%"><span class="h-full aspect-square rounded-full border border-white/30 bg-white/10"></span><span class="h-full aspect-square rounded-full border border-white/30 bg-white/10"></span></div>
+                    <div id="sample-duo-controls" class="absolute rounded-xl border border-white/30 bg-white/10" style="right:4%;top:35%;width:16%;height:59%"></div>
                 </div>
                 <!-- Phone Notch (Purely aesthetic for preview) -->
                 <div id="preview-notch" class="absolute top-0 left-1/2 transform -translate-x-1/2 w-1/3 h-7 bg-gray-800 rounded-b-xl z-20">
@@ -573,12 +576,23 @@
                 ctx.fillStyle = label.color; ctx.font = `${label.fontSize}px monospace`;
                 ctx.textBaseline = 'top'; ctx.fillText(label.text, label.x, label.y, label.width);
             }
-            drawIconOverlay(width, height);
+            drawIconOverlay();
         }
 
-        function drawIconOverlay(width, height) {
+        function drawIconOverlay() {
             const overlay = document.getElementById('icon-overlay');
             overlay.classList.toggle('hidden', !document.getElementById('show-icons').checked);
+            const duo = state.device.startsWith('duo-');
+            const home = state.screen === 'home' && !duo;
+            const widgets = document.getElementById('sample-widgets');
+            widgets.classList.toggle('hidden', !home && (duo || state.layout === 'none'));
+            widgets.style.top = home ? '13%' : state.layout === 'bottom' ? '81%' : '25%';
+            widgets.style.height = home ? '17%' : '8%';
+            document.getElementById('sample-clock').classList.toggle('hidden', home);
+            document.getElementById('sample-home-icons').classList.toggle('hidden', !home);
+            document.getElementById('sample-dock').classList.toggle('hidden', !home);
+            document.getElementById('sample-lock-controls').classList.toggle('hidden', home || duo);
+            document.getElementById('sample-duo-controls').classList.toggle('hidden', !duo);
             const rgb = state.lived.replace('#', '').match(/../g).map(value => parseInt(value, 16)).join(',');
             for (const block of overlay.querySelectorAll('.border')) {
                 block.style.backgroundColor = `rgba(${rgb},.12)`;
