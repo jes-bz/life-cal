@@ -91,9 +91,12 @@ async function confirmWallpaper(settings, png) {
     preview.addImage(Image.fromData(Data.fromBase64String(png))).centerAligned();
     table.addRow(preview);
     const details = new UITableRow();
-    details.height = 64;
+    const lifespan = getLifespanSummary(settings);
+    details.height = lifespan.rounded ? 96 : 64;
     details.addText(getDevice(settings.device).label,
-        'Review your design. Settings are saved only when you apply it.');
+        lifespan.rounded
+            ? `Target: ${settings.years} years. Rounded to ${lifespan.effectiveYears.toFixed(1)} years · ${lifespan.side} × ${lifespan.side}. Saved only when you apply.`
+            : 'Review your design. Settings are saved only when you apply it.');
     table.addRow(details);
     let choice = 'cancel';
     for (const [value, title] of [

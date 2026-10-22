@@ -4,7 +4,7 @@ export const DESIGN_DEFAULTS = {
     view: 'weeks', grid: 'adaptive', shape: 'square', future: 'dim',
     highlight: 'none', accent: '#f6a64b', screen: 'lock', placement: 'center',
     scale: 100, position: 50, spacing: 25, futureOpacity: 100,
-    ageLabels: 'none', decades: false, midyear: false
+    ageLabels: 'none', decades: false, midyear: false, squareLifespan: false
 };
 export const DESIGN_FIELDS = Object.keys(DESIGN_DEFAULTS);
 export function normalizeDesign(input = {}) {
@@ -22,11 +22,21 @@ export function normalizeDesign(input = {}) {
     }
     if (typeof s.accent !== 'string' || !/^#?[\da-f]{6}$/i.test(s.accent)) throw new Error('Invalid accent color');
     s.accent = '#' + s.accent.replace(/^#/, '');
-    for (const key of ['decades', 'midyear']) {
+    for (const key of ['decades', 'midyear', 'squareLifespan']) {
         if (![true, false, 'true', 'false'].includes(s[key])) throw new Error('Invalid design option: ' + key);
         s[key] = s[key] === true || s[key] === 'true';
     }
     return s;
+}
+export function getLifespanSummary(input) {
+    const s = normalizeDesign(input);
+    const perYear = s.view === 'months' ? 12 : 52;
+    const requested = Number(s.years) * perYear;
+    const rounded = s.squareLifespan && s.grid === 'adaptive' && s.view !== 'year';
+    const side = Math.round(Math.sqrt(requested));
+    const total = rounded ? side * side : requested;
+    return { rounded, total, side, effectiveYears: total / perYear,
+        unit: perYear === 12 ? 'months' : 'weeks' };
 }
 function civilDay(date) { return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000; }
 function timeUnits(s, now, view) {
@@ -40,9 +50,9 @@ function timeUnits(s, now, view) {
         // Clamp anniversaries to the final day for births on the 29th–31st.
         const anniversary = Math.min(birth.getDate(), new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate());
         if (now.getDate() < anniversary) months--;
-        return { total: s.years * 12, current: months, perYear: 12 };
+        return { total: getLifespanSummary(s).total, current: months, perYear: 12 };
     }
-    return { total: s.years * 52, current: Math.floor((civilDay(now) - civilDay(birth)) / 7), perYear: 52 };
+    return { total: getLifespanSummary(s).total, current: Math.floor((civilDay(now) - civilDay(birth)) / 7), perYear: 52 };
 }
 export function generateDesign(input, now = new Date()) {
     const s = normalizeDesign(input);
@@ -50,7 +60,7 @@ export function generateDesign(input, now = new Date()) {
     const isDuo = s.device.startsWith('duo-');
     if (isDuo) { s.screen = 'lock'; s.placement = 'center'; s.position = 100; }
     const legacy = isDuo && s.view === 'weeks' && s.grid === 'adaptive' && s.screen === 'lock' &&
-        s.placement === 'center' && s.scale === 100 && s.spacing === 25;
+        s.placement === 'center' && s.scale === 100 && s.spacing === 25 && !s.squareLifespan;
     const marks = [], labels = [];
     function addMark(x, y, size, index, current) {
         const past = index < current, active = index === current && current >= 0;
@@ -101,8 +111,9 @@ export function generateDesign(input, now = new Date()) {
             const size = Math.min((areaWidth - gutter) / xUnits, panelHeight * s.scale / 100 / yUnits) / 1.05;
             return { cols, rows, size, gridWidth: size * xUnits, gridHeight: size * yUnits };
         }
-        let fitted = dimensions(perYear || 19);
-        if (!classic) {
+        const square = s.squareLifespan && !classic && view !== 'year';
+        let fitted = dimensions(square ? Math.sqrt(total) : perYear || 19);
+        if (!classic && !square) {
             // Prefer a square grid. Only use a wider rectangle when its safe
             // area is too short for a width-filling square; never stretch cells.
             const targetAspect = Math.max(1, (areaWidth - gutter) / (panelHeight * s.scale / 100));

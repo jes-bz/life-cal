@@ -8,7 +8,7 @@ access, or separate script installation.
 ## Install and use
 
 1. [Install Scriptable](https://apps.apple.com/us/app/scriptable/id1405459188),
-   then [add Life Calendar](https://www.icloud.com/shortcuts/ea5c6d25777d4c65b7956ea32f1b6fd9).
+   then [add Life Calendar](https://www.icloud.com/shortcuts/899c4796262a4b6fb81ba8839ffa740c).
    Return to the website after installation. An unconfigured Shortcut opens the
    website; it does not present a second color or settings editor.
 2. In the Shortcut's final **Set Wallpaper Photo** action, select the Home Screen or Lock Screen
@@ -68,6 +68,11 @@ version-aware Shortcut; earlier shared versions cannot enforce it retroactively.
 Fit to screen prefers a near-square grid with uniform markers and spacing. It uses
 a wider grid only when the available height requires it; classic-only age and
 separator settings do not affect the adaptive layout.
+
+The optional full-square lifespan setting rounds the total life weeks (or months)
+to the nearest square count, without changing the entered target years. The site
+and iPhone preview disclose the effective lifespan. It applies only to adaptive
+life views; current-year days and classic year rows retain their exact counts.
 
 There are no custom titles, quotes, or progress text. Duo keeps its fixed
 bottom-aligned layout and permanent right-side control space. Design settings

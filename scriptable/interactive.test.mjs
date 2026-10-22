@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import vm from 'node:vm';
-import { DESIGN_FIELDS } from '../calendar-design.js';
+import { DESIGN_FIELDS, getLifespanSummary } from '../calendar-design.js';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
@@ -28,7 +28,7 @@ function runtime(saved, choice = 'Apply Wallpaper', runsInApp = true) {
         addImage(image) { assert.equal(image, 'IMAGE'); return { centerAligned() {} }; }
     }
     const context = vm.createContext({
-        DESIGN_FIELDS, LIFE_CALENDAR_VERSION: release.version, LIFE_CALENDAR_SITE_URL: release.siteUrl,
+        DESIGN_FIELDS, getLifespanSummary, LIFE_CALENDAR_VERSION: release.version, LIFE_CALENDAR_SITE_URL: release.siteUrl,
         config: { runsInApp },
         Safari: { open: url => opened.push(url) },
         Keychain: { contains: key => store.has(key), get: key => store.get(key),
@@ -187,4 +187,15 @@ test('appearance fields survive apply and saved-design website round trip', asyn
     for (const [key,value] of Object.entries(appearance)) assert.equal(values.get(key), String(value).replace(/^#/, ''));
     assert.equal(values.has('version'), false);
     assert.equal(values.has('ignored'), false);
+});
+
+test('rounded lifespan is disclosed before Apply and persists without changing target years', async () => {
+    const r = runtime(settings);
+    const input = {...handoff, years:90, grid:'adaptive', squareLifespan:true};
+    await r.execute(input);
+    assert.equal(r.saved().years,90);
+    assert.equal(r.saved().squareLifespan,true);
+    assert.ok(r.tables[0].some(row => row.cells.some(cell => cell.subtitle?.includes('88.9 years · 68 × 68'))));
+    const restored = new URL(await r.execute('settings'));
+    assert.equal(new URLSearchParams(restored.hash.slice(1)).get('squareLifespan'), 'true');
 });

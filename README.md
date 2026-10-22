@@ -18,7 +18,7 @@ The project consists of:
 
 ## iPhone Setup
 
-Install [Scriptable](https://apps.apple.com/us/app/scriptable/id1405459188), then add the [Life Calendar Shortcut](https://www.icloud.com/shortcuts/ea5c6d25777d4c65b7956ea32f1b6fd9). The [offline setup guide](scriptable/README.md) explains initial setup, changing settings, and scheduling weekly refreshes.
+Install [Scriptable](https://apps.apple.com/us/app/scriptable/id1405459188), then add the [Life Calendar Shortcut](https://www.icloud.com/shortcuts/899c4796262a4b6fb81ba8839ffa740c). The [offline setup guide](scriptable/README.md) explains initial setup, changing settings, and scheduling weekly refreshes.
 
 ## Display sizes
 

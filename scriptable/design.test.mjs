@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { generateDesign, normalizeDesign } from '../calendar-design.js';
+import { generateDesign, normalizeDesign, getLifespanSummary } from '../calendar-design.js';
 import { generateRectData, DEVICES } from '../calendar-logic.js';
 const now = new Date(2024, 1, 29, 12);
 const base = { device: 'iphone', dob: '2000-01-01', years: 90, layout: 'none', lived: '#ffffff', rest: '#333333' };
@@ -86,4 +86,31 @@ test('adaptive grid widens only to fit a short panel without stretching markers'
     for (const mark of marks) {
         assert.ok(mark.size > 0 && mark.x + mark.size <= width && mark.y + mark.size <= height);
     }
+});
+
+test('full-square rounding chooses nearest marker count across supported years', () => {
+    for (let years=1;years<=120;years++) for (const view of ['weeks','months','combined']) {
+        const options = {...base,years,view,grid:'adaptive',squareLifespan:true};
+        const summary = getLifespanSummary(options);
+        const perYear = view === 'months' ? 12 : 52;
+        const target = years * perYear;
+        assert.ok(Number.isInteger(Math.sqrt(summary.total)));
+        assert.ok(Math.abs(summary.total-target) <= Math.abs((summary.side-1)**2-target));
+        assert.ok(Math.abs(summary.total-target) <= Math.abs((summary.side+1)**2-target));
+        const marks = generateDesign(options,now).marks.slice(0,summary.total);
+        assert.equal(marks.length,summary.total);
+        assert.equal(marks.findIndex(m=>m.y!==marks[0].y),summary.side);
+        assert.equal(marks.at(-1).x,marks[summary.side-1].x);
+    }
+    assert.deepEqual(getLifespanSummary({...base,squareLifespan:true}),
+        {rounded:true,total:4624,side:68,effectiveYears:4624/52,unit:'weeks'});
+});
+test('rounding is opt-in and inactive for classic grids and current-year days', () => {
+    assert.equal(scene({}).marks.length,90*52);
+    for (const options of [{grid:'classic'},{view:'year'}]) {
+        assert.deepEqual(scene(options),scene({...options,squareLifespan:true}));
+        assert.equal(getLifespanSummary({...base,...options,squareLifespan:true}).rounded,false);
+    }
+    assert.equal(normalizeDesign({squareLifespan:'true'}).squareLifespan,true);
+    assert.throws(()=>normalizeDesign({squareLifespan:'yes'}));
 });
