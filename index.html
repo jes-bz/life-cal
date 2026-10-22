@@ -33,7 +33,16 @@
         :focus-visible { outline: 2px solid #ffb86c; outline-offset: 3px; }
         input[type=radio] { accent-color: #ff9e3b; }
         input[type=text], input[type=number], input[type=date] { min-width: 0; }
-        input[type=color] { background: transparent; }
+        input[type=color].color-picker {
+            appearance: none; -webkit-appearance: none;
+            width: 5rem; height: 2.75rem; flex: 0 0 5rem;
+            padding: 4px; border: 1px solid #6b7280; border-radius: 6px;
+            background: #242424; cursor: pointer;
+        }
+        .color-picker::-webkit-color-swatch-wrapper { padding: 0; }
+        .color-picker::-webkit-color-swatch { border: 0; border-radius: 3px; }
+        .color-picker::-moz-color-swatch { border: 0; border-radius: 3px; }
+        .color-picker:hover { border-color: #ffb86c; }
         .preview-area {
             container-type: size;
             min-width: 0;
@@ -162,8 +171,6 @@
 </div>
 <div><label for="design-shape" class="block text-xs font-bold uppercase text-gray-400 mb-1">Marker shape</label><select id="design-shape" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="square">Squares</option><option value="rounded">Rounded squares</option><option value="circle">Circles</option></select></div>
 <div><label for="design-future" class="block text-xs font-bold uppercase text-gray-400 mb-1">Future markers</label><select id="design-future" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="dim">Solid / dim</option><option value="outline">Hollow outlines</option><option value="hidden">Hidden</option></select></div>
-<div><label for="design-highlight" class="block text-xs font-bold uppercase text-gray-400 mb-1">Current period</label><select id="design-highlight" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="none">No accent</option><option value="color">Accent color</option><option value="outline">Accent outline</option><option value="larger">Larger accent marker</option></select></div>
-<div id="accent-options"><label for="design-accent" class="block text-xs font-bold uppercase text-gray-400 mb-1">Current-period accent</label><input type="color" id="design-accent" class="h-10 w-full"></div>
 <label class="flex items-center gap-2 text-sm"><input type="checkbox" id="show-icons"> Preview sample icons and widgets · not in image</label>
 <details><summary class="cursor-pointer text-sm font-bold">Advanced placement and contrast</summary><div class="space-y-4 pt-4">
 <label for="design-scale" class="block text-xs text-gray-400">Grid size <output id="value-scale"></output><input id="design-scale" type="range" min="30" max="100" class="block w-full mt-2"></label>
@@ -184,33 +191,45 @@
                             <option value="custom">Custom</option>
                         </select>
                     </div>
+                    <p class="text-xs text-gray-400">Tap a color swatch to open the color picker, or enter a hex code.</p>
                     <div>
                         <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Background</label>
                         <div class="flex items-center space-x-2">
-                            <input type="color" id="color-bg" value="#000000"
-                                class="h-10 w-10 rounded cursor-pointer border-0 p-0">
-                            <input type="text" id="hex-bg" value="#000000"
+                            <input type="color" id="color-bg" aria-label="Choose background color" value="#000000"
+                                class="color-picker" title="Open color picker">
+                            <input type="text" id="hex-bg" aria-label="Background color hex" value="#000000"
                                 class="flex-1 bg-gray-50 border border-gray-200 rounded p-2 text-base font-mono uppercase">
                         </div>
                     </div>
                     <div>
                         <label id="label-lived" class="block text-xs font-bold uppercase text-gray-400 mb-1">Lived Weeks</label>
                         <div class="flex items-center space-x-2">
-                            <input type="color" id="color-lived" value="#3b82f6"
-                                class="h-10 w-10 rounded cursor-pointer border-0 p-0">
-                            <input type="text" id="hex-lived" value="#3b82f6"
+                            <input type="color" id="color-lived" aria-label="Choose past markers color" value="#3b82f6"
+                                class="color-picker" title="Open color picker">
+                            <input type="text" id="hex-lived" aria-label="Past markers color hex" value="#3b82f6"
                                 class="flex-1 bg-gray-50 border border-gray-200 rounded p-2 text-base font-mono uppercase">
                         </div>
                     </div>
                     <div id="future-color-options">
                         <label id="label-rest" class="block text-xs font-bold uppercase text-gray-400 mb-1">Future Weeks</label>
                         <div class="flex items-center space-x-2">
-                            <input type="color" id="color-rest" value="#333333"
-                                class="h-10 w-10 rounded cursor-pointer border-0 p-0">
-                            <input type="text" id="hex-rest" value="#333333"
+                            <input type="color" id="color-rest" aria-label="Choose future markers color" value="#333333"
+                                class="color-picker" title="Open color picker">
+                            <input type="text" id="hex-rest" aria-label="Future markers color hex" value="#333333"
                                 class="flex-1 bg-gray-50 border border-gray-200 rounded p-2 text-base font-mono uppercase">
                         </div>
                     </div>
+                    <div class="pt-4 border-t border-gray-200 space-y-4">
+<div><label for="design-highlight" class="block text-xs font-bold uppercase text-gray-400 mb-1">Current period</label><select id="design-highlight" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="none">No accent</option><option value="color">Accent color</option><option value="outline">Accent outline</option><option value="larger">Larger accent marker</option></select></div>
+                        <div id="accent-options">
+                            <label for="hex-accent" class="block text-xs font-bold uppercase text-gray-400 mb-1">Accent color</label>
+                            <div class="flex items-center space-x-2">
+                                <input type="color" id="design-accent" aria-label="Choose accent color" title="Open color picker" class="color-picker">
+                                <input type="text" id="hex-accent" aria-label="Accent color hex" class="flex-1 bg-gray-50 border border-gray-200 rounded p-2 text-base font-mono uppercase">
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Actions -->
@@ -404,6 +423,7 @@
             updateColorInputs('bg', state.bg);
             updateColorInputs('lived', state.lived);
             updateColorInputs('rest', state.rest);
+            updateColorInputs('accent', state.accent);
 
             // 3. Initialize URL and Draw
             updateUrl();
@@ -433,11 +453,12 @@
                 const el = document.getElementById('design-' + key);
                 if (el.type === 'checkbox') el.checked = state[key]; else el.value = state[key];
                 const output = document.getElementById('value-' + key);
+                if (key === 'accent') document.getElementById('hex-accent').value = state.accent;
                 if (output) output.textContent = state[key] + '%';
             }
         }
         function addListeners() {
-            for (const key of DESIGN_FIELDS) document.getElementById('design-' + key).addEventListener('input', e => {
+            for (const key of DESIGN_FIELDS.filter(key => key !== 'accent')) document.getElementById('design-' + key).addEventListener('input', e => {
                 state[key] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
                 if (key === 'screen' && state.screen === 'lock') { state.placement = 'center'; state.position = 50; }
                 if (key === 'placement') state.position = ['bottom', 'corner'].includes(state.placement) ? 100 : 50;
@@ -484,6 +505,7 @@
             setupColorSync('bg');
             setupColorSync('lived');
             setupColorSync('rest');
+            setupColorSync('accent');
 
             // Buttons
             els.btnDownload.addEventListener('click', downloadImage);
@@ -503,7 +525,7 @@
         }
 
         function setupColorSync(key) {
-            const picker = document.getElementById(`color-${key}`);
+            const picker = document.getElementById(key === 'accent' ? 'design-accent' : `color-${key}`);
             const text = document.getElementById(`hex-${key}`);
 
             picker.addEventListener('input', (e) => {
@@ -526,7 +548,7 @@
         }
 
         function updateColorInputs(key, val) {
-            document.getElementById(`color-${key}`).value = val;
+            document.getElementById(key === 'accent' ? 'design-accent' : `color-${key}`).value = val;
             document.getElementById(`hex-${key}`).value = val;
         }
 
