@@ -8,11 +8,11 @@ access, or separate script installation.
 ## Install and use
 
 1. [Install Scriptable](https://apps.apple.com/us/app/scriptable/id1405459188),
-   then [add Life Calendar](https://www.icloud.com/shortcuts/2fad56b25104445c9b1d750111cfc9de).
+   then [add Life Calendar](https://www.icloud.com/shortcuts/54552a91a195416fa353997b346914d7).
    Return to the website after installation. An unconfigured Shortcut opens the
    website; it does not present a second color or settings editor.
-2. In the Shortcut's final **Set Wallpaper Photo** action, select the Lock Screen
-   wallpaper to update. Leave **Show Preview** and **Crop to Subject** disabled.
+2. In the Shortcut's final **Set Wallpaper Photo** action, select the Home Screen or Lock Screen
+   wallpaper to update. The website layout preset does not change this destination. Leave **Show Preview** and **Crop to Subject** disabled.
    This wallpaper target belongs to each phone and still needs manual selection.
 3. Choose your birth date, display, life expectancy, layout, and colors on the
    website. Named palettes are available alongside custom colors. Tap **Apply to
@@ -50,6 +50,24 @@ version stops configuration and offers the update page before saving anything.
 An older website page asks you to reopen the current website. Weekly refreshes
 use saved settings without checking the network. This protection requires the
 version-aware Shortcut; earlier shared versions cannot enforce it retroactively.
+
+## Design options
+
+- Lock Screen safe areas and Home Screen placements: centered, bottom aligned,
+  narrow vertical, and compact corner. The optional icon/widget overlay is only
+  a preview; it is never included in the downloaded or generated image.
+- Life in weeks, life in months, the current year in days (including leap years),
+  or a life grid above an enlarged current-year grid.
+- Adaptive fitting or classic rows with exactly 52 weeks / 12 months per year.
+  Classic grids can show age markers every 5 or 10 years, decade gaps, and a
+  half-year gap in week views.
+- Square, rounded-square, or circular markers; solid/dim, hollow, or hidden
+  future markers; optional current-period color, outline, or larger accent.
+- Advanced grid size, vertical position, spacing, and future-marker opacity.
+
+There are no custom titles, quotes, or progress text. Duo keeps its fixed
+bottom-aligned layout and permanent right-side control space. Design settings
+are shared by the browser and Scriptable through `calendar-design.js`.
 
 ## Build and release
 

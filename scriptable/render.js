@@ -31,7 +31,8 @@ function renderWallpaper(input) {
         }
         settings[key] = '#' + settings[key].replace(/^#/, '');
     }
-    const { width, height } = getDevice(settings.device);
+    const scene = generateDesign(settings);
+    const { width, height } = scene;
     const context = new DrawContext();
     context.size = new Size(width, height);
     context.respectScreenScale = false;
@@ -39,13 +40,28 @@ function renderWallpaper(input) {
     context.setFillColor(new Color(settings.bg));
     context.fillRect(new Rect(0, 0, width, height));
     const colors = {};
-    for (const rect of generateRectData({
-        ...settings, width, height,
-        colorLived: settings.lived, colorRest: settings.rest
-    })) {
-        if (!colors[rect.color]) colors[rect.color] = new Color(rect.color);
-        context.setFillColor(colors[rect.color]);
-        context.fillRect(new Rect(rect.x, rect.y, rect.size, rect.size));
+    for (const mark of scene.marks) {
+        const key = mark.color + ':' + mark.opacity;
+        const color = colors[key] || (colors[key] = new Color(mark.color, mark.opacity));
+        context.setFillColor(color);
+        const line = Math.min(mark.size * .2, Math.max(1, mark.size * .12));
+        const inset = mark.outline ? line / 2 : 0;
+        const rect = new Rect(mark.x + inset, mark.y + inset, mark.size - inset * 2, mark.size - inset * 2);
+        if (mark.outline) { context.setStrokeColor(color); context.setLineWidth(line); }
+        if (mark.shape === 'circle') {
+            if (mark.outline) context.strokeEllipse(rect); else context.fillEllipse(rect);
+        } else if (mark.shape === 'rounded') {
+            const path = new Path(); path.addRoundedRect(rect, mark.size * .25, mark.size * .25);
+            context.addPath(path);
+            if (mark.outline) context.strokePath(); else context.fillPath();
+        } else {
+            if (mark.outline) context.strokeRect(rect); else context.fillRect(rect);
+        }
+    }
+    for (const label of scene.labels) {
+        context.setFont(Font.regularMonospacedSystemFont(label.fontSize));
+        context.setTextColor(new Color(label.color));
+        context.drawTextInRect(label.text, new Rect(label.x, label.y, label.width, label.height));
     }
     return Data.fromPNG(context.getImage()).toBase64String();
 }

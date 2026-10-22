@@ -19,11 +19,22 @@ function run(parameter) {
         Script: { setShortcutOutput(value) { output = value; } },
         Size: class { constructor(width, height) { Object.assign(this, { width, height }); } },
         Rect,
-        Color: class { constructor(hex) { this.hex = hex; } },
+        Color: class { constructor(hex, opacity = 1) { this.hex = hex; this.opacity = opacity; } },
+        Path: class { addRoundedRect(rect) { this.rect = rect; } },
+        Font: { regularMonospacedSystemFont: size => size },
         DrawContext: class {
             constructor() { context = this; }
             setFillColor(color) { this.color = color.hex; }
             fillRect(rect) { draws.push({ ...rect, color: this.color }); }
+            setStrokeColor(color) { this.color = color.hex; }
+            setLineWidth() {}
+            fillEllipse(rect) { this.fillRect(rect); }
+            strokeEllipse(rect) { this.fillRect(rect); }
+            strokeRect(rect) { this.fillRect(rect); }
+            addPath(path) { this.path = path; }
+            fillPath() { this.fillRect(this.path.rect); }
+            strokePath() { this.fillRect(this.path.rect); }
+            setFont() {} setTextColor() {} drawTextInRect() {}
             getImage() { return this; }
         },
         Data: { fromPNG(image) {
@@ -81,5 +92,14 @@ test('rejects malformed settings before allocating a drawing context', () => {
         { dob: '2000-01-01', device: 'unknown' }, { dob: '2000-01-01', bg: 'red' },
         { dob: '2000-01-01', layout: 'unknown' }]) {
         assert.throws(() => run(input));
+    }
+});
+
+test('all native marker paths render with bounds and normalization intact', () => {
+    for (const shape of ['circle', 'rounded', 'square']) for (const future of ['dim', 'outline', 'hidden']) {
+        const { draws } = run({ dob: '2000-01-01', grid: 'classic', shape, future,
+            view: 'combined', highlight: 'larger', decades: true, midyear: true, ageLabels: '10' });
+        assert.ok(draws.length > 365);
+        for (const r of draws) assert.ok(r.width > 0 && r.height > 0);
     }
 });

@@ -1,6 +1,6 @@
 const SETTINGS_KEY = 'life-calendar.settings.v1';
 const MANUAL_RUN_KEY = 'life-calendar.manual-run.v1';
-const SETTINGS_FIELDS = ['dob', 'device', 'years', 'layout', 'bg', 'lived', 'rest'];
+const SETTINGS_FIELDS = ['dob', 'device', 'years', 'layout', 'bg', 'lived', 'rest', ...DESIGN_FIELDS];
 const SHORTCUTS_URL = 'shortcuts://';
 
 function importedSettings(input) {

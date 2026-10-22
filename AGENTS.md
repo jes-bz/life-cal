@@ -6,6 +6,8 @@
   `https://jessebrizzi.com/life-cal/` by GitHub Pages.
 - `calendar-logic.js` supplies browser preview and download geometry. It
   is also used by the PNG tests; the production Worker does not import it.
+- `calendar-design.js` supplies shared appearance settings and scene geometry
+  for the browser and offline Scriptable renderer.
 - `worker/` contains the Rust request handler, PNG renderer, tests, npm commands,
   and production Wrangler configuration for `https://life-cal.jes.bz/`.
 - Keep this repository focused on Life Calendar. Account-wide Cloudflare changes

@@ -67,9 +67,11 @@ action("is.workflow.actions.conditional", WFControlFlowMode=2, GroupingIdentifie
 decoded = action("is.workflow.actions.base64encode", WFEncodeMode="Decode",
                  WFInput=reference(result, "If Result"))
 images = action("is.workflow.actions.detect.images", WFInput=reference(decoded, "Base64 Encoded"))
-action("is.workflow.actions.wallpaper.set", WFInput=reference(images, "Images"),
+wallpaper = action("is.workflow.actions.wallpaper.set", WFInput=reference(images, "Images"),
        WFWallpaperLocation="Lock Screen", WFWallpaperSmartCrop=False,
        WFWallpaperShowPreview=False)
+# Shortcuts preserves the final wallpaper result as an explicit output action.
+action("is.workflow.actions.output", WFOutput=text_output(wallpaper, "Unknown Action"))
 
 shortcut = {
     "WFWorkflowName": "Life Calendar",

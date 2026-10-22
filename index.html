@@ -89,7 +89,7 @@
                 <div class="mt-2 grid grid-cols-2 gap-2 text-xs">
                     <a href="https://apps.apple.com/us/app/scriptable/id1405459188" target="_blank" rel="noopener noreferrer"
                         class="rounded border border-indigo-200 px-3 py-2 text-center font-bold text-indigo-700 hover:bg-indigo-50">1. Get Scriptable</a>
-                    <a href="https://www.icloud.com/shortcuts/2fad56b25104445c9b1d750111cfc9de" target="_blank" rel="noopener noreferrer"
+                    <a href="https://www.icloud.com/shortcuts/54552a91a195416fa353997b346914d7" target="_blank" rel="noopener noreferrer"
                         class="rounded bg-indigo-600 px-3 py-2 text-center font-bold text-black hover:bg-indigo-700">2. Add Shortcut</a>
                 </div>
                 <p class="mt-3 text-xs text-gray-400">Install both, then return here to choose your design. Already installed? Configure your design below.</p>
@@ -146,6 +146,27 @@
 
                 <hr id="layout-divider" class="border-gray-100">
 
+<section class="space-y-4" aria-label="Calendar design">
+<h2 class="text-sm font-bold">Calendar design</h2>
+<div><label for="design-screen" class="block text-xs font-bold uppercase text-gray-400 mb-1">Wallpaper layout</label><select id="design-screen" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="lock">Lock Screen</option><option value="home">Home Screen</option></select></div>
+<div><label for="design-placement" class="block text-xs font-bold uppercase text-gray-400 mb-1">Placement</label><select id="design-placement" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="center">Centered</option><option value="bottom">Bottom aligned</option><option value="vertical">Narrow vertical</option><option value="corner">Compact corner</option></select></div>
+<div><label for="design-view" class="block text-xs font-bold uppercase text-gray-400 mb-1">Calendar view</label><select id="design-view" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="weeks">Life in weeks</option><option value="months">Life in months</option><option value="year">Current year · days</option><option value="combined">Life + current year</option></select></div>
+<div><label for="design-grid" class="block text-xs font-bold uppercase text-gray-400 mb-1">Grid structure</label><select id="design-grid" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="adaptive">Fit to screen</option><option value="classic">Classic · one year per row</option></select></div>
+<div><label for="design-shape" class="block text-xs font-bold uppercase text-gray-400 mb-1">Marker shape</label><select id="design-shape" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="square">Squares</option><option value="rounded">Rounded squares</option><option value="circle">Circles</option></select></div>
+<div><label for="design-future" class="block text-xs font-bold uppercase text-gray-400 mb-1">Future markers</label><select id="design-future" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="dim">Solid / dim</option><option value="outline">Hollow outlines</option><option value="hidden">Hidden</option></select></div>
+<div><label for="design-highlight" class="block text-xs font-bold uppercase text-gray-400 mb-1">Current period</label><select id="design-highlight" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="none">No accent</option><option value="color">Accent color</option><option value="outline">Accent outline</option><option value="larger">Larger accent marker</option></select></div>
+<div><label for="design-ageLabels" class="block text-xs font-bold uppercase text-gray-400 mb-1">Age markers · classic grid</label><select id="design-ageLabels" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="none">None</option><option value="5">Every 5 years</option><option value="10">Every 10 years</option></select></div>
+<label class="flex items-center gap-2 text-sm"><input type="checkbox" id="design-decades"> Separate decades · classic grid</label>
+<label class="flex items-center gap-2 text-sm"><input type="checkbox" id="design-midyear"> Gap after week 26 · classic weeks</label>
+<div><label for="design-accent" class="block text-xs font-bold uppercase text-gray-400 mb-1">Current-period accent</label><input type="color" id="design-accent" class="h-10 w-full"></div>
+<label class="flex items-center gap-2 text-sm"><input type="checkbox" id="show-icons"> Preview sample icons and widgets · not in image</label>
+<details><summary class="cursor-pointer text-sm font-bold">Advanced placement and contrast</summary><div class="space-y-4 pt-4">
+<label for="design-scale" class="block text-xs text-gray-400">Grid size <output id="value-scale"></output><input id="design-scale" type="range" min="30" max="100" class="block w-full mt-2"></label>
+<label for="design-position" class="block text-xs text-gray-400">Vertical position · top to bottom <output id="value-position"></output><input id="design-position" type="range" min="0" max="100" class="block w-full mt-2"></label>
+<label for="design-spacing" class="block text-xs text-gray-400">Marker spacing <output id="value-spacing"></output><input id="design-spacing" type="range" min="0" max="75" class="block w-full mt-2"></label>
+<label for="design-futureOpacity" class="block text-xs text-gray-400">Future marker opacity <output id="value-futureOpacity"></output><input id="design-futureOpacity" type="range" min="0" max="100" class="block w-full mt-2"></label>
+</div></details><p class="text-xs text-gray-400">Classic rows represent years. Year view uses one marker per day. Layout does not change the Shortcut’s destination: select Home Screen or Lock Screen in its Set Wallpaper action. Duo always reserves its permanent right-side controls.</p></section>
+
                 <!-- Colors -->
                 <div class="space-y-4">
                     <div>
@@ -168,7 +189,7 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Lived Weeks</label>
+                        <label id="label-lived" class="block text-xs font-bold uppercase text-gray-400 mb-1">Lived Weeks</label>
                         <div class="flex items-center space-x-2">
                             <input type="color" id="color-lived" value="#3b82f6"
                                 class="h-10 w-10 rounded cursor-pointer border-0 p-0">
@@ -177,7 +198,7 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Future Weeks</label>
+                        <label id="label-rest" class="block text-xs font-bold uppercase text-gray-400 mb-1">Future Weeks</label>
                         <div class="flex items-center space-x-2">
                             <input type="color" id="color-rest" value="#333333"
                                 class="h-10 w-10 rounded cursor-pointer border-0 p-0">
@@ -219,6 +240,13 @@
                 <canvas id="canvas" width="1320" height="2868"
                     class="w-full h-full object-contain bg-transparent"></canvas>
 
+                <div id="icon-overlay" class="hidden absolute inset-0 pointer-events-none z-10" aria-hidden="true">
+                    <div class="absolute rounded-xl border border-white/30 bg-white/10" style="left:8%;top:13%;width:84%;height:17%"></div>
+                    <div class="absolute grid grid-cols-4 gap-3" style="left:9%;top:36%;width:82%">
+                        <span class="aspect-square rounded-xl bg-white/20 border border-white/30"></span><span class="aspect-square rounded-xl bg-white/20 border border-white/30"></span><span class="aspect-square rounded-xl bg-white/20 border border-white/30"></span><span class="aspect-square rounded-xl bg-white/20 border border-white/30"></span>
+                    </div>
+                    <div class="absolute rounded-2xl border border-white/30 bg-white/10" style="left:7%;bottom:3%;width:86%;height:9%"></div>
+                </div>
                 <!-- Phone Notch (Purely aesthetic for preview) -->
                 <div id="preview-notch" class="absolute top-0 left-1/2 transform -translate-x-1/2 w-1/3 h-7 bg-gray-800 rounded-b-xl z-20">
                 </div>
@@ -244,7 +272,7 @@
                         <a href="https://apps.apple.com/us/app/scriptable/id1405459188" target="_blank" rel="noopener noreferrer" class="rounded-md border border-indigo-200 bg-surface px-3 py-2 text-center text-xs font-bold text-indigo-700 hover:bg-indigo-100">
                             <i class="fa-brands fa-apple mr-1"></i> Install Scriptable
                         </a>
-                        <a href="https://www.icloud.com/shortcuts/2fad56b25104445c9b1d750111cfc9de" target="_blank" rel="noopener noreferrer" class="rounded-md bg-indigo-700 px-3 py-2 text-center text-xs font-bold text-black hover:bg-indigo-600">
+                        <a href="https://www.icloud.com/shortcuts/54552a91a195416fa353997b346914d7" target="_blank" rel="noopener noreferrer" class="rounded-md bg-indigo-700 px-3 py-2 text-center text-xs font-bold text-black hover:bg-indigo-600">
                             <i class="fa-solid fa-arrow-down-to-bracket mr-1"></i> Add Life Calendar Shortcut
                         </a>
                     </div>
@@ -253,7 +281,7 @@
 
                 <section class="rounded-lg border border-gray-100 bg-gray-50 p-4">
                     <h3 class="font-bold text-white mb-2">2. Choose the wallpaper to update</h3>
-                    <p class="text-xs text-gray-500">In Life Calendar, edit the final <strong>Set Wallpaper Photo</strong> action and choose the Lock Screen wallpaper to update. Leave preview and crop options off.</p>
+                    <p class="text-xs text-gray-500">In Life Calendar, edit the final <strong>Set Wallpaper Photo</strong> action and choose the wallpaper to update. Select <strong>Lock Screen</strong> or <strong>Home Screen</strong> to match your design. Leave preview and crop options off.</p>
                 </section>
 
                 <section class="rounded-lg border border-gray-100 bg-gray-50 p-4">
@@ -281,7 +309,8 @@
     </div>
 
     <script type="module">
-        import { generateRectData, DEVICES, getDevice } from './calendar-logic.js';
+        import { DEVICES, getDevice } from './calendar-logic.js';
+        import { DESIGN_DEFAULTS, DESIGN_FIELDS, normalizeDesign, generateDesign } from './calendar-design.js';
 
         // --- DOM Elements ---
         const palettes = {
@@ -310,6 +339,7 @@
 
         // --- State ---
         const state = {
+            ...DESIGN_DEFAULTS,
             device: 'iphone',
             dob: '1990-01-01',
             years: 90,
@@ -319,7 +349,7 @@
             layout: 'none', // 'none', 'top', 'bottom'
         };
 
-        const WEBSITE_VERSION = '1.1.0';
+        const WEBSITE_VERSION = '1.2.0';
         let websiteVersion = null;
 
         // --- Initialization ---
@@ -334,11 +364,16 @@
             if (Object.hasOwn(DEVICES, params.get('device'))) state.device = params.get('device');
             if (/^\d{4}-\d{2}-\d{2}$/.test(params.get('dob'))) state.dob = params.get('dob');
             const years = Number(params.get('years'));
-            if (Number.isInteger(years) && years >= 10 && years <= 130) state.years = years;
+            if (Number.isInteger(years) && years >= 1 && years <= 120) state.years = years;
             for (const key of ['bg', 'lived', 'rest']) {
                 const color = (params.get(key) || '').replace(/^#/, '');
                 if (/^[\da-f]{6}$/i.test(color)) state[key] = '#' + color;
             }
+
+            const designInput = {};
+            for (const key of DESIGN_FIELDS) if (params.has(key)) designInput[key] = params.get(key);
+            try { Object.assign(state, normalizeDesign(designInput)); } catch {}
+            syncDesignControls();
 
             // Layout
             if (['none', 'top', 'bottom'].includes(params.get('layout'))) state.layout = params.get('layout');
@@ -381,7 +416,23 @@
         // Debounce to prevent flooding history API
         const debouncedUpdateUrl = debounce(updateUrl, 300);
 
+        function syncDesignControls() {
+            for (const key of DESIGN_FIELDS) {
+                const el = document.getElementById('design-' + key);
+                if (el.type === 'checkbox') el.checked = state[key]; else el.value = state[key];
+                const output = document.getElementById('value-' + key);
+                if (output) output.textContent = state[key] + '%';
+            }
+        }
         function addListeners() {
+            for (const key of DESIGN_FIELDS) document.getElementById('design-' + key).addEventListener('input', e => {
+                state[key] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+                if (key === 'screen' && state.screen === 'lock') { state.placement = 'center'; state.position = 50; }
+                if (key === 'placement') state.position = ['bottom', 'corner'].includes(state.placement) ? 100 : 50;
+                syncDesignControls(); updateUrl(); draw();
+            });
+            document.getElementById('show-icons').addEventListener('change', draw);
+
             els.device.addEventListener('change', () => {
                 state.device = els.device.value;
                 updateUrl();
@@ -470,6 +521,9 @@
         // --- Core Logic ---
 
         function draw() {
+            const unit = {weeks:'weeks', months:'months', year:'days', combined:'periods'}[state.view];
+            document.getElementById('label-lived').textContent = 'Past ' + unit;
+            document.getElementById('label-rest').textContent = 'Future ' + unit;
             document.getElementById('palette').value = Object.keys(palettes).find(name =>
                 palettes[name].every((color, index) => color === state[['bg', 'lived', 'rest'][index]].toLowerCase())) || 'custom';
             const ctx = els.canvas.getContext('2d');
@@ -482,7 +536,14 @@
             els.deviceSize.textContent = `${width} × ${height} pixels`;
             const isDuo = state.device.startsWith('duo-');
             els.deviceNote.classList.toggle('hidden', !isDuo);
-            document.getElementById('layout-options').classList.toggle('hidden', isDuo);
+            for (const key of ['screen', 'placement', 'position']) {
+                document.getElementById('design-' + key).disabled = isDuo || (key === 'placement' && state.screen !== 'home');
+            }
+            document.getElementById('design-grid').disabled = state.view === 'year';
+            const classic = state.grid === 'classic' && state.view !== 'year';
+            for (const key of ['ageLabels', 'decades']) document.getElementById('design-' + key).disabled = !classic;
+            document.getElementById('design-midyear').disabled = !classic || state.view === 'months';
+            document.getElementById('layout-options').classList.toggle('hidden', isDuo || state.screen === 'home');
             document.getElementById('layout-divider').classList.toggle('hidden', isDuo);
             document.getElementById('preview-notch').classList.toggle('hidden', isDuo);
 
@@ -492,20 +553,36 @@
 
             if (!state.dob) return;
 
-            const rects = generateRectData({
-                width, 
-                height,
-                dob: state.dob,
-                years: state.years,
-                layout: state.device.startsWith('duo-') ? 'none' : state.layout,
-                colorLived: state.lived,
-                colorRest: state.rest,
-                device: state.device
-            });
+            let scene;
+            try { scene = generateDesign(state); } catch { return; }
+            for (const m of scene.marks) {
+                ctx.globalAlpha = m.opacity;
+                ctx.fillStyle = ctx.strokeStyle = m.color;
+                const line = Math.min(m.size * .2, Math.max(1, m.size * .12));
+                const inset = m.outline ? line / 2 : 0;
+                const x = m.x + inset, y = m.y + inset, size = m.size - 2 * inset;
+                ctx.lineWidth = line;
+                ctx.beginPath();
+                if (m.shape === 'circle') ctx.arc(x + size / 2, y + size / 2, size / 2, 0, Math.PI * 2);
+                else if (m.shape === 'rounded') ctx.roundRect(x, y, size, size, m.size * .25);
+                else ctx.rect(x, y, size, size);
+                if (m.outline) ctx.stroke(); else ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+            for (const label of scene.labels) {
+                ctx.fillStyle = label.color; ctx.font = `${label.fontSize}px monospace`;
+                ctx.textBaseline = 'top'; ctx.fillText(label.text, label.x, label.y, label.width);
+            }
+            drawIconOverlay(width, height);
+        }
 
-            for (const r of rects) {
-                ctx.fillStyle = r.color;
-                ctx.fillRect(r.x, r.y, r.size, r.size);
+        function drawIconOverlay(width, height) {
+            const overlay = document.getElementById('icon-overlay');
+            overlay.classList.toggle('hidden', !document.getElementById('show-icons').checked);
+            const rgb = state.lived.replace('#', '').match(/../g).map(value => parseInt(value, 16)).join(',');
+            for (const block of overlay.querySelectorAll('.border')) {
+                block.style.backgroundColor = `rgba(${rgb},.12)`;
+                block.style.borderColor = `rgba(${rgb},.35)`;
             }
         }
 
@@ -517,6 +594,7 @@
             params.set('bg', state.bg.replace('#', ''));
             params.set('lived', state.lived.replace('#', ''));
             params.set('rest', state.rest.replace('#', ''));
+            for (const key of DESIGN_FIELDS) params.set(key, String(state[key]).replace(/^#/, ''));
             params.set('layout', state.device.startsWith('duo-') ? 'none' : state.layout);
             
             return params;
@@ -540,6 +618,7 @@
         function openShortcutWithSettings() {
             if (!websiteVersion) return;
             const settings = {
+                ...Object.fromEntries(DESIGN_FIELDS.map(key => [key, state[key]])),
                 version: websiteVersion,
                 dob: state.dob,
                 device: state.device,

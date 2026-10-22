@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import vm from 'node:vm';
+import { DESIGN_FIELDS } from '../calendar-design.js';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
@@ -8,6 +9,9 @@ execFileSync(process.execPath, ['scriptable/build.mjs']);
 const source = await readFile(new URL('./interactive.js', import.meta.url), 'utf8');
 const functions = source.slice(0, source.lastIndexOf('Script.setShortcutOutput'));
 const release = JSON.parse(await readFile(new URL('../release.json', import.meta.url), 'utf8'));
+const [major, minor] = release.version.split('.').map(Number);
+const newerMinor = `${major}.${minor + 1}.0`;
+const newerMajor = `${major + 1}.0.0`;
 const settings = { dob: '2000-01-01', device: 'max', years: 90, layout: 'bottom',
     bg: '#000000', lived: '#ffffff', rest: '#333333' };
 const website = { ...settings, dob: '1988-04-03', bg: '#112233' };
@@ -24,7 +28,7 @@ function runtime(saved, choice = 'Apply Wallpaper', runsInApp = true) {
         addImage(image) { assert.equal(image, 'IMAGE'); return { centerAligned() {} }; }
     }
     const context = vm.createContext({
-        LIFE_CALENDAR_VERSION: release.version, LIFE_CALENDAR_SITE_URL: release.siteUrl,
+        DESIGN_FIELDS, LIFE_CALENDAR_VERSION: release.version, LIFE_CALENDAR_SITE_URL: release.siteUrl,
         config: { runsInApp },
         Safari: { open: url => opened.push(url) },
         Keychain: { contains: key => store.has(key), get: key => store.get(key),
@@ -139,14 +143,14 @@ test('invalid inputs cannot replace saved settings', async () => {
     assert.equal(r.writes(), 0);
 });
 
-for (const version of ['1.1.9', '1.1.0']) {
+for (const version of [release.version.split('.').slice(0, 2).join('.') + '.9', release.version]) {
     test(`patch-compatible handoff ${version} previews normally`, async () => {
         const r = runtime(settings);
         assert.equal(await r.execute({ ...website, version }), 'ready');
         assert.deepEqual(r.saved(), website);
     });
 }
-for (const version of ['1.2.0', '2.0.0', '1.0.9', 'invalid', null]) {
+for (const version of [newerMinor, newerMajor, '0.0.0', 'invalid', null]) {
     test(`incompatible handoff ${version} blocks before settings or wallpaper writes`, async () => {
         const r = runtime(settings, 'Open update page', false);
         const input = { ...website, version };
@@ -160,13 +164,27 @@ for (const version of ['1.2.0', '2.0.0', '1.0.9', 'invalid', null]) {
         assert.deepEqual(r.saved(), settings);
         assert.equal(r.writes(), 0);
         assert.equal(r.tables[0][0].cells[0].title,
-            ['1.0.9', null].includes(version) ? 'Reopen the website' : 'Shortcut update required');
+            ['0.0.0', null].includes(version) ? 'Reopen the website' : 'Shortcut update required');
     });
 }
 test('canceling an update exits cleanly and invalidates an earlier approval', async () => {
     const r = runtime(settings, 'Cancel');
-    await r.preflight({ ...website, version: '2.0.0' });
-    assert.equal(await r.execute({ ...website, version: '2.0.0' }), 'shortcuts://');
+    await r.preflight({ ...website, version: newerMajor });
+    assert.equal(await r.execute({ ...website, version: newerMajor }), 'shortcuts://');
     assert.equal(await r.execute('finish'), 'shortcuts://');
     assert.deepEqual(r.saved(), settings);
+});
+
+test('appearance fields survive apply and saved-design website round trip', async () => {
+    const appearance = { view:'combined', grid:'classic', shape:'circle', future:'outline', highlight:'larger',
+        accent:'#123456', screen:'home', placement:'corner', scale:70, position:100, spacing:40,
+        futureOpacity:35, ageLabels:'10', decades:true, midyear:true };
+    const r = runtime(settings);
+    await r.execute({ ...handoff, ...appearance, ignored:'drop' });
+    assert.deepEqual(r.saved(), { ...website, ...appearance });
+    const url = new URL(await r.preflight('settings'));
+    const values = new URLSearchParams(url.hash.slice(1));
+    for (const [key,value] of Object.entries(appearance)) assert.equal(values.get(key), String(value).replace(/^#/, ''));
+    assert.equal(values.has('version'), false);
+    assert.equal(values.has('ignored'), false);
 });
