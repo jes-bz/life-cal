@@ -92,6 +92,7 @@ def source_hashes(expected):
 def check_links(release):
     source = (ROOT / 'index.html').read_text()
     assert f"const WEBSITE_VERSION = '{release['version']}';" in source, 'Website handoff version differs from release'
+    assert f"./calendar-design.js?v={release['version']}" in source, 'Design module cache version differs from release'
     for name in ('index.html', 'README.md', 'scriptable/README.md'):
         urls = re.findall(r'https://www\.icloud\.com/shortcuts/[a-f0-9]{32}', (ROOT / name).read_text())
         assert urls and set(urls) == {release['shortcutUrl']}, f'{name}: stale shortcut link'

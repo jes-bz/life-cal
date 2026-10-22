@@ -44,6 +44,9 @@ Do not set Cargo `strip = true`; it breaks the pinned wasm-bindgen catch wrapper
   Bottom Widgets for regular iPhones. Image requests without a device use Max.
 - Preserve accepted image parameters and unattended iPhone Shortcut URLs.
 - Preview and manual download run locally in canvas, without Worker requests.
+- Adaptive offline/browser grids prefer a square when it fits, with uniform
+  markers and spacing. Classic-only options must not affect adaptive geometry.
+  Keep the browser design-module cache version aligned with `release.json`.
 - Keep bounded input validation ahead of rendering and avoid rendering on direct
   HEAD cache misses.
 - Preserve normalized image cache keys, per-request filenames, and client cache

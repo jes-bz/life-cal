@@ -49,9 +49,8 @@ export function generateDesign(input, now = new Date()) {
     const { width, height } = getDevice(s.device);
     const isDuo = s.device.startsWith('duo-');
     if (isDuo) { s.screen = 'lock'; s.placement = 'center'; s.position = 100; }
-    const legacy = s.view === 'weeks' && s.grid === 'adaptive' && s.screen === 'lock' &&
-        s.placement === 'center' && s.scale === 100 && (s.position === 50 || isDuo) && s.spacing === 25 &&
-        s.ageLabels === 'none' && !s.decades && !s.midyear;
+    const legacy = isDuo && s.view === 'weeks' && s.grid === 'adaptive' && s.screen === 'lock' &&
+        s.placement === 'center' && s.scale === 100 && s.spacing === 25;
     const marks = [], labels = [];
     function addMark(x, y, size, index, current) {
         const past = index < current, active = index === current && current >= 0;
@@ -95,17 +94,29 @@ export function generateDesign(input, now = new Date()) {
         const labelEvery = classic && s.ageLabels !== 'none' ? Number(s.ageLabels) : 0;
         const gutter = labelEvery ? width * .035 : 0;
         const gapRatio = .08 + s.spacing / 100;
-        let cols = classic ? perYear : view === 'year' ? 19 : view === 'months' ? 24 : 52;
-        let size, rows, gridHeight, gridWidth;
-        do {
-            rows = Math.ceil(total / cols);
+        function dimensions(cols) {
+            const rows = Math.ceil(total / cols);
             const xUnits = cols + (cols - 1) * gapRatio + (split ? 1 : 0);
             const yUnits = rows + (rows - 1) * gapRatio + (decade ? Math.floor((rows - 1) / 10) : 0);
-            size = Math.min((areaWidth - gutter) / xUnits, panelHeight * s.scale / 100 / yUnits) / 1.05;
-            gridWidth = size * xUnits; gridHeight = size * yUnits;
-            if (classic || view === 'year' || gridWidth >= (areaWidth - gutter) * .80 || cols >= 160) break;
-            cols++;
-        } while (true);
+            const size = Math.min((areaWidth - gutter) / xUnits, panelHeight * s.scale / 100 / yUnits) / 1.05;
+            return { cols, rows, size, gridWidth: size * xUnits, gridHeight: size * yUnits };
+        }
+        let fitted = dimensions(perYear || 19);
+        if (!classic) {
+            // Prefer a square grid. Only use a wider rectangle when its safe
+            // area is too short for a width-filling square; never stretch cells.
+            const targetAspect = Math.max(1, (areaWidth - gutter) / (panelHeight * s.scale / 100));
+            let bestError = Infinity;
+            for (let cols = 1; cols <= total; cols++) {
+                const candidate = dimensions(cols);
+                const error = Math.abs(Math.log(candidate.gridWidth / candidate.gridHeight / targetAspect));
+                if (error < bestError - 1e-10 || (Math.abs(error - bestError) < 1e-10 && candidate.size > fitted.size)) {
+                    fitted = candidate;
+                    bestError = error;
+                }
+            }
+        }
+        const { cols, rows, size, gridHeight, gridWidth } = fitted;
         const fraction = s.position / 100;
         const x = s.screen === 'home' && s.placement === 'corner' ? left + gutter :
             left + (right - left - gridWidth - gutter) / 2 + gutter;

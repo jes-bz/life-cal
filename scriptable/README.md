@@ -8,7 +8,7 @@ access, or separate script installation.
 ## Install and use
 
 1. [Install Scriptable](https://apps.apple.com/us/app/scriptable/id1405459188),
-   then [add Life Calendar](https://www.icloud.com/shortcuts/54552a91a195416fa353997b346914d7).
+   then [add Life Calendar](https://www.icloud.com/shortcuts/ea5c6d25777d4c65b7956ea32f1b6fd9).
    Return to the website after installation. An unconfigured Shortcut opens the
    website; it does not present a second color or settings editor.
 2. In the Shortcut's final **Set Wallpaper Photo** action, select the Home Screen or Lock Screen
@@ -64,6 +64,10 @@ version-aware Shortcut; earlier shared versions cannot enforce it retroactively.
 - Square, rounded-square, or circular markers; solid/dim, hollow, or hidden
   future markers; optional current-period color, outline, or larger accent.
 - Advanced grid size, vertical position, spacing, and future-marker opacity.
+
+Fit to screen prefers a near-square grid with uniform markers and spacing. It uses
+a wider grid only when the available height requires it; classic-only age and
+separator settings do not affect the adaptive layout.
 
 There are no custom titles, quotes, or progress text. Duo keeps its fixed
 bottom-aligned layout and permanent right-side control space. Design settings

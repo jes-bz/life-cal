@@ -5,10 +5,10 @@ import { generateRectData, DEVICES } from '../calendar-logic.js';
 const now = new Date(2024, 1, 29, 12);
 const base = { device: 'iphone', dob: '2000-01-01', years: 90, layout: 'none', lived: '#ffffff', rest: '#333333' };
 const scene = options => generateDesign({ ...base, ...options }, now);
-test('default design retains existing geometry and colors', () => {
-    const { width, height } = DEVICES.iphone;
-    const original = generateRectData({ ...base, width, height, now, colorLived: base.lived, colorRest: base.rest });
-    assert.deepEqual(scene({}).marks.map(({ x, y, size, color }) => ({ x, y, size, color })), original);
+test('Duo default retains its fixed geometry and colors', () => {
+    const { width, height } = DEVICES['duo-outer'];
+    const original = generateRectData({ ...base, device: 'duo-outer', width, height, now, colorLived: base.lived, colorRest: base.rest });
+    assert.deepEqual(scene({device: 'duo-outer'}).marks.map(({ x, y, size, color }) => ({ x, y, size, color })), original);
 });
 test('classic week rows are exactly one year, with decade and half-year separators', () => {
     const { marks, labels } = scene({ grid: 'classic', midyear: true, decades: true, ageLabels: '10' });
@@ -59,4 +59,31 @@ test('every new layout stays inside native safe areas including the Duo control 
 test('invalid appearance values fail before rendering', () => {
     for (const value of [{shape:'triangle'}, {scale:0}, {position:101}, {futureOpacity:-1}, {spacing:Infinity},
         {accent:'red'}, {midyear:'yes'}, {view:'unknown'}]) assert.throws(() => normalizeDesign(value));
+});
+
+test('adaptive grid is near square and fills width when a square fits', () => {
+    for (const device of ['iphone', 'max']) for (const layout of ['none', 'top', 'bottom']) {
+        const { marks, width } = scene({ device, layout, grid:'adaptive', highlight:'color' });
+        const cols = marks.findIndex(m => m.y !== marks[0].y);
+        const rows = Math.ceil(marks.length / cols);
+        assert.ok(Math.abs(cols - rows) <= 1);
+        assert.ok(cols >= 68 && cols <= 69);
+        const w = Math.max(...marks.map(m => m.x + m.size)) - marks[0].x;
+        const h = marks.at(-1).y + marks.at(-1).size - marks[0].y;
+        assert.ok(Math.abs(w / h - 1) < .03);
+        assert.ok(w > width * .85);
+    }
+});
+test('disabled classic options do not affect adaptive geometry', () => {
+    for (const device of Object.keys(DEVICES)) {
+        assert.deepEqual(scene({device}), scene({device,ageLabels:'10',decades:true,midyear:true}));
+    }
+});
+test('adaptive grid widens only to fit a short panel without stretching markers', () => {
+    const {marks,width,height} = scene({view:'year',device:'duo-inner-landscape'});
+    const cols = marks.findIndex(m => m.y !== marks[0].y);
+    assert.ok(cols > Math.ceil(Math.sqrt(marks.length)));
+    for (const mark of marks) {
+        assert.ok(mark.size > 0 && mark.x + mark.size <= width && mark.y + mark.size <= height);
+    }
 });
