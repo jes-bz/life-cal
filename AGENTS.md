@@ -1,5 +1,7 @@
 # Life Calendar
 
+The hosted `life-cal-worker` service is retired. Keep `worker/` local-only; do not redeploy it or restore its production route. The static site and offline Shortcut are the supported paths.
+
 ## Project scope
 
 - `index.html` is the static configuration site, published to
@@ -31,7 +33,7 @@ configurations, and exercises HTTP/cache behavior in workerd. The PNG checks
 cover browser geometry, colors, fractional edges, antialiasing, and Duo margins.
 
 `npm run dev` serves the Worker locally; `npm run build` performs a dry run.
-`npm run deploy` deploys the production Worker. Pushing main deploys the static
+There is no Worker deploy script. Pushing main deploys the static
 website separately through `.github/workflows/static.yml`.
 
 Do not set Cargo `strip = true`; it breaks the pinned wasm-bindgen catch wrappers.

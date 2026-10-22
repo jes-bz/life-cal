@@ -8,6 +8,8 @@ The project consists of:
 1.  **Static Website**: An interactive configuration tool to set your birthdate, life expectancy, and colors.
 2.  **Offline iPhone Shortcut**: A Scriptable-powered shortcut that generates and updates wallpapers on the device.
 
+The generator is free, with no account or subscription. Browser previews and downloads run locally; automatic iPhone rendering runs on the device. The former hosted image Worker is retired.
+
 ## Features
 
 *   **Interactive Preview**: Visualize your calendar instantly in the browser.

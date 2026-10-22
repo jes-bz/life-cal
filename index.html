@@ -3,8 +3,43 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Life Calendar Wallpaper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Calendar Wallpaper Generator · Memento Mori</title>
+    <meta name="description" content="Create a free memento mori wallpaper showing your life in weeks or months. Customize colors, preview your design, and automate iPhone updates with Shortcuts.">
+    <link rel="canonical" href="https://jessebrizzi.com/life-cal/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jessebrizzi.com/life-cal/">
+    <meta property="og:title" content="Life Calendar Wallpaper Generator · Memento Mori">
+    <meta property="og:description" content="See your life in weeks or months. Create a free custom wallpaper, download it, or set up automatic iPhone updates with Shortcuts and Scriptable.">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Life Calendar Wallpaper Generator · Memento Mori">
+    <meta name="twitter:description" content="Create a free life-in-weeks wallpaper with custom colors and layouts. Preview and download in your browser, or automate updates on iPhone.">
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Life Calendar Wallpaper Generator",
+    "alternateName": "Memento Mori Life Calendar",
+    "url": "https://jessebrizzi.com/life-cal/",
+    "description": "Create custom memento mori wallpapers showing life in weeks or months, or the current year in days. Preview and download locally in your browser, with optional iPhone automation using Shortcuts and Scriptable.",
+    "applicationCategory": "DesignApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript and a modern web browser.",
+    "isAccessibleForFree": true,
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+    },
+    "featureList": [
+        "Life in weeks or months",
+        "Current year in days",
+        "Custom colors and grid layouts",
+        "Local wallpaper preview and download",
+        "Optional iPhone Shortcut automation"
+    ]
+}
+    </script>
     <meta name="theme-color" content="#000000">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -92,8 +127,9 @@
             class="w-full md:w-96 bg-surface border-r border-gray-200 flex flex-col z-10 shadow-lg md:shadow-none md:h-full md:overflow-y-auto md:shrink-0">
             <div class="p-6 border-b border-gray-100">
                 <h1 class="text-xl font-bold tracking-tighter uppercase"><i
-                        class="fa-solid fa-calendar-days mr-2 text-indigo-600"></i>MEMENTO MORI</h1>
-                <p class="text-xs text-gray-500 mt-1">Life Calendar Generator</p>
+                        class="fa-solid fa-calendar-days mr-2 text-indigo-600" aria-hidden="true"></i>Life Calendar Wallpaper</h1>
+                <p class="text-xs text-gray-500 mt-1">Memento mori · your life in weeks</p>
+                <p class="mt-3 text-xs text-gray-400">Create a free wallpaper that puts your time in perspective. Customize your life in weeks or months, then download it or set up automatic iPhone updates.</p>
                 <p class="mt-4 text-xs font-bold uppercase text-gray-400">First-time setup · install once</p>
                 <div class="mt-2 grid grid-cols-2 gap-2 text-xs">
                     <a href="https://apps.apple.com/us/app/scriptable/id1405459188" target="_blank" rel="noopener noreferrer"
@@ -254,6 +290,24 @@
                     </a>
                     <p id="shortcut-version" role="status" class="text-center text-xs text-gray-400">Checking Shortcut version…</p>
                 </div>
+
+                <section aria-labelledby="about-title" class="pt-6 border-t border-gray-200 space-y-4 text-xs text-gray-400">
+                    <h2 id="about-title" class="text-sm font-bold text-gray-700">About this memento mori calendar</h2>
+                    <p>Free, with no account or subscription. Customize colors, download your wallpaper, and use local iPhone updates without paying for a hosted image service.</p>
+                    <p>A life calendar represents time as a grid: each marker is one week or month, with past and future periods in different colors. Memento mori means “remember you must die”—a reminder to spend your time intentionally.</p>
+                    <details>
+                        <summary class="cursor-pointer font-bold text-gray-700">How do I make a life-in-weeks wallpaper?</summary>
+                        <p class="mt-2">Choose your birth date and target lifespan, then adjust the grid, colors, and space for your clock or widgets. Fit to screen arranges markers into a near-square grid; Classic keeps one year per row. Download Wallpaper saves an image from your browser.</p>
+                    </details>
+                    <details>
+                        <summary class="cursor-pointer font-bold text-gray-700">Can my iPhone update the wallpaper automatically?</summary>
+                        <p class="mt-2">Install Scriptable and the Life Calendar Shortcut using the buttons above. Return here to configure your design, then choose Apply to iPhone. Preview and confirm on your phone, and enable the Shortcut’s schedule for automatic refreshes. Rendering runs locally on your iPhone.</p>
+                    </details>
+                    <details>
+                        <summary class="cursor-pointer font-bold text-gray-700">Is my birth date uploaded?</summary>
+                        <p class="mt-2">The preview and image download run locally in your browser. Your design is remembered in this browser’s local storage and included in the URL fragment when you share a design link, so anyone with that full link can see its settings. Apply to iPhone passes the design to your installed Shortcut.</p>
+                    </details>
+                </section>
             </div>
         </div>
 
@@ -262,7 +316,7 @@
             <div id="phone-preview" class="phone-preview relative shadow-2xl rounded-3xl border-8 border-gray-800 overflow-hidden bg-black">
                 <!-- Canvas preview -->
                 <canvas id="canvas" width="1320" height="2868"
-                    class="w-full h-full object-contain bg-transparent"></canvas>
+                    class="w-full h-full object-contain bg-transparent" role="img" aria-label="Preview of your customized life calendar wallpaper">Your life calendar preview requires JavaScript and canvas support. Use the controls to customize a wallpaper and download it.</canvas>
 
                 <div id="icon-overlay" class="hidden absolute inset-0 pointer-events-none z-10" aria-hidden="true">
                     <div id="sample-clock" class="absolute rounded-xl border border-white/30 bg-white/10" style="left:14%;top:13%;width:72%;height:10%"></div>
