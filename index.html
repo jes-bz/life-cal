@@ -365,7 +365,11 @@
             let remembered = '';
             try { remembered = localStorage.getItem('life-calendar.design.v1') || ''; } catch {}
             const explicit = new URLSearchParams(window.location.hash.slice(1) || window.location.search);
-            const params = new URLSearchParams(remembered);
+            // A complete saved/shared design is authoritative. Older designs
+            // should use defaults for new options, not inherit browser settings.
+            const completeDesign = ['device', 'dob', 'years', 'layout', 'bg', 'lived', 'rest']
+                .every(key => explicit.has(key));
+            const params = new URLSearchParams(completeDesign ? '' : remembered);
             for (const [key, value] of explicit) params.set(key, value);
 
             if (Object.hasOwn(DEVICES, params.get('device'))) state.device = params.get('device');
