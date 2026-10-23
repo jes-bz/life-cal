@@ -4,7 +4,7 @@ export const DESIGN_DEFAULTS = {
     view: 'weeks', grid: 'adaptive', shape: 'square', future: 'dim',
     highlight: 'none', accent: '#f6a64b', screen: 'lock', placement: 'center',
     scale: 100, position: 50, spacing: 25, futureOpacity: 100,
-    ageLabels: 'none', decades: false, midyear: false, squareLifespan: false
+    classicWidth: 'natural', ageLabels: 'none', decades: false, midyear: false, squareLifespan: false
 };
 export const DESIGN_FIELDS = Object.keys(DESIGN_DEFAULTS);
 export function normalizeDesign(input = {}) {
@@ -12,7 +12,7 @@ export function normalizeDesign(input = {}) {
     const choices = { view: ['weeks', 'months', 'year', 'combined'], grid: ['adaptive', 'classic'],
         shape: ['square', 'rounded', 'circle'], future: ['dim', 'outline', 'hidden'],
         highlight: ['none', 'color', 'outline', 'larger'], screen: ['lock', 'home'],
-        placement: ['center', 'bottom', 'vertical', 'corner'], ageLabels: ['none', '5', '10'] };
+        placement: ['center', 'bottom', 'vertical', 'corner'], classicWidth: ['natural', 'wide', 'full'], ageLabels: ['none', '5', '10'] };
     for (const [key, values] of Object.entries(choices)) {
         if (!values.includes(s[key])) throw new Error('Unknown design option: ' + key);
     }
@@ -127,6 +127,15 @@ export function generateDesign(input, now = new Date()) {
                 }
             }
         }
+        // Expand only the horizontal gaps: retain marker size, row height,
+        // and the extra half-year gap. The device's safe area stays reserved.
+        let extraColumnGap = 0;
+        if (classic && s.classicWidth !== 'natural' && fitted.cols > 1) {
+            const weight = s.classicWidth === 'wide' ? .5 : 1;
+            const spare = Math.max(0, areaWidth - gutter - fitted.gridWidth);
+            extraColumnGap = spare * weight / (fitted.cols - 1);
+            fitted.gridWidth += spare * weight;
+        }
         const { cols, rows, size, gridHeight, gridWidth } = fitted;
         const fraction = s.position / 100;
         const x = s.screen === 'home' && s.placement === 'corner' ? left + gutter :
@@ -134,7 +143,7 @@ export function generateDesign(input, now = new Date()) {
         const y = panelTop + (panelHeight - gridHeight) * fraction;
         for (let i = 0; i < total; i++) {
             const col = i % cols, row = Math.floor(i / cols);
-            addMark(x + size * (col * (1 + gapRatio) + (split && col >= 26 ? 1 : 0)),
+            addMark(x + size * (col * (1 + gapRatio) + (split && col >= 26 ? 1 : 0)) + col * extraColumnGap,
                 y + size * (row * (1 + gapRatio) + (decade ? Math.floor(row / 10) : 0)), size, i, current);
         }
         if (labelEvery) for (let row = 0; row < rows; row += labelEvery) {

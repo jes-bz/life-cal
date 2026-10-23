@@ -114,3 +114,29 @@ test('rounding is opt-in and inactive for classic grids and current-year days', 
     assert.equal(normalizeDesign({squareLifespan:'true'}).squareLifespan,true);
     assert.throws(()=>normalizeDesign({squareLifespan:'yes'}));
 });
+
+test('classic row width spreads columns without stretching markers or moving years', () => {
+    for (const view of ['weeks', 'months', 'combined']) {
+        const options = { grid: 'classic', view, midyear: true, decades: true, ageLabels: '10' };
+        const scenes = ['natural', 'wide', 'full'].map(classicWidth => scene({...options, classicWidth}));
+        const cols = view === 'months' ? 12 : 52;
+        const span = s => s.marks[cols - 1].x + s.marks[cols - 1].size - s.marks[0].x;
+        assert.ok(span(scenes[0]) < span(scenes[1]));
+        assert.ok(span(scenes[1]) < span(scenes[2]));
+        for (const current of scenes) {
+            assert.equal(current.marks.length, scenes[0].marks.length);
+            for (let i=0; i<current.marks.length; i++) {
+                assert.equal(current.marks[i].size, scenes[0].marks[i].size);
+                assert.equal(current.marks[i].y, scenes[0].marks[i].y);
+            }
+            assert.equal(current.marks[0].y, current.marks[cols-1].y);
+        }
+        assert.ok(Math.abs(span(scenes[2]) - 1206 * (.92 - .035)) < .001);
+    }
+});
+test('classic width options do not affect adaptive or current-year geometry', () => {
+    for (const options of [{grid:'adaptive'}, {grid:'classic',view:'year'}]) {
+        for (const classicWidth of ['wide','full']) assert.deepEqual(scene({...options,classicWidth}),scene(options));
+    }
+    assert.throws(()=>normalizeDesign({classicWidth:'stretch'}));
+});
