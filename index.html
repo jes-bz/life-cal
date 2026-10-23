@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Life in Weeks Wallpaper · Life Calendar</title>
-    <meta name="description" content="Create a free life-in-weeks wallpaper. Customize and download in your browser, or automate offline iPhone updates with Shortcuts and Scriptable. No account.">
+    <title>Life Calendar & Countdown Wallpaper · Free Memento Mori</title>
+    <meta name="description" content="Create a free life calendar or countdown wallpaper. Customize colors, quotes and dates in your browser, then automate offline iPhone updates with Shortcuts and Scriptable.">
     <link rel="canonical" href="https://jessebrizzi.com/life-cal/">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jessebrizzi.com/life-cal/">
-    <meta property="og:title" content="Free Life in Weeks Wallpaper · Life Calendar">
-    <meta property="og:description" content="Design your life-in-weeks wallpaper for free. Preview in your browser and keep it updated locally on iPhone with Shortcuts and Scriptable. No account or subscription.">
+    <meta property="og:title" content="Life Calendar & Countdown Wallpaper · Free Memento Mori">
+    <meta property="og:description" content="Design a free life-in-weeks or countdown wallpaper with themes and optional quotes. Preview in your browser and keep it updated locally on iPhone with Shortcuts and Scriptable.">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Free Life in Weeks Wallpaper · Life Calendar">
-    <meta name="twitter:description" content="Free, open-source life-in-weeks wallpapers. Customize in your browser, then let your iPhone render updates offline with Shortcuts and Scriptable.">
+    <meta name="twitter:title" content="Life Calendar & Countdown Wallpaper · Free Memento Mori">
+    <meta name="twitter:description" content="Free, open-source life-in-weeks and countdown wallpapers. Customize themes and quotes in your browser, then render updates offline on iPhone.">
     <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -21,7 +21,7 @@
     "name": "Life Calendar Wallpaper Generator",
     "alternateName": "Memento Mori Life Calendar",
     "url": "https://jessebrizzi.com/life-cal/",
-    "description": "Free, open-source memento mori wallpaper generator for life in weeks or months and the current year in days. Customize and download locally in your browser, or automate offline iPhone rendering with Shortcuts and Scriptable. No account or subscription.",
+    "description": "Free, open-source memento mori wallpaper generator for life in weeks or months, the current year in days, or any date countdown. Customize themes and optional quotes, download locally in your browser, or automate offline iPhone rendering with Shortcuts and Scriptable. No account or subscription.",
     "applicationCategory": "DesignApplication",
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript and a modern web browser.",
@@ -34,6 +34,8 @@
     "featureList": [
         "Life in weeks or months",
         "Current year in days",
+        "Custom countdown wallpapers",
+        "Eight color themes and optional offline quotes",
         "Custom colors and grid layouts",
         "Local wallpaper preview and download",
         "Offline iPhone rendering with Shortcuts and Scriptable",
@@ -70,7 +72,7 @@
                 <div class="mt-2 grid grid-cols-2 gap-2 text-xs">
                     <a href="https://apps.apple.com/us/app/scriptable/id1405459188" target="_blank" rel="noopener noreferrer"
                         class="rounded border border-indigo-200 px-3 py-2 text-center font-bold text-indigo-700 hover:bg-indigo-50">1. Get Scriptable</a>
-                    <a href="https://www.icloud.com/shortcuts/3d7d746feebe4870812868da22fffe6e" target="_blank" rel="noopener noreferrer"
+                    <a href="https://www.icloud.com/shortcuts/3019eb11a8e746d68e6172d13e0c23f1" target="_blank" rel="noopener noreferrer"
                         class="rounded bg-indigo-600 px-3 py-2 text-center font-bold text-black hover:bg-indigo-700">2. Add Shortcut</a>
                 </div>
                 <p class="mt-3 text-xs text-gray-400">Install once, then configure below. Already installed? Skip these steps.</p>
@@ -115,7 +117,13 @@
                 </div>
 
 <div id="placement-options"><label for="design-placement" class="block text-xs font-bold uppercase text-gray-400 mb-1">Placement</label><select id="design-placement" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="center">Centered</option><option value="bottom">Bottom aligned</option><option value="vertical">Narrow vertical</option><option value="corner">Compact corner</option></select></div>
-<div><label for="design-view" class="block text-xs font-bold uppercase text-gray-400 mb-1">Calendar view</label><select id="design-view" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="weeks">Life in weeks</option><option value="months">Life in months</option><option value="year">Current year · days</option><option value="combined">Life + current year</option></select></div>
+<div><label for="design-view" class="block text-xs font-bold uppercase text-gray-400 mb-1">Calendar view</label><select id="design-view" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="weeks">Life in weeks</option><option value="months">Life in months</option><option value="year">Current year · days</option><option value="combined">Life + current year</option><option value="countdown">Countdown · days</option></select></div>
+<div id="countdown-options" class="space-y-3 hidden">
+<label for="design-countdownTitle" class="block text-xs font-bold uppercase text-gray-400">Countdown title<input id="design-countdownTitle" type="text" maxlength="48" placeholder="A trip, project, or milestone" class="block w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"></label>
+<label for="design-countdownStart" class="block text-xs font-bold uppercase text-gray-400">Start date<input id="design-countdownStart" type="date" class="block w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"></label>
+<label for="design-countdownEnd" class="block text-xs font-bold uppercase text-gray-400">Target date<input id="design-countdownEnd" type="date" class="block w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"></label>
+<p class="text-xs text-gray-400">One marker per day from the start date until the target date. The countdown reaches zero at the start of the target day.</p>
+</div>
                 <!-- Date & Age -->
                 <div id="lifespan-options" class="space-y-4">
                     <div>
@@ -150,18 +158,18 @@
 <label id="position-options" for="design-position" class="block text-xs text-gray-400">Vertical position · top to bottom <output id="value-position"></output><input id="design-position" type="range" min="0" max="100" class="block w-full mt-2"></label>
 <label for="design-spacing" class="block text-xs text-gray-400">Marker spacing <output id="value-spacing"></output><input id="design-spacing" type="range" min="0" max="75" class="block w-full mt-2"></label>
 <label id="opacity-options" for="design-futureOpacity" class="block text-xs text-gray-400">Future marker opacity <output id="value-futureOpacity"></output><input id="design-futureOpacity" type="range" min="0" max="100" class="block w-full mt-2"></label>
-</div></details><p class="text-xs text-gray-400">Year view uses one marker per day. Wallpaper layout reserves space for your icons or widgets; choose the actual destination in the Shortcut’s Set Wallpaper action.</p></section>
+</div></details><p class="text-xs text-gray-400">Year and countdown views use one marker per day. Wallpaper layout reserves space for your icons or widgets; choose the actual destination in the Shortcut’s Set Wallpaper action.</p></section>
 
                 <!-- Colors -->
                 <div class="space-y-4">
                     <div>
-                        <label for="palette" class="block text-xs font-bold uppercase text-gray-400 mb-1">Color Palette</label>
+                        <label for="palette" class="block text-xs font-bold uppercase text-gray-400 mb-1">Color theme</label>
                         <select id="palette" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base">
                             <option value="classic">Classic</option>
                             <option value="paper">Warm Paper</option>
                             <option value="midnight">Midnight Blue</option>
                             <option value="forest">Forest</option>
-                            <option value="custom">Custom</option>
+                            <option value="graphite">Graphite</option><option value="sunset">Sunset</option><option value="lavender">Lavender</option><option value="ocean">Ocean</option><option value="custom">Custom</option>
                         </select>
                     </div>
                     <p class="text-xs text-gray-400">Tap a color swatch to open the color picker, or enter a hex code.</p>
@@ -205,6 +213,14 @@
 
                 </div>
 
+<section class="space-y-3" aria-labelledby="quote-title">
+<h2 id="quote-title" class="text-sm font-bold">Optional quote</h2>
+<label for="design-quote" class="block text-xs font-bold uppercase text-gray-400">Text below the grid</label>
+<select id="design-quote" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="none">None</option><option value="daily">Daily reflection · changes each day</option><option value="custom">My own quote</option></select>
+<div id="quote-text-options" class="hidden"><label for="design-quoteText" class="block text-xs text-gray-400">Quote or reminder · up to 140 characters</label><input type="text" id="design-quoteText" maxlength="140" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"></div>
+<p class="text-xs text-gray-400">Daily reflections are original prompts included in the Shortcut. They change when your wallpaper refreshes; nothing is fetched online.</p>
+</section>
+<p id="design-error" role="status" class="text-sm text-gray-400"></p>
                 <!-- Actions -->
                 <button id="reset-design" type="button" class="w-full border border-gray-200 rounded p-2 text-sm">Reset design</button>
                 <div class="pt-4 space-y-3">
@@ -307,7 +323,7 @@
                         <a href="https://apps.apple.com/us/app/scriptable/id1405459188" target="_blank" rel="noopener noreferrer" class="rounded-md border border-indigo-200 bg-surface px-3 py-2 text-center text-xs font-bold text-indigo-700 hover:bg-indigo-100">
                              Install Scriptable
                         </a>
-                        <a href="https://www.icloud.com/shortcuts/3d7d746feebe4870812868da22fffe6e" target="_blank" rel="noopener noreferrer" class="rounded-md bg-indigo-700 px-3 py-2 text-center text-xs font-bold text-black hover:bg-indigo-600">
+                        <a href="https://www.icloud.com/shortcuts/3019eb11a8e746d68e6172d13e0c23f1" target="_blank" rel="noopener noreferrer" class="rounded-md bg-indigo-700 px-3 py-2 text-center text-xs font-bold text-black hover:bg-indigo-600">
                              Add Life Calendar Shortcut
                         </a>
                     </div>
@@ -334,8 +350,8 @@
                 </section>
 
                 <section class="rounded-lg border border-gray-100 bg-gray-50 p-4">
-                    <h3 class="font-bold text-white mb-2">Optional: refresh weekly</h3>
-                    <p class="text-xs text-gray-500">Enable the imported Time of Day trigger in the Shortcut’s <strong>Edit → Automation</strong> section. If there isn’t one, create a weekly Time of Day automation with <strong>Run Immediately</strong> and <strong>Run Shortcut → Life Calendar</strong>; leave input empty.</p>
+                    <h3 class="font-bold text-white mb-2">Optional: automatic refreshes</h3>
+                    <p class="text-xs text-gray-500">For countdowns, year calendars, or daily reflections, change the trigger to <strong>Daily</strong>. Life-in-weeks calendars can refresh weekly. Enable the imported Time of Day trigger in the Shortcut’s <strong>Edit → Automation</strong> section. If there isn’t one, create a weekly Time of Day automation with <strong>Run Immediately</strong> and <strong>Run Shortcut → Life Calendar</strong>; leave input empty.</p>
                 </section>
 
                 <p class="text-xs text-gray-400">The settings handoff includes your birth date and selected options. It opens Shortcuts on this iPhone; nothing is sent to a wallpaper server. Don’t share the handoff URL.</p>
@@ -345,15 +361,10 @@
 
     <script type="module">
         import { DEVICES, getDevice } from './calendar-logic.js';
-        import { DESIGN_DEFAULTS, DESIGN_FIELDS, normalizeDesign, generateDesign, getLifespanSummary } from './calendar-design.js?v=1.5.0';
+        import { DESIGN_DEFAULTS, DESIGN_FIELDS, normalizeDesign, generateDesign, getLifespanSummary, COLOR_THEMES } from './calendar-design.js?v=1.6.0';
 
         // --- DOM Elements ---
-        const palettes = {
-            classic: ['#000000', '#ffffff', '#333333'],
-            paper: ['#f5f0e8', '#795548', '#d8cec0'],
-            midnight: ['#0b1020', '#8ab4f8', '#29334d'],
-            forest: ['#0d1912', '#a3c9a8', '#2c4432']
-        };
+        const palettes = COLOR_THEMES;
         const els = {
             device: document.getElementById('device'),
             deviceSize: document.getElementById('device-size'),
@@ -386,7 +397,7 @@
 
         const initialDesign = { ...state };
 
-        const WEBSITE_VERSION = '1.5.0';
+        const WEBSITE_VERSION = '1.6.0';
         let websiteVersion = null;
 
         // --- Initialization ---
@@ -510,6 +521,12 @@
 
             for (const key of DESIGN_FIELDS.filter(key => key !== 'accent')) document.getElementById('design-' + key).addEventListener('input', e => {
                 state[key] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+                if (key === 'view' && state.view === 'countdown' && !state.countdownStart) {
+                    const today = new Date();
+                    const date = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+                    state.countdownStart = date(today);
+                    state.countdownEnd = date(new Date(today.getFullYear()+1,today.getMonth(),today.getDate()));
+                }
                 if (key === 'screen' && state.screen === 'lock') { state.placement = 'center'; state.position = 50; }
                 if (key === 'placement') state.position = ['bottom', 'corner'].includes(state.placement) ? 100 : 50;
                 syncDesignControls(); updateUrl(); draw();
@@ -546,7 +563,7 @@
             document.getElementById('palette').addEventListener('change', e => {
                 const colors = palettes[e.target.value];
                 if (!colors) return;
-                ['bg', 'lived', 'rest'].forEach((key, index) => {
+                ['bg', 'lived', 'rest', 'accent'].forEach((key, index) => {
                     state[key] = colors[index];
                     updateColorInputs(key, state[key]);
                 });
@@ -605,11 +622,12 @@
         // --- Core Logic ---
 
         function draw() {
-            const unit = {weeks:'weeks', months:'months', year:'days', combined:'periods'}[state.view];
+            const lifeView = !['year', 'countdown'].includes(state.view);
+            const unit = {weeks:'weeks', months:'months', year:'days', combined:'periods', countdown:'days'}[state.view];
             document.getElementById('label-lived').textContent = 'Past ' + unit;
             document.getElementById('label-rest').textContent = 'Future ' + unit;
             document.getElementById('palette').value = Object.keys(palettes).find(name =>
-                palettes[name].every((color, index) => color === state[['bg', 'lived', 'rest'][index]].toLowerCase())) || 'custom';
+                palettes[name].every((color, index) => color === state[['bg', 'lived', 'rest', 'accent'][index]].toLowerCase())) || 'custom';
             const ctx = els.canvas.getContext('2d');
             const { width, height } = getDevice(state.device);
             if (els.canvas.width !== width || els.canvas.height !== height) {
@@ -624,28 +642,31 @@
             show('screen-options', !isDuo);
             show('placement-options', !isDuo && state.screen === 'home');
             show('position-options', !isDuo);
-            show('grid-options', state.view !== 'year');
-            show('rounding-options', state.grid === 'adaptive' && state.view !== 'year');
+            show('countdown-options', state.view === 'countdown');
+            show('quote-text-options', state.quote === 'custom');
+            show('grid-options', lifeView);
+            show('rounding-options', state.grid === 'adaptive' && lifeView);
             show('accent-options', state.highlight !== 'none');
             show('opacity-options', state.future !== 'hidden');
-            const hasAgeLabels = state.grid === 'classic' && state.view !== 'year' && state.ageLabels !== 'none';
+            const hasAgeLabels = state.grid === 'classic' && lifeView && state.ageLabels !== 'none';
             show('future-color-options', state.future !== 'hidden' || hasAgeLabels);
-            show('lifespan-options', state.view !== 'year');
+            show('lifespan-options', lifeView);
             document.getElementById('grid-help').textContent = state.grid === 'adaptive'
                 ? 'Arranges markers into a near-square grid that fits the available space. Years can continue across rows.'
                 : 'Each row is one year: 52 weeks or 12 months. Age labels and decade gaps follow these rows.';
             for (const key of ['screen', 'placement', 'position']) {
                 document.getElementById('design-' + key).disabled = isDuo || (key === 'placement' && state.screen !== 'home');
             }
-            document.getElementById('design-grid').disabled = state.view === 'year';
-            const lifespan = getLifespanSummary(state);
-            const canRound = state.grid === 'adaptive' && state.view !== 'year';
+            document.getElementById('design-grid').disabled = !lifeView;
+            let lifespan;
+            try { lifespan = getLifespanSummary(state); } catch { lifespan = { rounded: false, unit: 'days' }; }
+            const canRound = state.grid === 'adaptive' && lifeView;
             document.getElementById('design-squareLifespan').disabled = !canRound;
             document.getElementById('lifespan-summary').textContent = lifespan.rounded
                 ? `Rounded to ${lifespan.effectiveYears.toFixed(1)} years · ${lifespan.side} × ${lifespan.side} · ${lifespan.total.toLocaleString()} ${lifespan.unit}. Target: ${state.years} years.`
                 : canRound ? `Uses the nearest square number of ${lifespan.unit}; your target years stay unchanged.`
                 : 'Available with Fit to screen in life views.';
-            const classic = state.grid === 'classic' && state.view !== 'year';
+            const classic = state.grid === 'classic' && lifeView;
             show('classic-options', classic);
             show('midyear-options', classic && state.view !== 'months');
             for (const key of ['ageLabels', 'decades']) document.getElementById('design-' + key).disabled = !classic;
@@ -657,10 +678,12 @@
             ctx.fillStyle = state.bg;
             ctx.fillRect(0, 0, width, height);
 
-            if (!state.dob) return;
+            if (!state.dob && lifeView) return;
 
             let scene;
-            try { scene = generateDesign(state); } catch { return; }
+            try { scene = generateDesign(state); document.getElementById('design-error').textContent = ''; }
+            catch (error) { document.getElementById('design-error').textContent = error.message; els.btnDownload.disabled = true; els.btnApplySettings.disabled = true; els.btnUseSettings.disabled = true; return; }
+            els.btnDownload.disabled = false; els.btnApplySettings.disabled = !websiteVersion; els.btnUseSettings.disabled = !websiteVersion;
             for (const m of scene.marks) {
                 ctx.globalAlpha = m.opacity;
                 ctx.fillStyle = ctx.strokeStyle = m.color;
@@ -711,7 +734,7 @@
             params.set('bg', state.bg.replace('#', ''));
             params.set('lived', state.lived.replace('#', ''));
             params.set('rest', state.rest.replace('#', ''));
-            for (const key of DESIGN_FIELDS) params.set(key, String(state[key]).replace(/^#/, ''));
+            for (const key of DESIGN_FIELDS) params.set(key, key === 'accent' ? String(state[key]).replace(/^#/, '') : String(state[key]));
             params.set('layout', state.device.startsWith('duo-') ? 'none' : state.layout);
             
             return params;
@@ -727,13 +750,14 @@
         function downloadImage() {
             // Generate the wallpaper locally in the browser.
             const link = document.createElement('a');
-            link.download = `life-calendar-${state.dob}.png`;
+            link.download = state.view === 'countdown' ? `countdown-${state.countdownEnd}.png` : `life-calendar-${state.dob}.png`;
             link.href = els.canvas.toDataURL('image/png');
             link.click();
         }
 
         function openShortcutWithSettings() {
             if (!websiteVersion) return;
+            try { generateDesign(state); } catch { return; }
             const settings = {
                 ...Object.fromEntries(DESIGN_FIELDS.map(key => [key, state[key]])),
                 version: websiteVersion,
@@ -759,7 +783,7 @@
             if (release.version !== WEBSITE_VERSION) throw new Error('Reload the current website');
             websiteVersion = WEBSITE_VERSION;
             document.getElementById('shortcut-version').textContent = `Shortcut v${release.version} · major/minor updates require reinstallation`;
-            els.btnApplySettings.disabled = false;
+            draw();
             els.btnUseSettings.disabled = false;
         }).catch(() => {
             document.getElementById('shortcut-version').textContent = 'Could not check the Shortcut version. Reload this page before applying settings.';

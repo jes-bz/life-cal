@@ -140,3 +140,47 @@ test('classic width options do not affect adaptive or current-year geometry', ()
     }
     assert.throws(()=>normalizeDesign({classicWidth:'stretch'}));
 });
+
+
+test('countdown uses calendar days across leap day and ignores classic-only settings', () => {
+    const countdown = { view: 'countdown', countdownStart: '2024-02-28', countdownEnd: '2024-03-02', countdownTitle: 'A milestone' };
+    const result = scene(countdown);
+    assert.equal(result.marks.length, 3);
+    assert.equal(result.marks.findIndex(mark => mark.active), 1);
+    assert.ok(result.labels.some(label => label.text === '2 days left'));
+    assert.deepEqual(scene({ ...countdown, grid: 'classic', midyear: true, decades: true, ageLabels: '5', classicWidth: 'full', squareLifespan: true }), result);
+    const before = generateDesign({ ...base, ...countdown }, new Date(2024, 1, 27));
+    assert.equal(before.marks.filter(mark => mark.active).length, 0);
+    assert.ok(before.marks.every(mark => mark.color === base.rest));
+    const done = generateDesign({ ...base, ...countdown }, new Date(2024, 2, 2));
+    assert.ok(done.labels.some(label => label.text === 'Target reached'));
+    assert.ok(done.marks.every(mark => mark.color === base.lived));
+    assert.equal(done.marks.filter(mark => mark.active).length, 0);
+});
+test('countdown validates real dates, ordering and bounded duration', () => {
+    for (const dates of [['2024-02-30','2024-03-02'], ['2024-03-02','2024-03-02'], ['2024-03-02','2024-03-01'], ['1900-01-01','2026-01-01']]) {
+        assert.throws(() => scene({view:'countdown',countdownStart:dates[0],countdownEnd:dates[1]}));
+    }
+});
+test('custom quotes wrap within each device safe area and stay separate from markers', () => {
+    for (const device of Object.keys(DEVICES)) {
+        const result = scene({ device, quote:'custom', quoteText:'A'.repeat(140), position:100 });
+        const maxX = result.width * (device.startsWith('duo-') ? .74 : .96);
+        assert.ok(result.labels.length >= 2);
+        for (const label of result.labels) {
+            assert.ok(label.x >= 0 && label.x + label.width <= maxX + .001);
+            assert.ok(label.y + label.height <= result.height * .94);
+            assert.ok(Math.max(...result.marks.map(mark => mark.y + mark.size)) < label.y);
+        }
+    }
+    assert.throws(() => scene({quoteText:'A'.repeat(141)}));
+    assert.throws(() => scene({countdownTitle:'A'.repeat(49)}));
+});
+test('daily reflections are deterministic within a local day and rotate on refresh', () => {
+    const options = {...base, view:'year', quote:'daily'};
+    const first = generateDesign(options, new Date(2024, 1, 29, 0));
+    const later = generateDesign(options, new Date(2024, 1, 29, 23));
+    const next = generateDesign(options, new Date(2024, 2, 1, 0));
+    assert.deepEqual(first.labels, later.labels);
+    assert.notDeepEqual(first.labels.map(label=>label.text), next.labels.map(label=>label.text));
+});

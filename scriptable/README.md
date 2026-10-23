@@ -8,14 +8,14 @@ access, or separate script installation.
 ## Install and use
 
 1. [Install Scriptable](https://apps.apple.com/us/app/scriptable/id1405459188),
-   then [add Life Calendar](https://www.icloud.com/shortcuts/3d7d746feebe4870812868da22fffe6e).
+   then [add Life Calendar](https://www.icloud.com/shortcuts/3019eb11a8e746d68e6172d13e0c23f1).
    Return to the website after installation. An unconfigured Shortcut opens the
    website; it does not present a second color or settings editor.
 2. In the Shortcut's final **Set Wallpaper Photo** action, select the Home Screen or Lock Screen
    wallpaper to update. The website layout preset does not change this destination. Leave **Show Preview** and **Crop to Subject** disabled.
    This wallpaper target belongs to each phone and still needs manual selection.
 3. Choose your birth date, display, life expectancy, layout, and colors on the
-   website. Named palettes are available alongside custom colors. Tap **Apply to
+   website. Choose a life/year calendar or a single countdown. Eight color themes are available alongside custom colors. Optional custom quotes or built-in daily reflections render offline; reflections change when the wallpaper refreshes. Tap **Apply to
    iPhone** to open a local wallpaper preview, then **Apply Wallpaper** to save
    the design and refresh the wallpaper. **Cancel** or closing the preview
    leaves saved settings unchanged. **Edit on Website** returns the candidate
@@ -31,7 +31,8 @@ access, or separate script installation.
    **Edit → Automation**. It imports disabled. If your iOS version does not
    support embedded triggers, create a weekly Time of Day automation with
    **Run Immediately → Run Shortcut → Life Calendar**, leaving its input empty.
-   Approve first-use permissions during a manual run first.
+   For countdowns, year calendars, and daily reflections, change the trigger to
+   **Daily**. Approve first-use permissions during a manual run first.
 
 With saved settings, empty-input runs refresh silently, whether tapped manually
 or launched on schedule. Time of Day exposes no launch-origin value, so the

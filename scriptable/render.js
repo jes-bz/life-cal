@@ -8,19 +8,8 @@ function renderWallpaper(input) {
         device: 'iphone', years: 90, layout: 'none',
         bg: '#000000', lived: '#ffffff', rest: '#333333'
     }, options);
-    if (typeof settings.dob !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(settings.dob)) {
-        throw new Error('Birth date must be YYYY-MM-DD.');
-    }
-    const birth = new Date(settings.dob + 'T00:00:00.000Z');
-    if (!Number.isFinite(birth.getTime()) || birth.toISOString().slice(0, 10) !== settings.dob) {
-        throw new Error('Birth date must be a real calendar date.');
-    }
     if (!Object.prototype.hasOwnProperty.call(DEVICES, settings.device)) {
         throw new Error('Unknown device.');
-    }
-    settings.years = Number(settings.years);
-    if (!Number.isInteger(settings.years) || settings.years < 1 || settings.years > 120) {
-        throw new Error('Life expectancy must be a whole number from 1 to 120.');
     }
     if (!['none', 'top', 'bottom', 'right'].includes(settings.layout)) {
         throw new Error('Unknown layout.');

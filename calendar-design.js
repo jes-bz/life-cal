@@ -4,12 +4,13 @@ export const DESIGN_DEFAULTS = {
     view: 'weeks', grid: 'adaptive', shape: 'square', future: 'dim',
     highlight: 'none', accent: '#f6a64b', screen: 'lock', placement: 'center',
     scale: 100, position: 50, spacing: 25, futureOpacity: 100,
+    countdownStart: '', countdownEnd: '', countdownTitle: '', quote: 'none', quoteText: '',
     classicWidth: 'natural', ageLabels: 'none', decades: false, midyear: false, squareLifespan: false
 };
 export const DESIGN_FIELDS = Object.keys(DESIGN_DEFAULTS);
 export function normalizeDesign(input = {}) {
     const s = { ...DESIGN_DEFAULTS, ...input };
-    const choices = { view: ['weeks', 'months', 'year', 'combined'], grid: ['adaptive', 'classic'],
+    const choices = { quote: ['none', 'daily', 'custom'], view: ['weeks', 'months', 'year', 'combined', 'countdown'], grid: ['adaptive', 'classic'],
         shape: ['square', 'rounded', 'circle'], future: ['dim', 'outline', 'hidden'],
         highlight: ['none', 'color', 'outline', 'larger'], screen: ['lock', 'home'],
         placement: ['center', 'bottom', 'vertical', 'corner'], classicWidth: ['natural', 'wide', 'full'], ageLabels: ['none', '5', '10'] };
@@ -26,10 +27,43 @@ export function normalizeDesign(input = {}) {
         if (![true, false, 'true', 'false'].includes(s[key])) throw new Error('Invalid design option: ' + key);
         s[key] = s[key] === true || s[key] === 'true';
     }
+    for (const [key, limit] of [['countdownTitle', 48], ['quoteText', 140]]) {
+        if (typeof s[key] !== 'string' || Array.from(s[key]).length > limit || /[\x00-\x1f\x7f]/.test(s[key])) throw new Error('Invalid text: ' + key);
+    }
+    if (s.view === 'countdown') countdownRange(s);
     return s;
+}
+export const COLOR_THEMES = {
+    classic: ['#000000', '#ffffff', '#333333', '#f6a64b'],
+    paper: ['#f5f0e8', '#795548', '#d8cec0', '#ad572c'],
+    midnight: ['#0b1020', '#8ab4f8', '#29334d', '#f6a64b'],
+    forest: ['#0d1912', '#a3c9a8', '#2c4432', '#e4be78'],
+    graphite: ['#17191c', '#e4e7eb', '#41464e', '#82d9cd'],
+    sunset: ['#211315', '#f4b39a', '#573637', '#f5d276'],
+    lavender: ['#171322', '#d4c4f5', '#453b58', '#f0b5cd'],
+    ocean: ['#071b24', '#9dd9e8', '#234754', '#f0c987']
+};
+// Original prompts: no quote service, attribution claims, or network requests.
+const REFLECTIONS = [
+    'Make room for what matters.', 'Give this day your attention.',
+    'Spend your time on purpose.', 'Small moments make a life.',
+    'Begin with the time you have.', 'Leave space for joy.',
+    'Choose one thing worth your time.'
+];
+function dateDay(value) {
+    if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) throw new Error('Choose a real calendar date.');
+    const date = new Date(value + 'T00:00:00.000Z');
+    if (!Number.isFinite(date.getTime()) || date.toISOString().slice(0, 10) !== value) throw new Error('Choose a real calendar date.');
+    return date.getTime() / 86400000;
+}
+function countdownRange(s) {
+    const start = dateDay(s.countdownStart), end = dateDay(s.countdownEnd);
+    if (end <= start || end - start > 120 * 366) throw new Error('Target date must be after the start date and within 120 years.');
+    return { start, end, total: end - start };
 }
 export function getLifespanSummary(input) {
     const s = normalizeDesign(input);
+    if (s.view === 'countdown') { const { total } = countdownRange(s); return { rounded: false, total, side: 0, effectiveYears: 0, unit: 'days' }; }
     const perYear = s.view === 'months' ? 12 : 52;
     const requested = Number(s.years) * perYear;
     const rounded = s.squareLifespan && s.grid === 'adaptive' && s.view !== 'year';
@@ -40,6 +74,7 @@ export function getLifespanSummary(input) {
 }
 function civilDay(date) { return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000; }
 function timeUnits(s, now, view) {
+    if (view === 'countdown') { const range = countdownRange(s); return { total: range.total, current: Math.max(-1, Math.min(range.total, civilDay(now) - range.start)), perYear: 0 }; }
     const birth = new Date(s.dob + 'T00:00:00');
     if (view === 'year') {
         const start = new Date(now.getFullYear(), 0, 1), end = new Date(now.getFullYear() + 1, 0, 1);
@@ -56,11 +91,15 @@ function timeUnits(s, now, view) {
 }
 export function generateDesign(input, now = new Date()) {
     const s = normalizeDesign(input);
+    if (!['year', 'countdown'].includes(s.view)) {
+        dateDay(s.dob);
+        if (!Number.isInteger(Number(s.years)) || Number(s.years) < 1 || Number(s.years) > 120) throw new Error('Choose a lifespan from 1 to 120 whole years.');
+    }
     const { width, height } = getDevice(s.device);
     const isDuo = s.device.startsWith('duo-');
     if (isDuo) { s.screen = 'lock'; s.placement = 'center'; s.position = 100; }
     const legacy = isDuo && s.view === 'weeks' && s.grid === 'adaptive' && s.screen === 'lock' &&
-        s.placement === 'center' && s.scale === 100 && s.spacing === 25 && !s.squareLifespan;
+        s.placement === 'center' && s.scale === 100 && s.spacing === 25 && !s.squareLifespan && (s.quote === 'none' || (s.quote === 'custom' && !s.quoteText.trim()));
     const marks = [], labels = [];
     function addMark(x, y, size, index, current) {
         const past = index < current, active = index === current && current >= 0;
@@ -87,8 +126,37 @@ export function generateDesign(input, now = new Date()) {
     }
     // Duo's permanent right-side controls remain reserved for every design.
     const left = width * .04, right = width * (isDuo ? .74 : .96);
-    const top = height * (isDuo ? .35 : s.screen === 'home' ? .12 : s.layout === 'top' ? .35 : .25);
-    const bottom = height * (isDuo ? .94 : s.screen === 'home' ? .84 : s.layout === 'bottom' ? .80 : .90);
+    let top = height * (isDuo ? .35 : s.screen === 'home' ? .12 : s.layout === 'top' ? .35 : .25);
+    let bottom = height * (isDuo ? .94 : s.screen === 'home' ? .84 : s.layout === 'bottom' ? .80 : .90);
+    function textLines(text, y, fontSize, maxLines = 3) {
+        const capacity = Math.max(1, Math.floor((right - left) / (fontSize * .64)));
+        const lines = []; let line = '';
+        for (const word of text.trim().split(/\s+/)) {
+            if (!word) continue;
+            for (let offset = 0; offset < Array.from(word).length; offset += capacity) {
+                const chunk = Array.from(word).slice(offset, offset + capacity).join('');
+                if (line && Array.from(line + ' ' + chunk).length > capacity) { lines.push(line); line = ''; }
+                line += (line ? ' ' : '') + chunk;
+                if (Array.from(line).length >= capacity) { lines.push(line); line = ''; }
+            }
+        }
+        if (line) lines.push(line);
+        lines.slice(0, maxLines).forEach((text, index) => labels.push({ text, x: left, y: y + index * fontSize * 1.5,
+            width: right - left, height: fontSize * 1.5, fontSize, color: s.lived }));
+    }
+    const quoteText = s.quote === 'daily' ? REFLECTIONS[((civilDay(now) % REFLECTIONS.length) + REFLECTIONS.length) % REFLECTIONS.length] : s.quote === 'custom' ? s.quoteText : '';
+    if (quoteText.trim()) {
+        const quoteHeight = width * .12;
+        textLines(quoteText, bottom - quoteHeight, width * .018, 4);
+        bottom -= quoteHeight + width * .025;
+    }
+    if (s.view === 'countdown') {
+        const range = countdownRange(s);
+        const remaining = Math.max(0, range.end - civilDay(now));
+        textLines(s.countdownTitle || 'Countdown', top, width * .026, 2);
+        textLines(remaining === 0 ? 'Target reached' : remaining + (remaining === 1 ? ' day left' : ' days left'), top + width * .085, width * .022, 1);
+        top += width * .15;
+    }
     let areaWidth = (right - left) * s.scale / 100;
     if (s.screen === 'home' && s.placement === 'vertical') areaWidth *= .48;
     if (s.screen === 'home' && s.placement === 'corner') areaWidth *= .58;
@@ -98,7 +166,7 @@ export function generateDesign(input, now = new Date()) {
     const panelHeight = compact ? areaHeight * .5 : areaHeight;
     function panel(view, panelTop, panelHeight) {
         const { total, current, perYear } = timeUnits(s, now, view);
-        const classic = s.grid === 'classic' && view !== 'year';
+        const classic = s.grid === 'classic' && !['year', 'countdown'].includes(view);
         const split = classic && view === 'weeks' && s.midyear;
         const decade = classic && s.decades;
         const labelEvery = classic && s.ageLabels !== 'none' ? Number(s.ageLabels) : 0;
@@ -111,7 +179,7 @@ export function generateDesign(input, now = new Date()) {
             const size = Math.min((areaWidth - gutter) / xUnits, panelHeight * s.scale / 100 / yUnits) / 1.05;
             return { cols, rows, size, gridWidth: size * xUnits, gridHeight: size * yUnits };
         }
-        const square = s.squareLifespan && !classic && view !== 'year';
+        const square = s.squareLifespan && !classic && !['year', 'countdown'].includes(view);
         let fitted = dimensions(square ? Math.sqrt(total) : perYear || 19);
         if (!classic && !square) {
             // Prefer a square grid. Only use a wider rectangle when its safe

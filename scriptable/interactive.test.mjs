@@ -199,3 +199,15 @@ test('rounded lifespan is disclosed before Apply and persists without changing t
     const restored = new URL(await r.execute('settings'));
     assert.equal(new URLSearchParams(restored.hash.slice(1)).get('squareLifespan'), 'true');
 });
+
+
+test('countdown and quote fields survive saved-design links without stripping hash characters', async () => {
+    const input = {...handoff, view:'countdown', countdownStart:'2026-01-01', countdownEnd:'2026-12-31', countdownTitle:'#Next chapter', quote:'custom', quoteText:'#Remember & reflect'};
+    const r = runtime(settings);
+    await r.execute(input);
+    const url = new URL(await r.preflight('settings'));
+    const params = new URLSearchParams(url.hash.slice(1));
+    assert.equal(params.get('countdownTitle'), '#Next chapter');
+    assert.equal(params.get('quoteText'), '#Remember & reflect');
+    assert.equal(params.get('countdownEnd'), '2026-12-31');
+});

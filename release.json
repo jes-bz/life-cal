@@ -1,14 +1,14 @@
 {
-  "version": "1.5.0",
+  "version": "1.6.0",
   "siteUrl": "https://jes.bz/life-cal",
-  "shortcutUrl": "https://www.icloud.com/shortcuts/3d7d746feebe4870812868da22fffe6e",
-  "shortcutSha256": "bdcc9b780460716780c09caeb9bb446dba237f4a307ea9bd38d2f97824055626",
+  "shortcutUrl": "https://www.icloud.com/shortcuts/3019eb11a8e746d68e6172d13e0c23f1",
+  "shortcutSha256": "573753bc209ad68791e8047c1a2c86bc3207c511f0af7fb88af9096c8c8f72a0",
   "scriptSha256": [
-    "aa0d32662244762ea07d0d950c23b0b748e4d4924899a7fc88d2647586ca6783",
-    "c910c2ed007427311060be6fa466de33edc8244a12843681f045cdfea054360c",
-    "c910c2ed007427311060be6fa466de33edc8244a12843681f045cdfea054360c"
+    "736cfffd1d8cc180e57e047d70c08479e15d188d5ded5cd7940d5911cab08e4d",
+    "d307b0959e41c4ce1e8de76ea81a5ab65647d268e49e4af4cc56074dadb7ce1c",
+    "d307b0959e41c4ce1e8de76ea81a5ab65647d268e49e4af4cc56074dadb7ce1c"
   ],
-  "verifiedVersion": "1.5.0",
+  "verifiedVersion": "1.6.0",
   "verifiedPaths": [
     "cancel",
     "edit-website",

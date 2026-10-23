@@ -8,7 +8,7 @@ execFileSync(process.execPath, ['scriptable/build.mjs']);
 const source = await readFile(new URL('../dist/life-calendar-scriptable.js', import.meta.url), 'utf8');
 
 function run(parameter) {
-    const draws = [];
+    const draws = [], labels = [];
     let context;
     let output;
     class Rect {
@@ -34,7 +34,7 @@ function run(parameter) {
             addPath(path) { this.path = path; }
             fillPath() { this.fillRect(this.path.rect); }
             strokePath() { this.fillRect(this.path.rect); }
-            setFont() {} setTextColor() {} drawTextInRect() {}
+            setFont() {} setTextColor() {} drawTextInRect(text, rect) { labels.push({text, ...rect}); }
             getImage() { return this; }
         },
         Data: { fromPNG(image) {
@@ -43,7 +43,7 @@ function run(parameter) {
         } }
     };
     vm.runInNewContext(source + '\nScript.setShortcutOutput(renderWallpaper(args.shortcutParameter));', globals, { timeout: 3000 });
-    return { draws, context, output };
+    return { draws, labels, context, output };
 }
 
 test('native sizes, bounded geometry, week counts, and text output across devices/layouts', () => {
@@ -102,4 +102,13 @@ test('all native marker paths render with bounds and normalization intact', () =
         assert.ok(draws.length > 365);
         for (const r of draws) assert.ok(r.width > 0 && r.height > 0);
     }
+});
+
+
+test('native renderer supports countdowns and wrapped quotes without a birth date', () => {
+    const result = run({view:'countdown', countdownStart:'2026-01-01', countdownEnd:'2027-01-01', countdownTitle:'A milestone', quote:'custom', quoteText:'#Remember & reflect'});
+    assert.equal(result.draws.length, 366);
+    assert.ok(result.labels.some(label => label.text === 'A milestone'));
+    assert.ok(result.labels.some(label => label.text === '#Remember & reflect'));
+    assert.equal(result.output, 'PNG-output-contract');
 });

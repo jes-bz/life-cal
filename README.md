@@ -16,6 +16,8 @@ The generator is free, with no account or subscription. Browser previews and dow
 
 ## Features
 
+*   **Countdowns**: One calendar for a trip, project, or milestone, with start and target dates and a daily countdown.
+*   **Themes and quotes**: Eight editable color themes, an optional custom quote, or original reflection prompts that rotate on refresh. No quote API.
 *   **Interactive Preview**: Visualize your calendar instantly in the browser.
 *   **Customizable**: Adjust colors, layout, life expectancy, and display size.
 *   **Device Presets**: iPhone / Pro (1206 × 2622), Max (1320 × 2868), Duo outer (1398 × 2034), and Duo inner portrait/landscape (1878 × 2670 / 2670 × 1878). Duo layouts reserve space for right-side controls.
@@ -24,7 +26,7 @@ The generator is free, with no account or subscription. Browser previews and dow
 
 ## iPhone Setup
 
-Install [Scriptable](https://apps.apple.com/us/app/scriptable/id1405459188), then add the [Life Calendar Shortcut](https://www.icloud.com/shortcuts/3d7d746feebe4870812868da22fffe6e). The [offline setup guide](scriptable/README.md) explains initial setup, changing settings, and scheduling weekly refreshes.
+Install [Scriptable](https://apps.apple.com/us/app/scriptable/id1405459188), then add the [Life Calendar Shortcut](https://www.icloud.com/shortcuts/3019eb11a8e746d68e6172d13e0c23f1). The [offline setup guide](scriptable/README.md) explains initial setup, changing settings, and scheduling weekly refreshes.
 
 ## Display sizes
 

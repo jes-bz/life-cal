@@ -67,7 +67,7 @@ function websiteURL(settings) {
     if (!settings) return LIFE_CALENDAR_SITE_URL;
     // A fragment restores the editor without sending the settings to the server.
     const fields = SETTINGS_FIELDS.filter(key => settings[key] != null).map(key =>
-        encodeURIComponent(key) + '=' + encodeURIComponent(String(settings[key]).replace(/^#/, '')));
+        encodeURIComponent(key) + '=' + encodeURIComponent(['bg', 'lived', 'rest', 'accent'].includes(key) ? String(settings[key]).replace(/^#/, '') : String(settings[key])));
     return LIFE_CALENDAR_SITE_URL + '#' + fields.join('&');
 }
 
