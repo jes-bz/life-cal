@@ -51,7 +51,7 @@
     <meta name="twitter:image" content="https://jessebrizzi.com/life-cal/assets/share-card.png">
     <meta name="twitter:image:alt" content="Life Calendar with an illustrative life-in-weeks wallpaper">
     <meta name="theme-color" content="#000000">
-    <link rel="stylesheet" href="./assets/site.css?v=5">
+    <link rel="stylesheet" href="./assets/site.css?v=6">
 
 </head>
 
@@ -91,6 +91,10 @@
 
 <section class="space-y-4" aria-label="Calendar design">
 <h2 class="text-sm font-bold">Calendar design</h2>
+<div><h3 class="text-xs font-bold uppercase text-gray-400">Design presets</h3>
+<p class="mt-2 text-xs text-gray-400">Choose a starting look, then fine-tune below. Presets change colors and markers; your dates, calendar view, and placement stay as selected.</p>
+<div id="design-presets" class="design-presets" aria-label="Design presets"></div>
+<p id="preset-status" class="mt-2 text-xs text-gray-400" role="status"></p></div>
 <div id="screen-options"><label for="design-screen" class="block text-xs font-bold uppercase text-gray-400 mb-1">Wallpaper layout</label><select id="design-screen" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="lock">Lock Screen</option><option value="home">Home Screen</option></select></div>
                 <!-- Layout Options -->
                 <div id="layout-options" class="space-y-3">
@@ -365,6 +369,64 @@
 
         // --- DOM Elements ---
         const palettes = COLOR_THEMES;
+        const presets = [
+            { name:'Classic', palette:'classic', shape:'square', future:'dim', spacing:25, futureOpacity:100, highlight:'none' },
+            { name:'Warm Paper', palette:'paper', shape:'circle', future:'outline', spacing:35, futureOpacity:100, highlight:'color' },
+            { name:'Midnight', palette:'midnight', shape:'rounded', future:'dim', spacing:20, futureOpacity:65, highlight:'color' },
+            { name:'Forest', palette:'forest', shape:'circle', future:'dim', spacing:40, futureOpacity:80, highlight:'larger' },
+            { name:'Graphite', palette:'graphite', shape:'square', future:'outline', spacing:15, futureOpacity:100, highlight:'color' },
+            { name:'Sunset', palette:'sunset', shape:'rounded', future:'dim', spacing:30, futureOpacity:75, highlight:'larger' },
+            { name:'Lavender', palette:'lavender', shape:'circle', future:'outline', spacing:30, futureOpacity:80, highlight:'outline' },
+            { name:'Ocean', palette:'ocean', shape:'rounded', future:'dim', spacing:25, futureOpacity:100, highlight:'color' }
+        ];
+        const presetFields = ['shape', 'future', 'spacing', 'futureOpacity', 'highlight'];
+        const colorFields = ['bg', 'lived', 'rest', 'accent'];
+        function presetSettings(preset) {
+            return Object.fromEntries([
+                ...presetFields.map(key => [key, preset[key]]),
+                ...colorFields.map((key, index) => [key, palettes[preset.palette][index]])
+            ]);
+        }
+        function initPresets() {
+            const container = document.getElementById('design-presets');
+            for (const preset of presets) {
+                const button = document.createElement('button');
+                button.type = 'button'; button.className = 'design-preset';
+                button.setAttribute('aria-label', 'Apply ' + preset.name + ' design preset');
+                button.setAttribute('aria-pressed', 'false');
+                const canvas = document.createElement('canvas');
+                canvas.width = 160; canvas.height = 72; canvas.setAttribute('aria-hidden', 'true');
+                const ctx = canvas.getContext('2d');
+                const [bg, lived, rest, accent] = palettes[preset.palette];
+                ctx.fillStyle = bg; ctx.fillRect(0, 0, 160, 72);
+                const gap = 3 + preset.spacing / 12, size = Math.min(11, (144 - 7 * gap) / 8);
+                const left = (160 - (8 * size + 7 * gap)) / 2;
+                const top = (72 - (4 * size + 3 * gap)) / 2;
+                for (let i = 0; i < 32; i++) {
+                    const active = i === 18 && preset.highlight !== 'none';
+                    const future = i > 18;
+                    const enlarged = active && preset.highlight === 'larger' ? 1.35 : 1;
+                    const side = size * enlarged;
+                    const x = left + (i % 8) * (size + gap) - (side-size)/2;
+                    const y = top + Math.floor(i/8) * (size+gap) - (side-size)/2;
+                    ctx.fillStyle = ctx.strokeStyle = active ? accent : future ? rest : lived;
+                    ctx.globalAlpha = future ? preset.futureOpacity / 100 : 1;
+                    ctx.lineWidth = 1.2; ctx.beginPath();
+                    if (preset.shape === 'circle') ctx.arc(x+side/2,y+side/2,side/2,0,Math.PI*2);
+                    else if (preset.shape === 'rounded') ctx.roundRect(x,y,side,side,side*.25);
+                    else ctx.rect(x,y,side,side);
+                    if ((active && preset.highlight === 'outline') || (future && preset.future === 'outline')) ctx.stroke(); else ctx.fill();
+                }
+                const name = document.createElement('span'); name.textContent = preset.name;
+                button.append(canvas, name);
+                button.addEventListener('click', () => {
+                    Object.assign(state, presetSettings(preset));
+                    for (const key of colorFields) updateColorInputs(key, state[key]);
+                    syncDesignControls(); updateUrl(); draw();
+                });
+                container.append(button);
+            }
+        }
         const els = {
             device: document.getElementById('device'),
             deviceSize: document.getElementById('device-size'),
@@ -403,6 +465,7 @@
 
         // --- Initialization ---
         function init() {
+            initPresets();
             // 1. Parse URL Params
             let remembered = '';
             try { remembered = localStorage.getItem('life-calendar.design.v1') || ''; } catch {}
@@ -625,6 +688,9 @@
         // --- Core Logic ---
 
         function draw() {
+            const selectedPreset = presets.find(preset => Object.entries(presetSettings(preset)).every(([key, value]) => String(state[key]).toLowerCase() === String(value).toLowerCase()));
+            document.querySelectorAll('#design-presets button').forEach((button, index) => button.setAttribute('aria-pressed', String(presets[index] === selectedPreset)));
+            document.getElementById('preset-status').textContent = selectedPreset ? selectedPreset.name + ' preset' : 'Custom design';
             const lifeView = !['year', 'countdown'].includes(state.view);
             const unit = {weeks:'weeks', months:'months', year:'days', combined:'periods', countdown:'days'}[state.view];
             document.getElementById('label-lived').textContent = 'Past ' + unit;

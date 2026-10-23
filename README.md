@@ -17,6 +17,7 @@ The generator is free, with no account or subscription. Browser previews and dow
 ## Features
 
 *   **Countdowns**: One calendar for a trip, project, or milestone, with start and target dates and a daily countdown.
+*   **Design presets**: Eight visual starting looks combine colors, marker shapes, spacing, and accents while preserving dates and placement. Every option stays editable.
 *   **Themes and quotes**: Eight editable color themes, an optional custom quote, or original reflection prompts that rotate on refresh. No quote API.
 *   **Interactive Preview**: Visualize your calendar instantly in the browser.
 *   **Customizable**: Adjust colors, layout, life expectancy, and display size. New website designs default to one year per row with middle row spacing.
