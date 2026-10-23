@@ -19,7 +19,7 @@ The generator is free, with no account or subscription. Browser previews and dow
 *   **Countdowns**: One calendar for a trip, project, or milestone, with start and target dates and a daily countdown.
 *   **Themes and quotes**: Eight editable color themes, an optional custom quote, or original reflection prompts that rotate on refresh. No quote API.
 *   **Interactive Preview**: Visualize your calendar instantly in the browser.
-*   **Customizable**: Adjust colors, layout, life expectancy, and display size.
+*   **Customizable**: Adjust colors, layout, life expectancy, and display size. New website designs default to one year per row with middle row spacing.
 *   **Device Presets**: iPhone / Pro (1206 × 2622), Max (1320 × 2868), Duo outer (1398 × 2034), and Duo inner portrait/landscape (1878 × 2670 / 2670 × 1878). Duo layouts reserve space for right-side controls.
 *   **High Resolution**: Native display sizes; the website defaults to iPhone / Pro.
 *   **Offline iPhone wallpaper**: Scriptable generates and refreshes the wallpaper locally. See the [iPhone setup guide](scriptable/README.md).

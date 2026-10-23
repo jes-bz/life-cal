@@ -251,7 +251,7 @@
                     <p>A life calendar represents time as a grid: each marker is one week or month, with past and future periods in different colors. Memento mori means “remember you must die”—a reminder to spend your time intentionally.</p>
                     <details>
                         <summary class="cursor-pointer font-bold text-gray-700">How do I make a life-in-weeks wallpaper?</summary>
-                        <p class="mt-2">Choose your birth date and target lifespan, then adjust the grid, colors, and space for your clock or widgets. Fit to screen arranges markers into a near-square grid; Classic keeps one year per row. Download Wallpaper saves an image from your browser.</p>
+                        <p class="mt-2">Choose your birth date and target lifespan, then adjust the grid, colors, and space for your clock or widgets. Classic keeps one year per row and is the default; Fit to screen arranges markers into a near-square grid. Download Wallpaper saves an image from your browser.</p>
                     </details>
                     <details>
                         <summary class="cursor-pointer font-bold text-gray-700">Can my iPhone update the wallpaper automatically?</summary>
@@ -392,6 +392,7 @@
             bg: '#000000',
             lived: '#ffffff',
             rest: '#333333',
+            grid: 'classic', classicWidth: 'wide',
             layout: 'none', // 'none', 'top', 'bottom'
         };
 
@@ -422,7 +423,9 @@
                 if (/^[\da-f]{6}$/i.test(color)) state[key] = '#' + color;
             }
 
-            const designInput = {};
+            // Website-only defaults keep the shared renderer release unchanged.
+            // Explicit shared or remembered settings override these values.
+            const designInput = { grid: 'classic', classicWidth: 'wide' };
             for (const key of DESIGN_FIELDS) if (params.has(key)) designInput[key] = params.get(key);
             try { Object.assign(state, normalizeDesign(designInput)); } catch {}
             syncDesignControls();

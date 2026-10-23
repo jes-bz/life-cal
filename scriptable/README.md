@@ -60,7 +60,8 @@ version-aware Shortcut; earlier shared versions cannot enforce it retroactively.
 - Life in weeks, life in months, the current year in days (including leap years),
   or a life grid above an enlarged current-year grid.
 - Adaptive fitting or classic rows with exactly 52 weeks / 12 months per year.
-  Classic grids can show age markers every 5 or 10 years, decade gaps, and a
+  New website designs default to classic rows with middle horizontal spacing. Classic
+  grids can show age markers every 5 or 10 years, decade gaps, and a
   half-year gap in week views.
 - Square, rounded-square, or circular markers; solid/dim, hollow, or hidden
   future markers; optional current-period color, outline, or larger accent.
