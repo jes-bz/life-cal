@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Calendar Wallpaper Generator · Memento Mori</title>
-    <meta name="description" content="Create a free memento mori wallpaper showing your life in weeks or months. Customize colors, preview your design, and automate iPhone updates with Shortcuts.">
+    <title>Free Life in Weeks Wallpaper · Life Calendar</title>
+    <meta name="description" content="Create a free life-in-weeks wallpaper. Customize and download in your browser, or automate offline iPhone updates with Shortcuts and Scriptable. No account.">
     <link rel="canonical" href="https://jessebrizzi.com/life-cal/">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jessebrizzi.com/life-cal/">
-    <meta property="og:title" content="Life Calendar Wallpaper Generator · Memento Mori">
-    <meta property="og:description" content="See your life in weeks or months. Create a free custom wallpaper, download it, or set up automatic iPhone updates with Shortcuts and Scriptable.">
+    <meta property="og:title" content="Free Life in Weeks Wallpaper · Life Calendar">
+    <meta property="og:description" content="Design your life-in-weeks wallpaper for free. Preview in your browser and keep it updated locally on iPhone with Shortcuts and Scriptable. No account or subscription.">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Life Calendar Wallpaper Generator · Memento Mori">
-    <meta name="twitter:description" content="Create a free life-in-weeks wallpaper with custom colors and layouts. Preview and download in your browser, or automate updates on iPhone.">
+    <meta name="twitter:title" content="Free Life in Weeks Wallpaper · Life Calendar">
+    <meta name="twitter:description" content="Free, open-source life-in-weeks wallpapers. Customize in your browser, then let your iPhone render updates offline with Shortcuts and Scriptable.">
     <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -21,7 +21,7 @@
     "name": "Life Calendar Wallpaper Generator",
     "alternateName": "Memento Mori Life Calendar",
     "url": "https://jessebrizzi.com/life-cal/",
-    "description": "Create custom memento mori wallpapers showing life in weeks or months, or the current year in days. Preview and download locally in your browser, with optional iPhone automation using Shortcuts and Scriptable.",
+    "description": "Free, open-source memento mori wallpaper generator for life in weeks or months and the current year in days. Customize and download locally in your browser, or automate offline iPhone rendering with Shortcuts and Scriptable. No account or subscription.",
     "applicationCategory": "DesignApplication",
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript and a modern web browser.",
@@ -36,7 +36,8 @@
         "Current year in days",
         "Custom colors and grid layouts",
         "Local wallpaper preview and download",
-        "Optional iPhone Shortcut automation"
+        "Offline iPhone rendering with Shortcuts and Scriptable",
+        "Free and open source, with no account or subscription"
     ]
 }
     </script>
@@ -48,87 +49,8 @@
     <meta name="twitter:image" content="https://jessebrizzi.com/life-cal/assets/share-card.png">
     <meta name="twitter:image:alt" content="Life Calendar with an illustrative life-in-weeks wallpaper">
     <meta name="theme-color" content="#000000">
-    <link rel="stylesheet" href="./assets/site.css?v=3">
-    <style>
+    <link rel="stylesheet" href="./assets/site.css?v=5">
 
-        :root { color-scheme: dark; }
-        body { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-        :focus-visible { outline: 2px solid #ffb86c; outline-offset: 3px; }
-        input[type=radio] { accent-color: #ff9e3b; }
-        input[type=text], input[type=number], input[type=date] { min-width: 0; }
-        input[type=color].color-picker {
-            appearance: none; -webkit-appearance: none;
-            width: 5rem; height: 2.75rem; flex: 0 0 5rem;
-            padding: 4px; border: 1px solid #6b7280; border-radius: 6px;
-            background: #242424; cursor: pointer;
-        }
-        .color-picker::-webkit-color-swatch-wrapper { padding: 0; }
-        .color-picker::-webkit-color-swatch { border: 0; border-radius: 3px; }
-        .color-picker::-moz-color-swatch { border: 0; border-radius: 3px; }
-        .color-picker:hover { border-color: #ffb86c; }
-        .preview-area {
-            container-type: size;
-            min-width: 0;
-            min-height: 0;
-            background: radial-gradient(ellipse at center, #211a14 0%, #0a0a0a 65%);
-        }
-        .phone-preview {
-            --preview-ratio: 1320 / 2868;
-            aspect-ratio: var(--preview-ratio);
-            width: min(90cqw, calc(90cqh * var(--preview-ratio)));
-            flex: none;
-        }
-        #preview-notch {
-            position: absolute; left: 50%; top: 1.6%; transform: translateX(-50%);
-            width: 28%; height: 3%; border-radius: 999px; background: #171717;
-            pointer-events: none;
-        }
-        #phone-preview[role=button] { cursor: zoom-in; }
-        #preview-dialog { width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; border: 0; background: #090909; color: white; }
-        #preview-dialog::backdrop { background: #090909; }
-        #preview-stage { container-type: size; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
-        #preview-dialog .phone-preview { width: min(90cqw, calc(82cqh * var(--preview-ratio))); border-radius: 24px; }
-        #close-preview { position: absolute; top: max(12px, env(safe-area-inset-top)); right: max(12px, env(safe-area-inset-right)); z-index: 1; min-width: 44px; min-height: 44px; padding: 8px 16px; background: #242424; border: 1px solid #636363; border-radius: 8px; cursor: pointer; }
-        body:has(#preview-dialog[open]) { overflow: hidden; }
-        @media (min-width: 768px) {
-            @supports (height: 100dvh) { body { height: 100dvh; } }
-        }
-
-
-        button, select, input[type=date], input[type=number], input[type=text] { min-height: 44px; }
-        label:has(input[type=checkbox]), #layout-options .flex { min-height: 44px; cursor: pointer; }
-        input[type=checkbox], input[type=radio] { accent-color: #ff9e3b; }
-        #layout-options input { flex-shrink: 0; }
-        #layout-options label { padding-block: 10px; cursor: pointer; }
-        .controls-panel a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; }
-        @media (max-width: 767px) {
-            .preview-area { order: -1; position: sticky; top: 0; z-index: 20; height: 26svh; min-height: 150px; padding: 8px; border-bottom: 1px solid #636363; }
-            .phone-preview { border-width: 3px; border-radius: 12px; }
-            .controls-panel { border-right: 0; }
-            .controls-panel > div { padding: 16px; }
-            #ui-container { min-height: 100svh; }
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #636363;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #b3b3b3;
-        }
-
-    </style>
 </head>
 
 <body class="bg-black text-white min-h-screen md:h-screen md:overflow-hidden flex flex-col">
@@ -142,7 +64,8 @@
             <div class="p-6 border-b border-gray-100">
                 <h1 class="text-xl font-bold tracking-tighter uppercase">Life Calendar Wallpaper</h1>
                 <p class="text-xs text-gray-500 mt-1">Memento mori · your life in weeks</p>
-                <p class="mt-3 text-xs text-gray-400">Free life-in-weeks wallpapers. Customize, download, or automate updates on iPhone.</p>
+                <p class="mt-3 text-xs text-gray-400">Design your life-in-weeks wallpaper in your browser. Let your iPhone keep it updated with offline rendering.</p>
+                <p class="mt-2 text-xs text-gray-400">Free and open source · No account or subscription</p>
                 <p class="mt-4 text-xs font-bold uppercase text-gray-400">First-time setup · install once</p>
                 <div class="mt-2 grid grid-cols-2 gap-2 text-xs">
                     <a href="https://apps.apple.com/us/app/scriptable/id1405459188" target="_blank" rel="noopener noreferrer"
@@ -196,12 +119,12 @@
                 <!-- Date & Age -->
                 <div id="lifespan-options" class="space-y-4">
                     <div>
-                        <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Birth Date</label>
+                        <label for="dob" class="block text-xs font-bold uppercase text-gray-400 mb-1">Birth Date</label>
                         <input type="date" id="dob"
                             class="appearance-none block w-full bg-gray-50 border border-gray-200 rounded p-2 text-base focus:outline-none focus:border-indigo-500 transition-colors">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Expectancy (Years)</label>
+                        <label for="years" class="block text-xs font-bold uppercase text-gray-400 mb-1">Expectancy (Years)</label>
                         <input type="number" id="years" value="80" min="1" max="120"
                             class="appearance-none block w-full bg-gray-50 border border-gray-200 rounded p-2 text-base focus:outline-none focus:border-indigo-500 transition-colors">
                     </div>
@@ -283,6 +206,7 @@
                 </div>
 
                 <!-- Actions -->
+                <button id="reset-design" type="button" class="w-full border border-gray-200 rounded p-2 text-sm">Reset design</button>
                 <div class="pt-4 space-y-3">
                     <button id="btn-apply-settings" disabled
                         class="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold py-3 px-4 rounded text-sm transition-colors flex items-center justify-center">
@@ -307,7 +231,7 @@
 
                 <section aria-labelledby="about-title" class="pt-6 border-t border-gray-200 space-y-4 text-xs text-gray-400">
                     <h2 id="about-title" class="text-sm font-bold text-gray-700">About this memento mori calendar</h2>
-                    <p>Free, with no account or subscription. Customize colors, download your wallpaper, and use local iPhone updates without paying for a hosted image service.</p>
+                    <p>A free, open-source memento mori wallpaper generator. Customize every color and layout without an account, subscription, or paid design tier. Preview and download locally in your browser; automatic iPhone updates render on your device with the free Scriptable app and Life Calendar Shortcut.</p>
                     <p>A life calendar represents time as a grid: each marker is one week or month, with past and future periods in different colors. Memento mori means “remember you must die”—a reminder to spend your time intentionally.</p>
                     <details>
                         <summary class="cursor-pointer font-bold text-gray-700">How do I make a life-in-weeks wallpaper?</summary>
@@ -316,6 +240,10 @@
                     <details>
                         <summary class="cursor-pointer font-bold text-gray-700">Can my iPhone update the wallpaper automatically?</summary>
                         <p class="mt-2">Install Scriptable and the Life Calendar Shortcut using the buttons above. Return here to configure your design, then choose Apply to iPhone. Preview and confirm on your phone, and enable the Shortcut’s schedule for automatic refreshes. Rendering runs locally on your iPhone.</p>
+                    </details>
+                    <details>
+                        <summary class="cursor-pointer font-bold text-gray-700">Do automatic updates work offline?</summary>
+                        <p class="mt-2">Yes. Once installed and configured, the Shortcut renders your saved design on your iPhone without fetching a wallpaper from a server. Internet access is needed to install the apps and Shortcut, open this editor, or get a new Shortcut release. Scriptable is required for automatic updates; a manual browser download needs no iPhone app.</p>
                     </details>
                     <details>
                         <summary class="cursor-pointer font-bold text-gray-700">Is my birth date uploaded?</summary>
@@ -327,7 +255,7 @@
 
         <!-- Preview Area -->
         <div class="preview-area h-[70vh] md:h-auto md:flex-1 relative overflow-hidden flex items-center justify-center p-4 md:p-8">
-            <div id="phone-preview" role="button" tabindex="0" aria-label="Open full-screen wallpaper preview" aria-haspopup="dialog" class="phone-preview relative shadow-2xl rounded-3xl border-8 border-gray-800 overflow-hidden bg-black">
+            <div id="phone-preview" role="button" tabindex="0" aria-label="Open full-screen wallpaper preview" aria-haspopup="dialog" aria-describedby="preview-hint" class="phone-preview relative shadow-2xl rounded-3xl border-8 border-gray-800 overflow-hidden bg-black">
                 <!-- Canvas preview -->
                 <canvas id="canvas" width="1320" height="2868"
                     class="w-full h-full object-contain bg-transparent" role="img" aria-label="Preview of your customized life calendar wallpaper">Your life calendar preview requires JavaScript and canvas support. Use the controls to customize a wallpaper and download it.</canvas>
@@ -346,6 +274,7 @@
                 <div id="preview-notch" aria-hidden="true">
                 </div>
             </div>
+            <span id="preview-hint">Tap preview to enlarge</span>
         </div>
     </div>
 
@@ -354,8 +283,14 @@
         <button id="close-preview" type="button" aria-label="Close full-screen preview">Close ×</button>
     </dialog>
 
+    <dialog id="reset-dialog" aria-labelledby="reset-title">
+        <h2 id="reset-title">Reset this design?</h2>
+        <p>This restores the defaults in this browser. Your saved iPhone wallpaper settings stay unchanged.</p>
+        <form method="dialog"><button value="cancel" autofocus>Keep design</button><button value="reset">Reset design</button></form>
+    </dialog>
+
     <!-- How-to Modal -->
-    <div id="howto-modal" role="dialog" aria-modal="true" aria-labelledby="setup-title" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+    <dialog id="howto-modal" role="dialog" aria-modal="true" aria-labelledby="setup-title" class="setup-dialog items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
         <div class="bg-surface rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto flex flex-col">
             <div class="p-6 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-surface z-10">
                 <h2 id="setup-title" class="text-lg font-bold">Set Up Life Calendar on iPhone</h2>
@@ -406,7 +341,7 @@
                 <p class="text-xs text-gray-400">The settings handoff includes your birth date and selected options. It opens Shortcuts on this iPhone; nothing is sent to a wallpaper server. Don’t share the handoff URL.</p>
             </div>
         </div>
-    </div>
+    </dialog>
 
     <script type="module">
         import { DEVICES, getDevice } from './calendar-logic.js';
@@ -448,6 +383,8 @@
             rest: '#333333',
             layout: 'none', // 'none', 'top', 'bottom'
         };
+
+        const initialDesign = { ...state };
 
         const WEBSITE_VERSION = '1.5.0';
         let websiteVersion = null;
@@ -505,7 +442,7 @@
             // 4. Listeners
             addListeners();
             if (params.get('update') === '1') {
-                els.modal.classList.remove('hidden');
+                els.modal.showModal();
                 document.getElementById('setup-title').textContent = 'Update Life Calendar';
             }
         }
@@ -531,6 +468,22 @@
             }
         }
         function addListeners() {
+            const resetDialog = document.getElementById('reset-dialog');
+            document.getElementById('reset-design').addEventListener('click', () => {
+                resetDialog.returnValue = '';
+                resetDialog.showModal();
+            });
+            resetDialog.addEventListener('close', () => {
+                if (resetDialog.returnValue !== 'reset') return;
+                Object.assign(state, initialDesign);
+                els.device.value = state.device;
+                els.dob.value = state.dob;
+                els.years.value = state.years;
+                for (const radio of els.layoutRadios) radio.checked = radio.value === state.layout;
+                for (const key of ['bg', 'lived', 'rest', 'accent']) updateColorInputs(key, state[key]);
+                document.getElementById('show-icons').checked = false;
+                syncDesignControls(); updateUrl(); draw();
+            });
             const previewDialog = document.getElementById('preview-dialog');
             const previewStage = document.getElementById('preview-stage');
             const previewHome = els.phonePreview.parentElement;
@@ -609,15 +562,15 @@
 
             // Modal
             els.btnHowto.addEventListener('click', () => {
-                els.modal.classList.remove('hidden');
+                els.modal.showModal();
             });
             els.btnCloseModal.addEventListener('click', () => {
-                els.modal.classList.add('hidden');
+                els.modal.close();
             });
             els.btnUseSettings.addEventListener('click', openShortcutWithSettings);
             els.btnApplySettings.addEventListener('click', openShortcutWithSettings);
             els.modal.addEventListener('click', (e) => {
-                if (e.target === els.modal) els.modal.classList.add('hidden');
+                if (e.target === els.modal) els.modal.close();
             });
         }
 

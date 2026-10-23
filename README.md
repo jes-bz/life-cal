@@ -2,7 +2,9 @@
 
 **[Create your free Life Calendar wallpaper →](https://jes.bz/life-cal/)**
 
-No account or subscription. Customize in your browser, download an image, or install the iPhone Shortcut for local automatic updates.
+Free and open source, with no account, subscription, or paid design tier. Design your life-in-weeks wallpaper in your browser, then let your iPhone keep it updated with offline rendering.
+
+Browser preview and download need no app. Automatic iPhone updates require the free Scriptable app and Life Calendar Shortcut; after installation and configuration, wallpaper refreshes need no image server or network request.
 
 A "Memento Mori" life calendar generator that visualizes your life in weeks. It generates a wallpaper for your phone showing weeks lived versus weeks remaining, helping you stay mindful of your time.
 
@@ -38,14 +40,14 @@ against your Lock Screen; they do not claim exact system safe-area measurements.
 Apple's display dimensions: [Duo](https://www.apple.com/iphone-duo/specs/) and
 [iPhone Pro / Max](https://www.apple.com/iphone-18-pro/specs/).
 
-## Static site styles
+## Development
 
-The browser loads only local HTML, CSS, and JavaScript, using system fonts. No runtime CSS framework, icon library, or external font service is required.
-
-After changing utility classes or the palette, rebuild the checked-in stylesheet from the repository root:
+The site uses plain CSS, browser JavaScript modules, and system fonts. There is no framework, package installation, or CSS compilation step. Edit `assets/site.css` directly.
 
 ```sh
-npx --yes --package tailwindcss@3.4.17 tailwindcss -c styles/tailwind.config.cjs -i styles/input.css -o assets/site.css --minify
+python3 -m http.server 8765
+node --test scriptable/*.test.mjs
+python3 scriptable/verify-release.py --check-recorded
 ```
 
-Tailwind is a build-only tool; publishing the site requires no npm install or framework runtime.
+The release verifier checks that the shared iPhone installer matches the source. Renderer changes need a new verified Shortcut release before publication.
