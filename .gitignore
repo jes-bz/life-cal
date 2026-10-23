@@ -1,11 +1,2 @@
 .DS_Store
-node_modules/
 dist/
-.wrangler/
-worker/node_modules/
-worker/dist/
-worker/.wrangler/
-
-# Rust/Wasm build artifacts
-worker/target/
-worker/build/

@@ -1,6 +1,6 @@
 # Life Calendar
 
-The hosted `life-cal-worker` service is retired. Keep `worker/` local-only; do not redeploy it or restore its production route. The static site and offline Shortcut are the supported paths.
+The hosted `life-cal-worker` service is retired and its sources have been removed. Do not redeploy it or restore its production route. The static site and offline Shortcut are the supported paths.
 
 ## Tool behavior
 
@@ -16,37 +16,25 @@ The hosted `life-cal-worker` service is retired. Keep `worker/` local-only; do n
 
 - `index.html` is the static configuration site, published to
   `https://jessebrizzi.com/life-cal/` by GitHub Pages.
-- `calendar-logic.js` supplies browser preview and download geometry. It
-  is also used by the PNG tests; the production Worker does not import it.
+- `calendar-logic.js` supplies device presets and baseline geometry.
 - `calendar-design.js` supplies shared appearance settings and scene geometry
   for the browser and offline Scriptable renderer.
-- `worker/` retains local Rust renderer and test code. It has no production
-  endpoint or deployment workflow.
+- `assets/site.css` is plain CSS edited directly, with no framework or build step.
 - Keep this repository focused on Life Calendar. Account-wide Cloudflare changes
   and configuration for other websites do not belong here.
 
 ## Development and verification
 
-From `worker/`:
+Serve the repository with `python3 -m http.server 8765`. Run:
 
 ```sh
-rustup show
-cargo install worker-build --version 0.8.7 --locked
-npm ci
-npm test
-cargo fmt --check
+node --test scriptable/*.test.mjs
+python3 scriptable/verify-release.py --check-recorded
 ```
 
-Use the checked-in Rust toolchain, Cargo lockfile, and npm lockfile. `npm test`
-compiles and packages Wasm, runs Rust unit tests, decodes PNGs across 180
-configurations, and exercises HTTP/cache behavior in workerd. The PNG checks
-cover browser geometry, colors, fractional edges, antialiasing, and Duo margins.
-
-`npm run dev` serves the Worker locally; `npm run build` performs a dry run.
-There is no Worker deploy script. Pushing main deploys the static
-website separately through `.github/workflows/static.yml`.
-
-Do not set Cargo `strip = true`; it breaks the pinned wasm-bindgen catch wrappers.
+Pushing main deploys the static website through `.github/workflows/static.yml`.
+Renderer changes require a matching verified Shortcut release before publishing;
+keep pending renderer features on a branch until the phone installer is ready.
 
 ## Behavior to preserve
 
@@ -59,14 +47,8 @@ Do not set Cargo `strip = true`; it breaks the pinned wasm-bindgen catch wrapper
 - Adaptive offline/browser grids prefer a square when it fits, with uniform
   markers and spacing. Classic-only options must not affect adaptive geometry.
   Keep the browser design-module cache version aligned with `release.json`.
-- Keep bounded input validation ahead of rendering and avoid rendering on direct
-  HEAD cache misses.
-- Preserve normalized image cache keys, per-request filenames, and client cache
-  expiry at the next weeks-lived change. Verify caching when changing geometry.
-- Keep query strings and birth dates out of custom logs. Observability settings
-  and cache configuration live in `worker/wrangler.toml`.
-- Verify CPU performance in Cloudflare when optimizing the Worker. Local timing
-  and HTTP success do not establish compliance with the free-tier CPU limit.
+- Keep query strings and birth dates out of logs. Preview, download and automated
+  phone rendering run locally.
 
 ## Edge protection
 
