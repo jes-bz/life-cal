@@ -2,7 +2,9 @@
 
 **[Create your free Life Calendar wallpaper →](https://jes.bz/life-cal/)**
 
-No account or subscription. Customize in your browser, download an image, or install the iPhone Shortcut for local automatic updates.
+Free and open source, with no account, subscription, or paid design tier. Design your life-in-weeks wallpaper in your browser, then let your iPhone keep it updated with offline rendering.
+
+Browser preview and download need no app. Automatic iPhone updates require the free Scriptable app and Life Calendar Shortcut; after installation and configuration, wallpaper refreshes need no image server or network request.
 
 A "Memento Mori" life calendar generator that visualizes your life in weeks. It generates a wallpaper for your phone showing weeks lived versus weeks remaining, helping you stay mindful of your time.
 
