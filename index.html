@@ -51,7 +51,7 @@
     <meta name="twitter:image" content="https://jessebrizzi.com/life-cal/assets/share-card.png">
     <meta name="twitter:image:alt" content="Life Calendar with an illustrative life-in-weeks wallpaper">
     <meta name="theme-color" content="#000000">
-    <link rel="stylesheet" href="./assets/site.css?v=6">
+    <link rel="stylesheet" href="./assets/site.css?v=7">
 
 </head>
 
@@ -66,7 +66,7 @@
             <div class="p-6 border-b border-gray-100">
                 <h1 class="text-xl font-bold tracking-tighter uppercase">Life Calendar Wallpaper</h1>
                 <p class="text-xs text-gray-500 mt-1">Memento mori · your life in weeks</p>
-                <p class="mt-3 text-xs text-gray-400">Design your life-in-weeks wallpaper in your browser. Let your iPhone keep it updated with offline rendering.</p>
+                <p class="mt-3 text-xs text-gray-400">Design a life calendar or countdown. Download it, or let your iPhone keep it updated offline.</p>
                 <p class="mt-2 text-xs text-gray-400">Free and open source · No account or subscription</p>
                 <p class="mt-4 text-xs font-bold uppercase text-gray-400">First-time setup · install once</p>
                 <div class="mt-2 grid grid-cols-2 gap-2 text-xs">
@@ -75,52 +75,13 @@
                     <a href="https://www.icloud.com/shortcuts/3019eb11a8e746d68e6172d13e0c23f1" target="_blank" rel="noopener noreferrer"
                         class="rounded bg-indigo-600 px-3 py-2 text-center font-bold text-black hover:bg-indigo-700">2. Add Shortcut</a>
                 </div>
-                <p class="mt-3 text-xs text-gray-400">Install once, then configure below. Already installed? Skip these steps.</p>
+                <p class="mt-3 text-xs text-gray-400">Already installed? Configure below, or <a href="shortcuts://run-shortcut?name=Life%20Calendar&amp;input=text&amp;text=settings" class="text-indigo-700 hover:underline">load your saved iPhone design</a>.</p>
             </div>
 
-            <div class="p-6 space-y-6 md:flex-1 md:overflow-y-auto">
+            <div class="p-6 space-y-6">
 
-                <div>
-                    <label for="device" class="block text-xs font-bold uppercase text-gray-400 mb-1">Device / Display</label>
-                    <select id="device" class="block w-full bg-gray-50 border border-gray-200 rounded p-2 text-sm focus:outline-none focus:border-indigo-500 transition-colors"></select>
-                    <p id="device-size" class="mt-2 text-xs text-gray-500" aria-live="polite"></p>
-                    <p id="device-note" class="mt-2 text-xs text-gray-500 hidden">Duo uses a fixed left-shifted grid, centered beside the permanent right-side controls.</p>
-                </div>
-
-                <hr class="border-gray-100">
-
-<section class="space-y-4" aria-label="Calendar design">
-<h2 class="text-sm font-bold">Calendar design</h2>
-<div><h3 class="text-xs font-bold uppercase text-gray-400">Design presets</h3>
-<p class="mt-2 text-xs text-gray-400">Choose a starting look, then fine-tune below. Presets change colors and markers; your dates, calendar view, and placement stay as selected.</p>
-<div id="design-presets" class="design-presets" aria-label="Design presets"></div>
-<p id="preset-status" class="mt-2 text-xs text-gray-400" role="status"></p></div>
-<div id="screen-options"><label for="design-screen" class="block text-xs font-bold uppercase text-gray-400 mb-1">Wallpaper layout</label><select id="design-screen" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="lock">Lock Screen</option><option value="home">Home Screen</option></select></div>
-                <!-- Layout Options -->
-                <div id="layout-options" class="space-y-3">
-                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Lock Screen widgets</label>
-
-                    <div class="space-y-2">
-                        <div class="flex items-center">
-                            <input type="radio" id="layout-none" name="layout" value="none"
-                                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
-                            <label for="layout-none" class="ml-2 block text-sm text-gray-700">Standard (Clock +
-                                Buttons)</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" id="layout-top" name="layout" value="top"
-                                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
-                            <label for="layout-top" class="ml-2 block text-sm text-gray-700">+ Top Widgets</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="radio" id="layout-bottom" name="layout" value="bottom"
-                                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
-                            <label for="layout-bottom" class="ml-2 block text-sm text-gray-700">+ Bottom Widgets</label>
-                        </div>
-                    </div>
-                </div>
-
-<div id="placement-options"><label for="design-placement" class="block text-xs font-bold uppercase text-gray-400 mb-1">Placement</label><select id="design-placement" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="center">Centered</option><option value="bottom">Bottom aligned</option><option value="vertical">Narrow vertical</option><option value="corner">Compact corner</option></select></div>
+<section class="space-y-4" aria-labelledby="calendar-title">
+<h2 id="calendar-title" class="text-sm font-bold">Calendar</h2>
 <div><label for="design-view" class="block text-xs font-bold uppercase text-gray-400 mb-1">Calendar view</label><select id="design-view" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="weeks">Life in weeks</option><option value="months">Life in months</option><option value="year">Current year · days</option><option value="combined">Life + current year</option><option value="countdown">Countdown · days</option></select></div>
 <div id="countdown-options" class="space-y-3 hidden">
 <label for="design-countdownTitle" class="block text-xs font-bold uppercase text-gray-400">Countdown title<input id="design-countdownTitle" type="text" maxlength="48" placeholder="A trip, project, or milestone" class="block w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"></label>
@@ -136,38 +97,27 @@
                             class="appearance-none block w-full bg-gray-50 border border-gray-200 rounded p-2 text-base focus:outline-none focus:border-indigo-500 transition-colors">
                     </div>
                     <div>
-                        <label for="years" class="block text-xs font-bold uppercase text-gray-400 mb-1">Expectancy (Years)</label>
+                        <label for="years" class="block text-xs font-bold uppercase text-gray-400 mb-1">Target lifespan (years)</label>
                         <input type="number" id="years" value="80" min="1" max="120"
                             class="appearance-none block w-full bg-gray-50 border border-gray-200 rounded p-2 text-base focus:outline-none focus:border-indigo-500 transition-colors">
                     </div>
                 </div>
 
-<div id="grid-options"><label for="design-grid" class="block text-xs font-bold uppercase text-gray-400 mb-1">Grid structure</label><select id="design-grid" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="adaptive">Fit to screen</option><option value="classic">Classic · one year per row</option></select><p id="grid-help" class="mt-2 text-xs text-gray-400"></p></div>
-                <div id="rounding-options" class="space-y-2">
-                    <label class="flex items-center gap-2 text-sm"><input type="checkbox" id="design-squareLifespan"> Round lifespan to a full square</label>
-                    <p id="lifespan-summary" role="status" class="text-xs text-gray-400">Uses the nearest square number of weeks; your target years stay unchanged.</p>
-                </div>
-
-<div id="classic-options" class="space-y-3">
-<div><label for="design-classicWidth" class="block text-xs font-bold uppercase text-gray-400 mb-1">Row width</label><select id="design-classicWidth" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="natural">Natural · equal spacing</option><option value="wide">Wide · more horizontal space</option><option value="full">Full width · fill available space</option></select><p class="mt-2 text-xs text-gray-400">Wider rows spread the markers apart horizontally. Marker shapes and one year per row stay unchanged.</p></div>
-<div><label for="design-ageLabels" class="block text-xs font-bold uppercase text-gray-400 mb-1">Age labels</label><select id="design-ageLabels" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="none">None</option><option value="5">Every 5 years</option><option value="10">Every 10 years</option></select></div>
-<label class="flex items-center gap-2 text-sm"><input type="checkbox" id="design-decades"> Separate decades</label>
-<label id="midyear-options" class="flex items-center gap-2 text-sm"><input type="checkbox" id="design-midyear"> Gap after week 26</label>
-</div>
+</section>
+<section class="space-y-4" aria-labelledby="look-title">
+<h2 id="look-title" class="text-sm font-bold">Look</h2>
+<div><h3 class="text-xs font-bold uppercase text-gray-400">Design presets</h3>
+<p class="mt-2 text-xs text-gray-400">Start with a preset. Fine-tune it if you like; your dates and screen layout stay as selected.</p>
+<div id="design-presets" class="design-presets" aria-label="Design presets"></div>
+<p id="preset-status" class="mt-2 text-xs text-gray-400" role="status"></p></div>
+<details id="appearance-settings" class="config-details"><summary>Fine-tune colors and markers</summary><div class="space-y-4 pt-4">
 <div><label for="design-shape" class="block text-xs font-bold uppercase text-gray-400 mb-1">Marker shape</label><select id="design-shape" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="square">Squares</option><option value="rounded">Rounded squares</option><option value="circle">Circles</option></select></div>
 <div><label for="design-future" class="block text-xs font-bold uppercase text-gray-400 mb-1">Future markers</label><select id="design-future" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="dim">Solid / dim</option><option value="outline">Hollow outlines</option><option value="hidden">Hidden</option></select></div>
-<label class="flex items-center gap-2 text-sm"><input type="checkbox" id="show-icons"> Preview sample icons and widgets · not in image</label>
-<details><summary class="cursor-pointer text-sm font-bold">Advanced placement and contrast</summary><div class="space-y-4 pt-4">
-<label for="design-scale" class="block text-xs text-gray-400">Grid size <output id="value-scale"></output><input id="design-scale" type="range" min="30" max="100" class="block w-full mt-2"></label>
-<label id="position-options" for="design-position" class="block text-xs text-gray-400">Vertical position · top to bottom <output id="value-position"></output><input id="design-position" type="range" min="0" max="100" class="block w-full mt-2"></label>
-<label for="design-spacing" class="block text-xs text-gray-400">Marker spacing <output id="value-spacing"></output><input id="design-spacing" type="range" min="0" max="75" class="block w-full mt-2"></label>
-<label id="opacity-options" for="design-futureOpacity" class="block text-xs text-gray-400">Future marker opacity <output id="value-futureOpacity"></output><input id="design-futureOpacity" type="range" min="0" max="100" class="block w-full mt-2"></label>
-</div></details><p class="text-xs text-gray-400">Year and countdown views use one marker per day. Wallpaper layout reserves space for your icons or widgets; choose the actual destination in the Shortcut’s Set Wallpaper action.</p></section>
 
                 <!-- Colors -->
                 <div class="space-y-4">
                     <div>
-                        <label for="palette" class="block text-xs font-bold uppercase text-gray-400 mb-1">Color theme</label>
+                        <label for="palette" class="block text-xs font-bold uppercase text-gray-400 mb-1">Color palette</label>
                         <select id="palette" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base">
                             <option value="classic">Classic</option>
                             <option value="paper">Warm Paper</option>
@@ -176,7 +126,7 @@
                             <option value="graphite">Graphite</option><option value="sunset">Sunset</option><option value="lavender">Lavender</option><option value="ocean">Ocean</option><option value="custom">Custom</option>
                         </select>
                     </div>
-                    <p class="text-xs text-gray-400">Tap a color swatch to open the color picker, or enter a hex code.</p>
+                    <p class="text-xs text-gray-400">Palettes change colors while keeping your marker style. Tap a swatch to pick a color, or enter a hex code.</p>
                     <div>
                         <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Background</label>
                         <div class="flex items-center space-x-2">
@@ -205,7 +155,7 @@
                         </div>
                     </div>
                     <div class="pt-4 border-t border-gray-200 space-y-4">
-<div><label for="design-highlight" class="block text-xs font-bold uppercase text-gray-400 mb-1">Current period</label><select id="design-highlight" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="none">No accent</option><option value="color">Accent color</option><option value="outline">Accent outline</option><option value="larger">Larger accent marker</option></select></div>
+<div><label for="design-highlight" class="block text-xs font-bold uppercase text-gray-400 mb-1">Highlight the current marker</label><select id="design-highlight" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="none">No accent</option><option value="color">Accent color</option><option value="outline">Accent outline</option><option value="larger">Larger accent marker</option></select></div>
                         <div id="accent-options">
                             <label for="hex-accent" class="block text-xs font-bold uppercase text-gray-400 mb-1">Accent color</label>
                             <div class="flex items-center space-x-2">
@@ -217,17 +167,76 @@
 
                 </div>
 
-<section class="space-y-3" aria-labelledby="quote-title">
-<h2 id="quote-title" class="text-sm font-bold">Optional quote</h2>
+<label for="design-spacing" class="block text-xs text-gray-400">Marker spacing <output id="value-spacing"></output><input id="design-spacing" type="range" min="0" max="75" class="block w-full mt-2"></label>
+<label id="opacity-options" for="design-futureOpacity" class="block text-xs text-gray-400">Future marker opacity <output id="value-futureOpacity"></output><input id="design-futureOpacity" type="range" min="0" max="100" class="block w-full mt-2"></label>
+</div></details>
+<details id="quote-settings" class="config-details"><summary>Add a quote (optional)</summary><div class="space-y-3 pt-4">
 <label for="design-quote" class="block text-xs font-bold uppercase text-gray-400">Text below the grid</label>
-<select id="design-quote" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="none">None</option><option value="daily">Daily reflection · changes each day</option><option value="custom">My own quote</option></select>
+<select id="design-quote" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="none">None</option><option value="daily">Rotating daily reflection</option><option value="custom">My own quote</option></select>
 <div id="quote-text-options" class="hidden"><label for="design-quoteText" class="block text-xs text-gray-400">Quote or reminder · up to 140 characters</label><input type="text" id="design-quoteText" maxlength="140" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"></div>
-<p class="text-xs text-gray-400">Daily reflections are original prompts included in the Shortcut. They change when your wallpaper refreshes; nothing is fetched online.</p>
+<p id="quote-help" class="text-xs text-gray-400">Daily reflections are original prompts included in the Shortcut. They change when your wallpaper refreshes; nothing is fetched online.</p>
+</div></details>
 </section>
-<p id="design-error" role="status" class="text-sm text-gray-400"></p>
+<section class="space-y-4" aria-labelledby="fit-title">
+<h2 id="fit-title" class="text-sm font-bold">Screen fit</h2>
+                <div>
+                    <label for="device" class="block text-xs font-bold uppercase text-gray-400 mb-1">iPhone model / display</label>
+                    <select id="device" class="block w-full bg-gray-50 border border-gray-200 rounded p-2 text-sm focus:outline-none focus:border-indigo-500 transition-colors"></select>
+                    <p id="device-size" class="mt-2 text-xs text-gray-500" aria-live="polite"></p>
+                    <p id="device-note" class="mt-2 text-xs text-gray-500 hidden">Duo uses a fixed left-shifted grid, centered beside the permanent right-side controls.</p>
+                </div>
+
+<div id="screen-options"><label for="design-screen" class="block text-xs font-bold uppercase text-gray-400 mb-1">Reserve space for</label><select id="design-screen" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="lock">Lock Screen</option><option value="home">Home Screen</option></select></div>
+                <!-- Layout Options -->
+                <div id="layout-options" class="space-y-3">
+                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Lock Screen widgets</label>
+
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <input type="radio" id="layout-none" name="layout" value="none"
+                                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                            <label for="layout-none" class="ml-2 block text-sm text-gray-700">Standard (Clock +
+                                Buttons)</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="layout-top" name="layout" value="top"
+                                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                            <label for="layout-top" class="ml-2 block text-sm text-gray-700">+ Top Widgets</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="layout-bottom" name="layout" value="bottom"
+                                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                            <label for="layout-bottom" class="ml-2 block text-sm text-gray-700">+ Bottom Widgets</label>
+                        </div>
+                    </div>
+                </div>
+
+<div id="placement-options"><label for="design-placement" class="block text-xs font-bold uppercase text-gray-400 mb-1">Placement</label><select id="design-placement" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="center">Centered</option><option value="bottom">Bottom aligned</option><option value="vertical">Narrow vertical</option><option value="corner">Compact corner</option></select></div>
+<div id="grid-options"><label for="design-grid" class="block text-xs font-bold uppercase text-gray-400 mb-1">Grid structure</label><select id="design-grid" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="adaptive">Fit to screen</option><option value="classic">Classic · one year per row</option></select><p id="grid-help" class="mt-2 text-xs text-gray-400"></p></div>
+                <div id="rounding-options" class="space-y-2">
+                    <label class="flex items-center gap-2 text-sm"><input type="checkbox" id="design-squareLifespan"> Round lifespan to a full square</label>
+                    <p id="lifespan-summary" role="status" class="text-xs text-gray-400">Uses the nearest square number of weeks; your target years stay unchanged.</p>
+                </div>
+
+<div id="classic-options" class="space-y-3">
+<div><label for="design-classicWidth" class="block text-xs font-bold uppercase text-gray-400 mb-1">Row width</label><select id="design-classicWidth" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="natural">Natural · equal spacing</option><option value="wide">Wide · more horizontal space</option><option value="full">Full width · fill available space</option></select><p class="mt-2 text-xs text-gray-400">Wider rows spread the markers apart horizontally. Marker shapes and one year per row stay unchanged.</p></div>
+<details class="config-details"><summary>Year labels and separators</summary><div class="space-y-3 pt-4"><div><label for="design-ageLabels" class="block text-xs font-bold uppercase text-gray-400 mb-1">Age labels</label><select id="design-ageLabels" class="w-full bg-gray-50 border border-gray-200 rounded p-2 text-base"><option value="none">None</option><option value="5">Every 5 years</option><option value="10">Every 10 years</option></select></div>
+<label class="flex items-center gap-2 text-sm"><input type="checkbox" id="design-decades"> Separate decades</label>
+<label id="midyear-options" class="flex items-center gap-2 text-sm"><input type="checkbox" id="design-midyear"> Gap after week 26</label>
+</div></details>
+</div>
+<details class="config-details"><summary>Adjust size and position</summary><div class="space-y-4 pt-4">
+<label for="design-scale" class="block text-xs text-gray-400">Grid size <output id="value-scale"></output><input id="design-scale" type="range" min="30" max="100" class="block w-full mt-2"></label>
+<label id="position-options" for="design-position" class="block text-xs text-gray-400">Vertical position · top to bottom <output id="value-position"></output><input id="design-position" type="range" min="0" max="100" class="block w-full mt-2"></label>
+</div></details>
+<label class="flex items-center gap-2 text-sm"><input type="checkbox" id="show-icons"> Show sample clock, widgets and icons in preview</label>
+<p class="text-xs text-gray-400">Sample overlays help you check spacing and are not included in your wallpaper. Choose the actual wallpaper destination in the Shortcut’s Set Wallpaper action.</p>
+</section>
                 <!-- Actions -->
-                <button id="reset-design" type="button" class="w-full border border-gray-200 rounded p-2 text-sm">Reset design</button>
                 <div class="pt-4 space-y-3">
+                    <h2 class="text-sm font-bold">Use your wallpaper</h2>
+                    <p id="design-error" role="status" class="text-sm text-gray-400"></p>
+                    <p id="refresh-help" class="text-xs text-gray-400 hidden">For daily changes, set the Life Calendar Shortcut’s schedule to Daily. The included schedule starts as weekly.</p>
                     <button id="btn-apply-settings" disabled
                         class="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold py-3 px-4 rounded text-sm transition-colors flex items-center justify-center">
                          Apply to iPhone
@@ -235,13 +244,14 @@
                     <p class="text-xs text-gray-400">Opens the installed Life Calendar Shortcut with this design. Preview it on your iPhone, then tap Apply Wallpaper.</p>
                     <div class="flex flex-wrap justify-between gap-3 text-xs">
                         <button id="btn-howto" class="text-indigo-700 hover:underline">Installation guide</button>
-                        <a href="shortcuts://run-shortcut?name=Life%20Calendar&amp;input=text&amp;text=settings" class="text-indigo-700 hover:underline">Load saved iPhone design</a>
+
                     </div>
                     <button id="btn-download"
                         class="w-full bg-surface border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold py-2 px-4 rounded text-sm transition-colors flex items-center justify-center">
                          Download Wallpaper
                     </button>
 
+                    <button id="reset-design" type="button" class="text-xs text-gray-400 hover:underline">Reset to defaults</button>
                     <a href="https://github.com/jes-bz/life-cal" target="_blank"
                         class="block w-full text-center text-xs text-gray-400 hover:text-indigo-600 mt-4 transition-colors">
                          Contribute on GitHub
@@ -492,6 +502,7 @@
             for (const key of DESIGN_FIELDS) if (params.has(key)) designInput[key] = params.get(key);
             try { Object.assign(state, normalizeDesign(designInput)); } catch {}
             syncDesignControls();
+            document.getElementById('quote-settings').open = state.quote !== 'none';
 
             // Layout
             if (['none', 'top', 'bottom'].includes(params.get('layout'))) state.layout = params.get('layout');
@@ -713,6 +724,9 @@
             show('position-options', !isDuo);
             show('countdown-options', state.view === 'countdown');
             show('quote-text-options', state.quote === 'custom');
+            show('quote-help', state.quote === 'daily');
+            document.querySelector('#quote-settings > summary').textContent = state.quote === 'none' ? 'Add a quote (optional)' : state.quote === 'daily' ? 'Quote · Daily reflection' : 'Quote · Custom text';
+            show('refresh-help', ['countdown', 'year', 'combined'].includes(state.view) || state.quote === 'daily');
             show('grid-options', lifeView);
             show('rounding-options', state.grid === 'adaptive' && lifeView);
             show('accent-options', state.highlight !== 'none');
@@ -805,7 +819,7 @@
             params.set('rest', state.rest.replace('#', ''));
             for (const key of DESIGN_FIELDS) params.set(key, key === 'accent' ? String(state[key]).replace(/^#/, '') : String(state[key]));
             params.set('layout', state.device.startsWith('duo-') ? 'none' : state.layout);
-            
+
             return params;
         }
 

@@ -258,3 +258,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .design-preset span { display:block; padding:6px 4px 3px; font-size:12px; }
 .design-preset:hover { border-color:#b3b3b3; }
 .design-preset[aria-pressed=true] { border-color:#ffb86c; box-shadow:0 0 0 1px #ffb86c; }
+
+.config-details { border-top:1px solid #333; }
+.config-details > summary { font-size:13px; font-weight:600; }
+.controls-panel > .space-y-6 > section + section { border-top:1px solid #333; padding-top:20px; }
