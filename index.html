@@ -48,30 +48,11 @@
     <meta name="twitter:image" content="https://jessebrizzi.com/life-cal/assets/share-card.png">
     <meta name="twitter:image:alt" content="Life Calendar with an illustrative life-in-weeks wallpaper">
     <meta name="theme-color" content="#000000">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        // Catthode palette: catthode.github.io/styles.css.
-        tailwind.config = {
-            theme: { extend: { colors: {
-                surface: '#141414',
-                gray: {
-                    50: '#1b1b1b', 100: '#2d2d2d', 200: '#636363',
-                    300: '#636363', 400: '#b3b3b3', 500: '#b3b3b3',
-                    600: '#e8e8e8', 700: '#e8e8e8', 800: '#2d2d2d', 900: '#fae2c8'
-                },
-                indigo: {
-                    50: '#2a2018', 100: '#5a4028', 200: '#d9b98c',
-                    500: '#ffb86c', 600: '#ff9e3b', 700: '#ffb86c', 900: '#fae2c8'
-                }
-            } } }
-        };
-    </script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/site.css?v=2">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
         :root { color-scheme: dark; }
-        body { font-family: 'JetBrains Mono', monospace; }
+        body { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
         :focus-visible { outline: 2px solid #ffb86c; outline-offset: 3px; }
         input[type=radio] { accent-color: #ff9e3b; }
         input[type=text], input[type=number], input[type=date] { min-width: 0; }
@@ -102,6 +83,20 @@
         }
 
 
+        button, select, input[type=date], input[type=number], input[type=text] { min-height: 44px; }
+        label:has(input[type=checkbox]), #layout-options .flex { min-height: 44px; cursor: pointer; }
+        input[type=checkbox], input[type=radio] { accent-color: #ff9e3b; }
+        #layout-options input { flex-shrink: 0; }
+        #layout-options label { padding-block: 10px; cursor: pointer; }
+        .controls-panel a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; }
+        @media (max-width: 767px) {
+            .preview-area { order: -1; position: sticky; top: 0; z-index: 20; height: 26svh; min-height: 150px; padding: 8px; border-bottom: 1px solid #636363; }
+            .phone-preview { border-width: 3px; border-radius: 12px; }
+            .controls-panel { border-right: 0; }
+            .controls-panel > div { padding: 16px; }
+            #ui-container { min-height: 100svh; }
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -131,12 +126,11 @@
 
         <!-- Controls Panel -->
         <div
-            class="w-full md:w-96 bg-surface border-r border-gray-200 flex flex-col z-10 shadow-lg md:shadow-none md:h-full md:overflow-y-auto md:shrink-0">
+            class="controls-panel w-full md:w-96 bg-surface border-r border-gray-200 flex flex-col z-10 shadow-lg md:shadow-none md:h-full md:overflow-y-auto md:shrink-0">
             <div class="p-6 border-b border-gray-100">
-                <h1 class="text-xl font-bold tracking-tighter uppercase"><i
-                        class="fa-solid fa-calendar-days mr-2 text-indigo-600" aria-hidden="true"></i>Life Calendar Wallpaper</h1>
+                <h1 class="text-xl font-bold tracking-tighter uppercase">Life Calendar Wallpaper</h1>
                 <p class="text-xs text-gray-500 mt-1">Memento mori · your life in weeks</p>
-                <p class="mt-3 text-xs text-gray-400">Create a free wallpaper that puts your time in perspective. Customize your life in weeks or months, then download it or set up automatic iPhone updates.</p>
+                <p class="mt-3 text-xs text-gray-400">Free life-in-weeks wallpapers. Customize, download, or automate updates on iPhone.</p>
                 <p class="mt-4 text-xs font-bold uppercase text-gray-400">First-time setup · install once</p>
                 <div class="mt-2 grid grid-cols-2 gap-2 text-xs">
                     <a href="https://apps.apple.com/us/app/scriptable/id1405459188" target="_blank" rel="noopener noreferrer"
@@ -144,7 +138,7 @@
                     <a href="https://www.icloud.com/shortcuts/899c4796262a4b6fb81ba8839ffa740c" target="_blank" rel="noopener noreferrer"
                         class="rounded bg-indigo-600 px-3 py-2 text-center font-bold text-black hover:bg-indigo-700">2. Add Shortcut</a>
                 </div>
-                <p class="mt-3 text-xs text-gray-400">Install both, then return here to choose your design. Already installed? Configure your design below.</p>
+                <p class="mt-3 text-xs text-gray-400">Install once, then configure below. Already installed? Skip these steps.</p>
             </div>
 
             <div class="p-6 space-y-6 md:flex-1 md:overflow-y-auto">
@@ -279,7 +273,7 @@
                 <div class="pt-4 space-y-3">
                     <button id="btn-apply-settings" disabled
                         class="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold py-3 px-4 rounded text-sm transition-colors flex items-center justify-center">
-                        <i class="fa-solid fa-arrow-up-right-from-square mr-2"></i> Apply to iPhone
+                         Apply to iPhone
                     </button>
                     <p class="text-xs text-gray-400">Opens the installed Life Calendar Shortcut with this design. Preview it on your iPhone, then tap Apply Wallpaper.</p>
                     <div class="flex flex-wrap justify-between gap-3 text-xs">
@@ -288,12 +282,12 @@
                     </div>
                     <button id="btn-download"
                         class="w-full bg-surface border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold py-2 px-4 rounded text-sm transition-colors flex items-center justify-center">
-                        <i class="fa-solid fa-download mr-2"></i> Download Wallpaper
+                         Download Wallpaper
                     </button>
 
                     <a href="https://github.com/jes-bz/life-cal" target="_blank"
                         class="block w-full text-center text-xs text-gray-400 hover:text-indigo-600 mt-4 transition-colors">
-                        <i class="fa-brands fa-github mr-1"></i> Contribute on GitHub
+                         Contribute on GitHub
                     </a>
                     <p id="shortcut-version" role="status" class="text-center text-xs text-gray-400">Checking Shortcut version…</p>
                 </div>
@@ -347,8 +341,8 @@
         <div class="bg-surface rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto flex flex-col">
             <div class="p-6 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-surface z-10">
                 <h2 id="setup-title" class="text-lg font-bold">Set Up Life Calendar on iPhone</h2>
-                <button id="btn-close-modal" aria-label="Close installation guide" class="text-gray-400 hover:text-gray-600">
-                    <i class="fa-solid fa-xmark text-xl"></i>
+                <button aria-label="Close installation guide" id="btn-close-modal" class="text-gray-400 hover:text-gray-600">
+                    <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="p-6 space-y-6 text-sm leading-relaxed text-gray-500">
@@ -358,10 +352,10 @@
                     <h3 class="font-bold text-indigo-900 mb-3">1. Install the iPhone tools</h3>
                     <div class="grid gap-2 sm:grid-cols-2">
                         <a href="https://apps.apple.com/us/app/scriptable/id1405459188" target="_blank" rel="noopener noreferrer" class="rounded-md border border-indigo-200 bg-surface px-3 py-2 text-center text-xs font-bold text-indigo-700 hover:bg-indigo-100">
-                            <i class="fa-brands fa-apple mr-1"></i> Install Scriptable
+                             Install Scriptable
                         </a>
                         <a href="https://www.icloud.com/shortcuts/899c4796262a4b6fb81ba8839ffa740c" target="_blank" rel="noopener noreferrer" class="rounded-md bg-indigo-700 px-3 py-2 text-center text-xs font-bold text-black hover:bg-indigo-600">
-                            <i class="fa-solid fa-arrow-down-to-bracket mr-1"></i> Add Life Calendar Shortcut
+                             Add Life Calendar Shortcut
                         </a>
                     </div>
                     <p class="mt-3 text-xs text-indigo-900">After adding the Shortcut, return to this page to choose your design. Running an unconfigured Shortcut opens this website; it does not ask you to pick colors on the phone.</p>
@@ -376,7 +370,7 @@
                     <h3 class="font-bold text-white mb-2">3. Load these settings</h3>
                     <p class="mb-3 text-xs text-gray-500">Tap the button to open Life Calendar on this iPhone with the settings currently selected on this page. Review the wallpaper preview in Scriptable, approve first-run permissions, then tap <strong>Apply Wallpaper</strong>.</p>
                     <button id="btn-use-settings" disabled class="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold py-3 px-4 rounded text-sm transition-colors flex items-center justify-center">
-                        <i class="fa-solid fa-arrow-up-right-from-square mr-2"></i> Apply to iPhone
+                         Apply to iPhone
                     </button>
                 </section>
 

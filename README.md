@@ -1,6 +1,8 @@
 # Life Calendar Wallpaper
 
-[https://jes.bz/life-cal/](https://jes.bz/life-cal/)
+**[Create your free Life Calendar wallpaper →](https://jes.bz/life-cal/)**
+
+No account or subscription. Customize in your browser, download an image, or install the iPhone Shortcut for local automatic updates.
 
 A "Memento Mori" life calendar generator that visualizes your life in weeks. It generates a wallpaper for your phone showing weeks lived versus weeks remaining, helping you stay mindful of your time.
 
@@ -35,3 +37,15 @@ The margins are approximate and should be checked
 against your Lock Screen; they do not claim exact system safe-area measurements.
 Apple's display dimensions: [Duo](https://www.apple.com/iphone-duo/specs/) and
 [iPhone Pro / Max](https://www.apple.com/iphone-18-pro/specs/).
+
+## Static site styles
+
+The browser loads only local HTML, CSS, and JavaScript, using system fonts. No runtime CSS framework, icon library, or external font service is required.
+
+After changing utility classes or the palette, rebuild the checked-in stylesheet from the repository root:
+
+```sh
+npx --yes --package tailwindcss@3.4.17 tailwindcss -c styles/tailwind.config.cjs -i styles/input.css -o assets/site.css --minify
+```
+
+Tailwind is a build-only tool; publishing the site requires no npm install or framework runtime.
