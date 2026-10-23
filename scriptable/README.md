@@ -8,7 +8,7 @@ access, or separate script installation.
 ## Install and use
 
 1. [Install Scriptable](https://apps.apple.com/us/app/scriptable/id1405459188),
-   then [add Life Calendar](https://www.icloud.com/shortcuts/899c4796262a4b6fb81ba8839ffa740c).
+   then [add Life Calendar](https://www.icloud.com/shortcuts/3d7d746feebe4870812868da22fffe6e).
    Return to the website after installation. An unconfigured Shortcut opens the
    website; it does not present a second color or settings editor.
 2. In the Shortcut's final **Set Wallpaper Photo** action, select the Home Screen or Lock Screen

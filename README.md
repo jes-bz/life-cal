@@ -24,7 +24,7 @@ The generator is free, with no account or subscription. Browser previews and dow
 
 ## iPhone Setup
 
-Install [Scriptable](https://apps.apple.com/us/app/scriptable/id1405459188), then add the [Life Calendar Shortcut](https://www.icloud.com/shortcuts/899c4796262a4b6fb81ba8839ffa740c). The [offline setup guide](scriptable/README.md) explains initial setup, changing settings, and scheduling weekly refreshes.
+Install [Scriptable](https://apps.apple.com/us/app/scriptable/id1405459188), then add the [Life Calendar Shortcut](https://www.icloud.com/shortcuts/3d7d746feebe4870812868da22fffe6e). The [offline setup guide](scriptable/README.md) explains initial setup, changing settings, and scheduling weekly refreshes.
 
 ## Display sizes
 
