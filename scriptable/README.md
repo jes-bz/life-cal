@@ -1,6 +1,6 @@
 # Offline iPhone wallpaper
 
-Configure Life Calendar on the [website](https://jessebrizzi.com/life-cal/). One
+Configure Life Calendar on the [website](https://life-cal.jes.bz/). One
 installed Shortcut previews a design before applying it, then generates future
 wallpapers locally with Scriptable. Refreshes need no network request, Photos
 access, or separate script installation.

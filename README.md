@@ -54,3 +54,12 @@ python3 scriptable/verify-release.py --check-recorded
 ```
 
 The release verifier checks that the shared iPhone installer matches the source. Renderer changes need a new verified Shortcut release before publication.
+
+## Hosting
+
+The website is hosted on GitHub Pages at https://life-cal.jes.bz/.
+https://jes.bz/life-cal is its permanent sharing link. Previous URLs under
+https://jessebrizzi.com/life-cal/ redirect to the matching page on the project domain.
+This project has no hosted API; the previous image Worker remains retired.
+Future backend endpoints belong under `/api/` on the project domain, with their
+runtime and firewall routes configured explicitly when implemented.

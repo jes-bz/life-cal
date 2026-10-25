@@ -15,7 +15,7 @@ The hosted `life-cal-worker` service is retired and its sources have been remove
 ## Project scope
 
 - `index.html` is the static configuration site, published to
-  `https://jessebrizzi.com/life-cal/` by GitHub Pages.
+  `https://life-cal.jes.bz/` by GitHub Pages.
 - `calendar-logic.js` supplies device presets and baseline geometry.
 - `calendar-design.js` supplies shared appearance settings and scene geometry
   for the browser and offline Scriptable renderer.

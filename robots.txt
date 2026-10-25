@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://life-cal.jes.bz/sitemap.xml
