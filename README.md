@@ -1,6 +1,6 @@
 # Life Calendar Wallpaper
 
-**[Create your free Life Calendar wallpaper →](https://jes.bz/life-cal/)**
+**[Create your free Life Calendar wallpaper →](https://life-cal.jes.bz/)**
 
 Free and open source, with no account, subscription, or paid design tier. Design your life-in-weeks wallpaper in your browser, then let your iPhone keep it updated with offline rendering.
 
